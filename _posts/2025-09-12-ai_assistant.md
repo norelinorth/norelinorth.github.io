@@ -6,6 +6,7 @@ date: 2025-08-24
 author: "Noreli North"
 categories: [agents, patterns]
 ---
+# How AI is Revolutionizing Accounting & Finance | A Deep Dive with the AI Assistant
 
 In today's rapidly evolving business landscape, the traditional Enterprise Resource Planning (ERP) system is undergoing a profound transformation. What if your ERP could do more than just store data? What if it could understand your questions, analyze complex information, and even suggest actions? This future is now a reality, and I'll use the **AI Assistant** as our case study to see these concepts in action.
 
