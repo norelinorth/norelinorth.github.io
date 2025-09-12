@@ -6,8 +6,6 @@ date: 2025-09-12
 author: "Noreli North"
 categories: [AI, ERP]
 ---
-# How AI is Revolutionizing Accounting & Finance | A Deep Dive with the AI Assistant
-
 In today's rapidly evolving business landscape, the traditional Enterprise Resource Planning (ERP) system is undergoing a profound transformation. What if your ERP could do more than just store data? What if it could understand your questions, analyze complex information, and even suggest actions? This future is now a reality, and I'll use the **AI Assistant** as our case study to see these concepts in action.
 
 This article, inspired by our recent video, explores how the AI Assistant is bridging the gap between cutting-edge Artificial Intelligence, robust ERP functionalities, and core business processes, with a special emphasis on its revolutionary impact on Accounting and Finance.
