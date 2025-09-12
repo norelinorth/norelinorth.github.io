@@ -4,7 +4,7 @@ title: "How AI is Revolutionizing Accounting & Finance | A Deep Dive with the AI
 description: "This article explores how the AI Assistant is bridging the gap between cutting-edge Artificial Intelligence, robust ERP functionalities, and core business processes, with a special emphasis on its revolutionary impact on Accounting and Finance."
 date: 2025-08-24
 author: "Noreli North"
-categories: [agents, patterns]
+categories: [AI, ERP]
 ---
 # How AI is Revolutionizing Accounting & Finance | A Deep Dive with the AI Assistant
 
