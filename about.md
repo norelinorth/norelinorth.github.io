@@ -10,7 +10,7 @@ I turn ideas into **working AI automations** — because AI agents turn routine 
 
 ### What you’ll get
 - Short, focused videos (no fluff)
-- Practical resources: starter kits & templates (**mix of open and premium**)
+- Practical resources: starter kits & templates
 - General examples + finance use cases (transferable techniques)
 - Clear builds: tool contracts, review steps, and deploy guides
 
