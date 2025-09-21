@@ -7,6 +7,82 @@ author: "Noreli North"
 categories: [AI, ERP]
 ---
 
+graph TB
+    Start([Month-End Trigger]) --> InitiateReport[User Initiates Report]
+
+    InitiateReport --> SelectParams{Select Parameters}
+    SelectParams --> |Company| ParamCompany[Company Selection]
+    SelectParams --> |Period| ParamPeriod[Fiscal Year Comparison]
+    SelectParams --> |Filters| ParamFilters[Threshold Settings]
+
+    ParamCompany --> DataCollection
+    ParamPeriod --> DataCollection
+    ParamFilters --> DataCollection
+
+    DataCollection[Data Collection Phase] --> QueryGL[Query GL Entries]
+
+    QueryGL --> DBOptimization{Database Query Optimization}
+    DBOptimization --> |Indexed| FastQuery[Optimized SQL Query]
+    DBOptimization --> |Non-Indexed| StandardQuery[Standard Query]
+
+    FastQuery --> DataAggregation
+    StandardQuery --> DataAggregation
+
+    DataAggregation[Aggregate by Account] --> CalculateVariance[Calculate Variances]
+
+    CalculateVariance --> VarianceLogic{Variance Calculation Logic}
+    VarianceLogic --> |Current Year| CurrentBalance[Sum Current Period]
+    VarianceLogic --> |Previous Year| PreviousBalance[Sum Previous Period]
+
+    CurrentBalance --> ComputeDiff
+    PreviousBalance --> ComputeDiff
+
+    ComputeDiff[Compute Differences] --> ApplyThresholds{Apply Thresholds}
+
+    ApplyThresholds --> |> $10,000| SignificantAmount[Significant Amount]
+    ApplyThresholds --> |> 10%| SignificantPercent[Significant Percentage]
+    ApplyThresholds --> |Below Threshold| Filtered[Filtered Out]
+
+    SignificantAmount --> AIAnalysis
+    SignificantPercent --> AIAnalysis
+
+    AIAnalysis{AI Configuration Check}
+    AIAnalysis --> |Configured| GenerateNarrative[Generate AI Narrative]
+    AIAnalysis --> |Not Configured| SkipAI[Basic Report Only]
+
+    GenerateNarrative --> PrepareContext[Prepare Context]
+    PrepareContext --> BuildPrompt[Build Structured Prompt]
+    BuildPrompt --> CallAPI[Call AI API]
+    CallAPI --> ProcessResponse[Process AI Response]
+    ProcessResponse --> EnrichData[Enrich Variance Data]
+
+    EnrichData --> FormatReport
+    SkipAI --> FormatReport
+
+    FormatReport[Format Final Report] --> OutputOptions{Output Format}
+
+    OutputOptions --> |Screen| DisplayReport[Display in Browser]
+    OutputOptions --> |Excel| ExportExcel[Export to Excel]
+    OutputOptions --> |PDF| ExportPDF[Generate PDF]
+    OutputOptions --> |API| JSONResponse[Return JSON]
+
+    DisplayReport --> UserActions
+    ExportExcel --> UserActions
+    ExportPDF --> UserActions
+    JSONResponse --> UserActions
+
+    UserActions{User Actions}
+    UserActions --> |Drill Down| ViewDetails[View GL Details]
+    UserActions --> |Share| ShareReport[Share with Team]
+    UserActions --> |Schedule| ScheduleReport[Set Automation]
+    UserActions --> |Adjust| SelectParams
+
+    ViewDetails --> End([End])
+    ShareReport --> End
+    ScheduleReport --> End
+
+
+
 sections:
   - id: "the-problem"
     title: "The Time Crisis Nobody Talks About"
