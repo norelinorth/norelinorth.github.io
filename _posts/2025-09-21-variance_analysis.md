@@ -388,49 +388,49 @@ sections:
       - Prevented estimated $500,000 in future losses
       - Implemented new controls based on variance patterns
 
-  - id: "roadmap"
-    title: "What's Next: The Roadmap"
-    content: |
-      ### Version 2.0 (Q1 2025)
+ - id: "roadmap"
+  title: "What's Next: The Roadmap"
+  content: |
+    ### Version 2.0 (Q1 2025)
 
-      #### 🔔 Real-Time Alerts
-      - Get notified the moment variances exceed thresholds
-      - Slack, Email, SMS, WhatsApp notifications
-      - Customizable alert rules
+    #### 🔔 Real-Time Alerts
+    - Get notified the moment variances exceed thresholds
+    - Slack, Email, SMS, WhatsApp notifications
+    - Customizable alert rules
 
-      #### 📊 Interactive Dashboards
-      - Drill-down charts
-      - Trend analysis
-      - Heat maps
-      - Mobile-responsive design
+    #### 📊 Interactive Dashboards
+    - Drill-down charts
+    - Trend analysis
+    - Heat maps
+    - Mobile-responsive design
 
-      #### 🤖 Multi-Model AI Support
-      - Claude integration
-      - Local LLM support (Llama, Mistral)
-      - Custom model fine-tuning
-      - Cost optimization algorithms
+    #### 🤖 Multi-Model AI Support
+    - Claude integration
+    - Local LLM support (Llama, Mistral)
+    - Custom model fine-tuning
+    - Cost optimization algorithms
 
-      ### Version 3.0 (Q2 2025)
+    ### Version 3.0 (Q2 2025)
 
-      #### 🔮 Predictive Analytics
-      - Forecast future variances
-      - Anomaly detection
-      - Seasonal adjustment
-      - Trend extrapolation
+    #### 🔮 Predictive Analytics
+    - Forecast future variances
+    - Anomaly detection
+    - Seasonal adjustment
+    - Trend extrapolation
 
-      #### 🔄 Integration Hub
-      - Power BI connector
-      - Tableau integration
-      - Google Sheets sync
-      - Excel add-in
+    #### 🔄 Integration Hub
+    - Power BI connector
+    - Tableau integration
+    - Google Sheets sync
+    - Excel add-in
 
-      #### 🎯 Industry Templates
-      - Manufacturing specific metrics
-      - Retail KPIs
-      - SaaS metrics
-      - Healthcare compliance
+    #### 🎯 Industry Templates
+    - Manufacturing specific metrics
+    - Retail KPIs
+    - SaaS metrics
+    - Healthcare compliance
 
-      ### Long-Term Vision
+    ### Long-Term Vision
 
       **The goal:** Create an open-source financial intelligence platform that rivals enterprise solutions.
 
