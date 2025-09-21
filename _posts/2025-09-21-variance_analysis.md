@@ -6,14 +6,10 @@ date: 2025-09-21
 author: "Noreli North"
 categories: [AI, ERP]
 ---
-
-sections:
-  - id: "the-problem"
-    title: "The Time Crisis Nobody Talks About"
-    content: |
+    **The Time Crisis Nobody Talks About**
       Let me paint you a picture that's probably painfully familiar.
 
-      It's month-end. Sarah, a financial controller at a mid-sized manufacturing company, sits at her desk with **seventeen Excel tabs** open. Each one comparing this year's numbers to last year's. She's been at this for two days already, and she's maybe 60% done.
+      It's month-end. Sarah, a financial controller at a mid-sized manufacturing company, sits at her desk with **seventeen Excel tabs** open. Each one comparing this  year's numbers to last year's. She's been at this for two days already, and she's maybe 60% done.
 
       Sound familiar?
 
@@ -36,9 +32,7 @@ sections:
 
       **This isn't a tools problem. It's a process problem that's costing businesses valuable time and opportunities.**
 
-  - id: "the-story"
-    title: "The Weekend That Changed Everything"
-    content: |
+    **The Weekend That Changed Everything**
       Last month, after that conversation with Sarah, I couldn't stop thinking about the insanity of it all.
 
       We live in 2024. We have:
@@ -68,9 +62,6 @@ sections:
 
       48 hours and 12 Red Bulls later, the Variance Analysis app was born.
 
- - id: "process-flow"
-  title: "How It Works: The Complete Process Flow"
-  content: |
     ### High-Level Process Overview
     
       ![alt text](/assets/process-flow_variance-analysis.png)    
@@ -110,10 +101,7 @@ sections:
 
       From click to complete report: typically under 2 minutes for a full year comparison.
 
-  - id: "architecture"
-    title: "Building the Solution: Architecture Deep Dive"
-    content: |
-      ### The Three-Layer Architecture
+    **Building the Solution: Architecture Deep Dive**
 
       #### Layer 1: Data Foundation
       The foundation is your existing ERPNext data. No migration, no synchronization, no ETL processes. We query directly from the source:
