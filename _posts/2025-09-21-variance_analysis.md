@@ -30,6 +30,8 @@ sections:
       ❌ Knowledge loss when employees leave
       ❌ Missed insights from data overload
 
+      ![alt text](/assets/security_variance-analysis.png)
+
       I've watched companies miss critical trends because they were buried in spreadsheet row 847. I've seen million-dollar decisions delayed because "the variance report isn't ready yet."
 
       **This isn't a tools problem. It's a process problem that's costing businesses valuable time and opportunities.**
