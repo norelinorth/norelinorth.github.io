@@ -381,7 +381,7 @@ categories: [AI, ERP]
   content: |
     ### Version 2.0 (Q1 2025)
 
-    #### 🔔 Real-Time Alerts
+    **🔔 Real-Time Alerts**
     - Get notified the moment variances exceed thresholds
     - Slack, Email, SMS, WhatsApp notifications
     - Customizable alert rules
