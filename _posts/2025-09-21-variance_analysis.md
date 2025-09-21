@@ -36,7 +36,7 @@ I've watched companies miss critical trends because they were buried in spreadsh
 **The Weekend That Changed Everything**
 Last month, after that conversation with Sarah, I couldn't stop thinking about the insanity of it all.
 
-We live in 2024. We have:
+We live in 2025. We have:
 - ERPNext systems with **all our financial data**
 - Python that can process millions of records in seconds
 - AI that can write better analysis than most humans
