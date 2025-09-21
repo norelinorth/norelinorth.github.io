@@ -19,8 +19,8 @@ And that's not even the worst part.
 
 ### The Hidden Costs of Manual Variance Analysis
 
-❌ 5% error rate (industry average)
-❌ 3-5 day delay in insights
+- ❌ 5% error rate (industry average)
+- ❌ 3-5 day delay in insights
 ❌ Inconsistent methodology
 ❌ No audit trail
 ❌ Knowledge loss when employees leave
