@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "How AI is Revolutionizing Accounting & Finance | A Deep Dive with the AI Assistant"
-description: "This article explores how the AI Assistant is bridging the gap between cutting-edge Artificial Intelligence, robust ERP functionalities, and core business processes, with a special emphasis on its revolutionary impact on Accounting and Finance."
+title: "How I Built an AI-Powered Variance Analysis Tool That's Transforming Financial Reporting"
+description: "Learn how an open-source ERPNext app is revolutionizing variance analysis with AI-powered financial reporting automation."
 date: 2025-09-21
 author: "Noreli North"
 categories: [AI, ERP]
