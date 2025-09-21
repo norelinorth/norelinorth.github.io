@@ -7,37 +7,6 @@ author: "Noreli North"
 categories: [AI, ERP]
 ---
 
----
-title: "How I Built an AI-Powered Variance Analysis Tool That's Transforming Financial Reporting"
-subtitle: "The Open Source ERPNext App That's Revolutionizing How Companies Analyze Financial Data"
-author: "[Your Name]"
-date: "2024-12-20"
-reading_time: "12 minutes"
-tags:
-  - ERPNext
-  - Variance Analysis
-  - Financial Automation
-  - Open Source
-  - AI
-  - Python
-  - Business Intelligence
-  - FinTech
-
-metadata:
-  description: "Learn how an open-source ERPNext app is revolutionizing variance analysis with AI-powered financial reporting automation."
-  keywords:
-    - variance analysis
-    - ERPNext
-    - financial automation
-    - AI financial analysis
-    - open source ERP
-    - Python automation
-  og_title: "AI-Powered Variance Analysis Tool for ERPNext"
-  og_description: "The open source ERPNext app that automates variance analysis with AI, reducing 20+ hours of work to just 2 minutes."
-  og_image: "https://yourdomain.com/variance-analysis-hero.jpg"
-  og_url: "https://yourdomain.com/variance-analysis-blog"
-  twitter_card: "summary_large_image"
-
 sections:
   - id: "the-problem"
     title: "The Time Crisis Nobody Talks About"
