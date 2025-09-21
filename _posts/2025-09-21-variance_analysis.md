@@ -70,7 +70,7 @@ sections:
     title: "How It Works: The Complete Process Flow"
     content: |
       ### High-Level Process Overview
-      ![alt text](/assets/process-flow_variance_analysis.png)    
+      ![alt text](/assets/process-flow_variance-analysis.png)    
 
       The system follows a streamlined workflow that transforms raw GL data into actionable insights:
 
