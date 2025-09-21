@@ -154,7 +154,6 @@ This is where we calculate variances and apply business logic:
       ```
 
 #### Layer 3: Intelligence Layer
-### Layer 3: Intelligence Layer
 This is where the magic happens. We craft specific, contextual prompts for meaningful analysis.
 
 ### The Problem with Most AI Financial Tools
