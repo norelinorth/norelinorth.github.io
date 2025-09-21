@@ -256,7 +256,6 @@ sections:
       ✅ **Knowledge retention** - Process doesn't leave with employees
       ✅ **Scalability** - Handles growth without additional resources
 
-      ###Case Study: Manufacturing Company
       ### Case Study: Manufacturing Company
 
       **Company Profile:**
