@@ -7,24 +7,24 @@ author: "Noreli North"
 categories: [AI, ERP]
 ---
 **The Time Crisis Nobody Talks About**
-      Let me paint you a picture that's probably painfully familiar.
+Let me paint you a picture that's probably painfully familiar.
 
-      It's month-end. Sarah, a financial controller at a mid-sized manufacturing company, sits at her desk with **seventeen Excel tabs** open. Each one comparing this  year's numbers to last year's. She's been at this for two days already, and she's maybe 60% done.
+It's month-end. Sarah, a financial controller at a mid-sized manufacturing company, sits at her desk with **seventeen Excel tabs** open. Each one comparing this  year's numbers to last year's. She's been at this for two days already, and she's maybe 60% done.
 
-      Sound familiar?
+Sound familiar?
 
-      Here's the brutal truth: The average financial analyst spends **20-30 hours every month** on variance analysis. That's almost a full work week dedicated to comparing numbers, calculating differences, and writing explanations.
+Here's the brutal truth: The average financial analyst spends **20-30 hours every month** on variance analysis. That's almost a full work week dedicated to comparing numbers, calculating differences, and writing explanations.
 
-      And that's not even the worst part.
+And that's not even the worst part.
 
-      ### The Hidden Costs of Manual Variance Analysis
+### The Hidden Costs of Manual Variance Analysis
 
-      ❌ 5% error rate (industry average)
-      ❌ 3-5 day delay in insights
-      ❌ Inconsistent methodology
-      ❌ No audit trail
-      ❌ Knowledge loss when employees leave
-      ❌ Missed insights from data overload
+❌ 5% error rate (industry average)
+❌ 3-5 day delay in insights
+❌ Inconsistent methodology
+❌ No audit trail
+❌ Knowledge loss when employees leave
+❌ Missed insights from data overload
 
       ![alt text](/assets/security_variance-analysis.png)
 
