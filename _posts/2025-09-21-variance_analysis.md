@@ -412,7 +412,7 @@ categories: [AI, ERP]
     - Google Sheets sync
     - Excel add-in
 
-    #### 🎯 Industry Templates
+    ### 🎯 Industry Templates
     - Manufacturing specific metrics
     - Retail KPIs
     - SaaS metrics
