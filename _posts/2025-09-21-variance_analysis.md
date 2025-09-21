@@ -68,10 +68,10 @@ sections:
 
       48 hours and 12 Red Bulls later, the Variance Analysis app was born.
 
-  - id: "process-flow"
-    title: "How It Works: The Complete Process Flow"
-    content: |
-      ### High-Level Process Overview
+ - id: "process-flow"
+  title: "How It Works: The Complete Process Flow"
+  content: |
+    ### High-Level Process Overview
     
       ![alt text](/assets/process-flow_variance-analysis.png)    
 
