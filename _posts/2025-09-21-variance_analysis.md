@@ -218,6 +218,8 @@ sections:
     content: |
       ### Time Savings Analysis
 
+      ![alt text](/assets/pipeline_variance-analysis.png) 
+
       | Metric | Before (Manual) | After (Automated) | Improvement |
       |--------|----------------|-------------------|-------------|
       | Time to Complete | 24 hours | 1.5 hours | 93.75% reduction |
