@@ -231,12 +231,12 @@ Notice how each insight:
 
 Beyond the time savings, companies report:
 
-✅ **Faster decision-making** - Variances identified in real-time
-✅ **Better insights** - AI catches patterns humans miss
-✅ **Consistency** - Same methodology every time
-✅ **Audit trail** - Complete history of all analyses
-✅ **Knowledge retention** - Process doesn't leave with employees
-✅ **Scalability** - Handles growth without additional resources
+- ✅ **Faster decision-making** - Variances identified in real-time
+- ✅ **Better insights** - AI catches patterns humans miss
+- ✅ **Consistency** - Same methodology every time
+- ✅ **Audit trail** - Complete history of all analyses
+- ✅ **Knowledge retention** - Process doesn't leave with employees
+- ✅ **Scalability** - Handles growth without additional resources
 
 ### Case Study: Manufacturing Company
 
