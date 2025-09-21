@@ -260,10 +260,10 @@ Beyond the time savings, companies report:
 
 ### Prerequisites
 
-✅ ERPNext v14 or v15
-✅ Python 3.8+
-✅ Administrative access to your ERPNext instance
-✅ (Optional) OpenAI API key for AI features
+- ✅ ERPNext v14 or v15
+- ✅ Python 3.8+
+- ✅ Administrative access to your ERPNext instance
+- ✅ (Optional) OpenAI API key for AI features
 
 ### Step 1: Installation (3 minutes)
 
@@ -364,7 +364,7 @@ Triggered internal audit that discovered employee theft ring.
 - Prevented estimated $500,000 in future losses
 - Implemented new controls based on variance patterns
 
-    ### Version 2.0 (Q1 2025)
+    **Version 2.0 (Q1 2025)**
 
     **🔔 Real-Time Alerts**
     - Get notified the moment variances exceed thresholds
