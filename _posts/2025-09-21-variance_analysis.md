@@ -299,7 +299,7 @@ No configuration needed! It works out of the box with your existing GL data.
 ![alt text](/assets/AI Integration Flow_variance analysis.png) 
 
 1. Navigate to **AI Provider** in ERPNext
-2. Enter your OpenAI API key
+2. Enter your AI API key
 3. Select your preferred model (gpt-4o-mini recommended for cost efficiency)
 4. Save
 
