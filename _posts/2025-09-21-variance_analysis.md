@@ -12,6 +12,8 @@ Let me paint you a picture that's probably painfully familiar.
 
 It's month-end. Sarah, a financial controller at a mid-sized manufacturing company, sits at her desk with **seventeen Excel tabs** open. Each one comparing this  year's numbers to last year's. She's been at this for two days already, and she's maybe 60% done.
 
+---
+
 Sound familiar?
 
 Here's the brutal truth: The average financial analyst spends **20-30 hours every month** on variance analysis. That's almost a full work week dedicated to comparing numbers, calculating differences, and writing explanations.
