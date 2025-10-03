@@ -6,7 +6,7 @@ date: 2025-10-03
 author: "Noreli North"
 categories: [Automation, ERP]
 ---
-*Key Results**:
+**Key Results**:
 - ⚡ 14-second reconciliation cycle (vs hours manually)
 - ✅ 100% standards compliant (no core modifications)
 - 🤖 AI-ready architecture (LangChain integration coming Q1 2026)
