@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "222Building AI-Ready Intercompany Elimination in ERPNext: From Manual Reconciliation to Autonomous IC Consolidation"
+title: "Building AI-Ready Intercompany Elimination in ERPNext: From Manual Reconciliation to Autonomous IC Consolidation"
 description: "Built a production-ready Frappe app that automates intercompany elimination in ERPNext—matching AR/AP entries across legal entities, creating elimination journal entries, and laying the foundation for AI-powered autonomous consolidation."
 date: 2025-10-03
 author: "Noreli North"
