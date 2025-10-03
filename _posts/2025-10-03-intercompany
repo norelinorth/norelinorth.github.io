@@ -13,8 +13,6 @@ categories: [Automation, ERP]
 - 📊 Real database data (standard ERPNext tables)
 - 🔒 Production-ready (professional audit passed)
 
----
-
 ## The Problem: Consolidation Accounting in Multi-Company ERP
 
 If you've ever managed a corporate group with multiple legal entities, you know the pain of intercompany reconciliation. It's one of those accounting challenges that has plagued ERP implementations for decades.
