@@ -33,7 +33,7 @@ Sales Invoice: ACC-SINV-2025-00010
 
 **In the subsidiary's books**:
 ```
-Purchase Invoice: ACC-PINV-2025-00010
+Purchase Invoice: ACC-PINV-2025-00011
   Account: 2110 - Creditors (Accounts Payable)
   Party: Noreli North Supplier (internal supplier)
   Credit: $500.00
