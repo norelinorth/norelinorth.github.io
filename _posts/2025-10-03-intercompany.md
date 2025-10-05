@@ -960,7 +960,7 @@ def find_matching_subset(available_entries, target_amount, tolerance, max_size=3
 
 ### Community Resources
 
-- **YouTube**: [Video walkthrough](https://youtube.com)
+- **YouTube**: [Video walkthrough](https://www.youtube.com/watch?v=fuAlB-RWv3Y)
 
 ---
 
