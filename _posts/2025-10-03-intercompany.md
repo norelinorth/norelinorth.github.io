@@ -9,7 +9,7 @@ categories: [Automation, ERP]
 **Key Results**:
 - ⚡ 14-second reconciliation cycle (vs hours manually)
 - ✅ 100% standards compliant (no core modifications)
-- 🤖 AI-ready architecture (LangChain integration coming Q1 2026)
+- 🤖 AI-ready architecture (LangChain integration coming soon)
 - 📊 Real database data (standard ERPNext tables)
 - 🔒 Production-ready (professional audit passed)
 
