@@ -563,7 +563,7 @@ frappe.call("intercompany.intercompany.api.create_elimination",
 
 **Journal Entry Created** (automatically):
 ```
-JV-2025-00005
+JV-2025-00007
   Company: Noreli North (Elimination always in parent)
   Posting Date: 2025-10-02
   Entry Type: Journal Entry
