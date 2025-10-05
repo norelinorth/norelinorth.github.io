@@ -481,7 +481,7 @@ GL Entry: GL-2025-10-02-00567
 Subsidiary's AP:
 ```
 GL Entry: GL-2025-10-02-00568
-  Voucher: ACC-PINV-2025-00010
+  Voucher: ACC-PINV-2025-00011
   Company: Noreli North (Demo)
   Account: 2110 - Creditors - NND
   Party: Noreli North Supplier
@@ -495,10 +495,10 @@ GL Entry: GL-2025-10-02-00568
 2. Click IC Match Group list
 3. Click "Run Matching" button
 4. Fill dialog:
-   - Company: Noreli North (Demo)
-   - Counterparty: Noreli North
-   - From Date: 2025-10-01
-   - To Date: 2025-10-02
+   - Company:
+   - Counterparty:
+   - From Date: 2025-01-01
+   - To Date: 2025-10-04
    - Tolerance: 0.01
 
 **Via API**:
@@ -506,8 +506,8 @@ GL Entry: GL-2025-10-02-00568
 frappe.call("intercompany.intercompany.api.run_matching",
     company="Noreli North (Demo)",
     counterparty_company="Noreli North",
-    from_date="2025-10-01",
-    to_date="2025-10-02",
+    from_date="2025-01-01",
+    to_date="2025-10-04",
     tolerance=0.01
 )
 ```
@@ -531,14 +531,14 @@ frappe.call("intercompany.intercompany.api.run_matching",
 IC-MATCH-2025-00019
   Company: Noreli North (Demo)
   Counterparty: Noreli North
-  Match Date: 2025-10-02
+  Match Date: 2025-10-04
   Total Amount: 500.00
   Difference: 0.00
   Status: Matched
 
   Lines:
     Line 1:
-      Voucher: ACC-PINV-2025-00010
+      Voucher: ACC-PINV-2025-00011
       Company: Noreli North (Demo)
       Account: 2110 - Creditors
       Credit: 500.00
@@ -591,8 +591,8 @@ JV-2025-00005
 **Filters**:
 - Company: Noreli North (Demo)
 - Counterparty: Noreli North
-- From Date: 2025-10-01
-- To Date: 2025-10-02
+- From Date: 2025-01-01
+- To Date: 2025-10-04
 
 **Results**:
 ```
@@ -613,8 +613,6 @@ Status: Fully Matched ✓
 ---
 
 ## Professional Standards Audit
-
-Ran comprehensive audit. Full report: [AUDIT_REPORT.md](../apps/intercompany/AUDIT_REPORT.md)
 
 ### Checklist Results
 
@@ -643,7 +641,6 @@ Ran comprehensive audit. Full report: [AUDIT_REPORT.md](../apps/intercompany/AUD
 **Test Environment**:
 - ERPNext 15.81.0 / Frappe 15.84.0
 - PostgreSQL 14 / 500 MB database
-- macOS M1 Pro / 16 GB RAM
 
 **Scenario 1: Simple Match** (2 invoices, perfect match)
 - Find GL entries: 0.3s
@@ -706,7 +703,7 @@ I created real companies (Noreli North, Noreli North Demo), real customers (Palm
 
 **Run professional standards audit before calling it "done".**
 
-Found 7 hardcoded values I'd missed. Found inconsistent error handling. Found SQL queries that could be optimized. The audit report became documentation for:
+The audit report became documentation for:
 - Future contributors
 - AI training data
 - Security review
@@ -716,7 +713,7 @@ Found 7 hardcoded values I'd missed. Found inconsistent error handling. Found SQ
 
 **Separate data, logic, API, and AI concerns.**
 
-When I eventually add LangChain integration, I won't need to refactor the business logic. The APIs are already there. The data layer is standard. I just add Layer 4 on top.
+When I add LangChain integration, I won't need to refactor the business logic. The APIs are already there. The data layer is standard. I just add Layer 4 on top.
 
 ---
 
@@ -937,8 +934,6 @@ def find_matching_subset(available_entries, target_amount, tolerance, max_size=3
 
 ### Get Involved
 
-**GitHub Repository**: [github.com/[your-username]/intercompany](https://github.com)
-
 **Contributions Welcome**:
 - 🐛 Bug reports
 - ✨ Feature requests
@@ -965,10 +960,7 @@ def find_matching_subset(available_entries, target_amount, tolerance, max_size=3
 
 ### Community Resources
 
-- **ERPNext Forum**: [Discussion thread](https://discuss.erpnext.com)
 - **YouTube**: [Video walkthrough](https://youtube.com)
-- **Blog**: Regular updates on AI integration progress
-- **Discord**: Join the #intercompany channel
 
 ---
 
@@ -985,7 +977,7 @@ The key insights:
 
 The result:
 - ⚡ **14 seconds** (vs hours)
-- 🤖 **AI-ready** (LangChain in Q1 2026)
+- 🤖 **AI-ready** (LangChain coming soon)
 - 🔒 **Production-grade** (100% standards compliant)
 - 📊 **Real database** (standard ERPNext tables)
 - 🌍 **Open source** (MIT license)
