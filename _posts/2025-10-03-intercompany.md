@@ -335,7 +335,7 @@ if tolerance == 0:
     frappe.throw(_("Please configure Matching Tolerance in Intercompany Settings"))
 ```
 
-Found and eliminated **7 hardcoded values** across the codebase. See [CHANGELOG.md](../apps/intercompany/CHANGELOG.md) for details.
+Found and eliminated **7 hardcoded values** across the codebase.
 
 #### 2. Standard ERPNext Patterns Only
 
@@ -377,12 +377,12 @@ if not frappe.has_permission("IC Match Group", "create"):
 ```
 
 **Role Matrix**:
-| Action | Accounts Manager | Accounts User | Read Only |
-|--------|-----------------|---------------|-----------|
-| Run Matching | ✅ | ❌ | ❌ |
-| Submit Match Group | ✅ | ❌ | ❌ |
-| Create Elimination | ✅ | ❌ | ❌ |
-| View Reports | ✅ | ✅ | ✅ |
+| Action             | Accounts Manager | Accounts User | Read Only |
+|--------------------|-----------------|---------------|------------|
+| Run Matching       | ✅              | ❌            | ❌        |
+| Submit Match Group | ✅              | ❌            | ❌        |
+| Create Elimination | ✅              | ❌            | ❌        |
+| View Reports       | ✅              | ✅            | ✅        |
 
 #### 4. Professional Error Handling
 
