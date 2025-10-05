@@ -174,8 +174,8 @@ AND ge.posting_date >= '2025-10-01'
 
 **Results**:
 ```
-name                          | voucher_no          | amount
-------------------------------|---------------------|--------
+name                         | voucher_no          | amount
+-----------------------------|---------------------|--------
 GL-2025-10-01-00234          | ACC-SINV-2025-00007 | 400.00
 GL-2025-10-02-00567          | ACC-SINV-2025-00010 | 500.00
 ```
@@ -253,7 +253,7 @@ def run_matching(company, counterparty_company, from_date, to_date, tolerance=No
 
 An AI agent can **call this API directly** without understanding the matching algorithm internals.
 
-### Layer 4: AI Integration (Coming Q1 2026)
+### Layer 4: AI Integration (Coming soon)
 
 **The Vision**: AI agent handles monthly reconciliation autonomously.
 
