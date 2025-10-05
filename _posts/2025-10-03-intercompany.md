@@ -376,14 +376,6 @@ if not frappe.has_permission("IC Match Group", "create"):
     frappe.throw(_("Insufficient permissions"))
 ```
 
-**Role Matrix**:
-| Action             | Accounts Manager | Accounts User | Read Only |
-|--------------------|-----------------|---------------|------------|
-| Run Matching       | ✅              | ❌            | ❌        |
-| Submit Match Group | ✅              | ❌            | ❌        |
-| Create Elimination | ✅              | ❌            | ❌        |
-| View Reports       | ✅              | ✅            | ✅        |
-
 #### 4. Professional Error Handling
 
 ```python
