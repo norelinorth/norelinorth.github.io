@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-We built an AI Agent Framework for ERPNext that automates complex finance workflows using LangChain and LangGraph. The Pre-Close Checklist workflow reduces 2 hours of manual work to 15 seconds while maintaining 100% compliance with Frappe/ERPNext standards. It's production-ready, fully extensible, and available as an open-source Frappe app.
+I built an AI Agent Framework for ERPNext that automates complex finance workflows using LangChain and LangGraph. The Pre-Close Checklist workflow reduces days of manual work to a few hours while maintaining 100% compliance with Frappe/ERPNext standards. It's production-ready, fully and extensible.
 
 **Key Results:**
 - ⚡ **15 seconds** execution time (vs 2 hours manual)
