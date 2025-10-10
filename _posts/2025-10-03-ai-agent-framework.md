@@ -1,6 +1,6 @@
 # Automating ERPNext Finance Workflows with AI Agents: A Deep Dive into the AI Agent Framework
 
-*How we reduced month-end pre-close validation from 2 hours to 15 seconds using LangChain and LangGraph*
+*How we reduced month-end pre-close validation from days to hours using LangChain and LangGraph*
 
 ---
 
