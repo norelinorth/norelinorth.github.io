@@ -191,9 +191,9 @@ The AI Agent Framework sits on top of ERPNext and provides three key components:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      ERPNext / Frappe                        │
+│                      ERPNext / Frappe                       │
 ├─────────────────────────────────────────────────────────────┤
-│                   AI Agent Framework App                     │
+│                   AI Agent Framework App                    │
 │  ┌────────────────────────────────────────────────────────┐ │
 │  │  AI Action Types (Workflows)                           │ │
 │  │  • Pre-Close Checklist                                 │ │
@@ -216,8 +216,8 @@ The AI Agent Framework sits on top of ERPNext and provides three key components:
 │  │  • And 15+ more...                                     │ │
 │  └────────────────────────────────────────────────────────┘ │
 ├─────────────────────────────────────────────────────────────┤
-│                    LLM Providers                             │
-│         OpenAI │ Anthropic │ Custom Models                   │
+│                    LLM Providers                            │
+│         OpenAI │ Anthropic │ Custom Models                  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -302,31 +302,31 @@ These are specialized Python functions that integrate with ERPNext data. Each to
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  Finance Tool Architecture                                   │
+│  Finance Tool Architecture                                  │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  Input (Pydantic Model)                                      │
-│  ↓                                                           │
-│  Validation (automatic)                                      │
-│  ↓                                                           │
+│                                                             │
+│  Input (Pydantic Model)                                     │
+│  ↓                                                          │
+│  Validation (automatic)                                     │
+│  ↓                                                          │
 │  Permission Check (frappe.has_permission)                   │
-│  ↓                                                           │
+│  ↓                                                          │
 │  Database Query (frappe.get_all / frappe.db.sql)            │
-│  ↓                                                           │
+│  ↓                                                          │
 │  Business Logic (Python + Frappe utilities)                 │
-│  ↓                                                           │
+│  ↓                                                          │
 │  Error Handling (try/except + frappe.log_error)             │
-│  ↓                                                           │
-│  Output (Structured JSON)                                    │
-│                                                              │
-│  Features:                                                   │
+│  ↓                                                          │
+│  Output (Structured JSON)                                   │
+│                                                             │
+│  Features:                                                  │
 │  • Type-safe inputs (Pydantic)                              │
 │  • Permission checks (Frappe)                               │
 │  • SQL injection prevention (parameterized queries)         │
 │  • Error logging (frappe.log_error)                         │
 │  • Consistent output format                                 │
 │  • Translatable messages (_())                              │
-│                                                              │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -391,20 +391,20 @@ Before we dive deep into the Pre-Close Checklist, let's visualize the difference
 ┌─────────────────────────────────────────────────────────────┐
 │  Traditional RPA Script (Brittle)                           │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
+│                                                             │
 │  1. Query database for invoices                             │
-│     ↓                                                        │
-│  2. Count by status                                          │
-│     ↓                                                        │
+│     ↓                                                       │
+│  2. Count by status                                         │
+│     ↓                                                       │
 │  3. IF count == 0:                                          │
 │        return "No invoices"                                 │
-│     ELSE:                                                    │
+│     ELSE:                                                   │
 │        return "Found X invoices"                            │
-│     ↓                                                        │
+│     ↓                                                       │
 │  4. Repeat for payments, AR, AP...                          │
-│     ↓                                                        │
-│  5. Print results                                            │
-│                                                              │
+│     ↓                                                       │
+│  5. Print results                                           │
+│                                                             │
 │  ❌ No reasoning                                            │
 │  ❌ No context                                              │
 │  ❌ No adaptation                                           │
@@ -416,28 +416,28 @@ Before we dive deep into the Pre-Close Checklist, let's visualize the difference
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  AI Agent (Intelligent)                                      │
+│  AI Agent (Intelligent)                                     │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
+│                                                             │
 │  System Prompt: "You are a finance assistant. Check         │
-│                  invoice status and provide insights."       │
-│     ↓                                                        │
+│                  invoice status and provide insights."      │
+│     ↓                                                       │
 │  Agent decides: "I should check invoices first"             │
-│     ↓                                                        │
+│     ↓                                                       │
 │  Calls Tool: CheckInvoiceStatus(company, dates)             │
-│     ↓                                                        │
-│  Tool returns: {submitted: 5, draft: 2, details: [...]}    │
-│     ↓                                                        │
+│     ↓                                                       │
+│  Tool returns: {submitted: 5, draft: 2, details: [...]}     │
+│     ↓                                                       │
 │  Agent reasons: "2 draft invoices found. Let me identify    │
 │                  which ones and their amounts."             │
-│     ↓                                                        │
+│     ↓                                                       │
 │  Agent generates: "[!] 2 draft invoices require attention:  │
-│                    - SINV-2025-00123 ($1,500)              │
-│                    - SINV-2025-00124 ($2,300)              │
+│                    - SINV-2025-00123 ($1,500)               │
+│                    - SINV-2025-00124 ($2,300)               │
 │                    Action: Submit before close"             │
-│     ↓                                                        │
+│     ↓                                                       │
 │  Agent decides: "Now check payments..."                     │
-│                                                              │
+│                                                             │
 │  ✅ Reasoning about data                                    │
 │  ✅ Contextual insights                                     │
 │  ✅ Adapts to edge cases                                    │
