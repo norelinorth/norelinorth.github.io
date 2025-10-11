@@ -1,3 +1,4 @@
+---
 layout: post
 title: "Automating ERPNext Finance Workflows with AI Agents: From 2-Hour Month-End Close to 15-Second Execution"
 description: "Built a production-ready AI Agent Framework for ERPNext using LangChain and LangGraph—automating pre-close validation, month-end close, and intercompany reconciliation with intelligent reasoning, complete audit trails, and 100% Frappe/ERPNext standards compliance."
@@ -5,7 +6,7 @@ date: 2025-10-10
 author: "Noreli North"
 categories: [AI, Automation, ERP, Finance]
 tags: [ERPNext, LangChain, LangGraph, AI Agents, Finance Automation, Month-End Close, Frappe Framework, OpenAI, Anthropic]
-
+---
 # Automating ERPNext Finance Workflows with AI Agents: A Deep Dive into the AI Agent Framework
 
 *How we reduced month-end pre-close validation from 2 hours to 15 seconds using LangChain and LangGraph*
