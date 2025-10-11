@@ -41,6 +41,22 @@ If you've ever worked in finance, you know the pain of month-end close. Every si
 
 Here's what this looks like in practice:
 
+```
+TRADITIONAL MONTH-END CLOSE PROCESS
+┌─────────────────────────────────────────────────────────────┐
+│  Step 1: Check Invoice Status        │  Manual │  20 mins  │
+│  Step 2: Payment Reconciliation       │  Manual │  30 mins  │
+│  Step 3: Review Outstanding Items     │  Manual │  25 mins  │
+│  Step 4: Check Pending Approvals      │  Manual │  15 mins  │
+│  Step 5: Compile Report               │  Manual │  30 mins  │
+├─────────────────────────────────────────────────────────────┤
+│  TOTAL TIME: 2 hours per company per month                  │
+│  ERROR RATE: 15-20% (items missed or incorrect)             │
+│  AVAILABILITY: Only during business hours                    │
+└─────────────────────────────────────────────────────────────┘
+```
+**Detailed breakdown:**
+
 | Step | Manual Process | Time Required |
 |------|----------------|---------------|
 | **Invoice Status** | Log into ERPNext, navigate to Sales Invoice list, filter by date, count statuses, repeat for Purchase Invoices | 20 minutes |
