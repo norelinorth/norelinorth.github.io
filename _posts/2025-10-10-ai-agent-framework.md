@@ -471,11 +471,11 @@ Here's the complete end-to-end process showing how the AI agent executes the Pre
 PRE-CLOSE CHECKLIST: AI AGENT WORKFLOW
 ┌────────────────────────────────────────────────────────────────┐
 │ USER TRIGGERS                                                  │
-│ "Run Pre-Close Checklist for Noreli North - October 2025"     │
+│ "Run Pre-Close Checklist for Noreli North - October 2025"      │
 └──────────────────────┬─────────────────────────────────────────┘
                        ↓
 ┌────────────────────────────────────────────────────────────────┐
-│ STEP 1: AI Agent Receives Instructions                        │
+│ STEP 1: AI Agent Receives Instructions                         │
 │ ┌────────────────────────────────────────────────────────────┐ │
 │ │ System Prompt:                                             │ │
 │ │ "You are a finance assistant. Check all critical items     │ │
@@ -484,95 +484,95 @@ PRE-CLOSE CHECKLIST: AI AGENT WORKFLOW
 └──────────────────────┬─────────────────────────────────────────┘
                        ↓
 ┌────────────────────────────────────────────────────────────────┐
-│ STEP 2: Check Invoice Status                                  │
+│ STEP 2: Check Invoice Status                                   │
 │ ┌────────────────────────────────────────────────────────────┐ │
 │ │ Tool: CheckInvoiceStatus(company, from_date, to_date)      │ │
 │ │                                                            │ │
 │ │ Queries:                                                   │ │
-│ │ - All sales invoices in period                            │ │
-│ │ - All purchase invoices in period                         │ │
-│ │ - Filter by status (Draft, Submitted, Cancelled)          │ │
+│ │ - All sales invoices in period                             │ │
+│ │ - All purchase invoices in period                          │ │
+│ │ - Filter by status (Draft, Submitted, Cancelled)           │ │
 │ │                                                            │ │
 │ │ Returns:                                                   │ │
 │ │ {                                                          │ │
-│ │   "total": 7, "submitted": 7, "draft": 0,                 │ │
-│ │   "ready_for_close": true                                 │ │
+│ │   "total": 7, "submitted": 7, "draft": 0,                  │ │
+│ │   "ready_for_close": true                                  │ │
 │ │ }                                                          │ │
 │ └────────────────────────────────────────────────────────────┘ │
-│ AI Reasoning: "✓ All invoices submitted - proceed to next"    │
+│ AI Reasoning: "✓ All invoices submitted - proceed to next"     │
 └──────────────────────┬─────────────────────────────────────────┘
                        ↓
 ┌────────────────────────────────────────────────────────────────┐
-│ STEP 3: Check Payment Reconciliation                          │
+│ STEP 3: Check Payment Reconciliation                           │
 │ ┌────────────────────────────────────────────────────────────┐ │
 │ │ Tool: CheckPaymentReconciliation(company, period)          │ │
 │ │                                                            │ │
 │ │ Queries:                                                   │ │
-│ │ - All payment entries in period                           │ │
-│ │ - Check reconciliation status                             │ │
-│ │ - Calculate reconciliation percentage                     │ │
+│ │ - All payment entries in period                            │ │
+│ │ - Check reconciliation status                              │ │
+│ │ - Calculate reconciliation percentage                      │ │
 │ │                                                            │ │
 │ │ Returns:                                                   │ │
 │ │ {                                                          │ │
-│ │   "total_payments": 0, "reconciled": 0,                   │ │
-│ │   "reconciliation_percentage": 100,                       │ │
-│ │   "ready_for_close": true                                 │ │
+│ │   "total_payments": 0, "reconciled": 0,                    │ │
+│ │   "reconciliation_percentage": 100,                        │ │
+│ │   "ready_for_close": true                                  │ │
 │ │ }                                                          │ │
 │ └────────────────────────────────────────────────────────────┘ │
-│ AI Reasoning: "✓ All payments reconciled - proceed"           │
+│ AI Reasoning: "✓ All payments reconciled - proceed"            │
 └──────────────────────┬─────────────────────────────────────────┘
                        ↓
 ┌────────────────────────────────────────────────────────────────┐
-│ STEP 4: Review Outstanding Items                              │
+│ STEP 4: Review Outstanding Items                               │
 │ ┌────────────────────────────────────────────────────────────┐ │
 │ │ Tool: CheckOutstandingItems(company, as_of_date)           │ │
 │ │                                                            │ │
 │ │ Queries:                                                   │ │
-│ │ - Outstanding receivables (AR)                            │ │
-│ │ - Outstanding payables (AP)                               │ │
-│ │ - Overdue amounts and invoices                            │ │
+│ │ - Outstanding receivables (AR)                             │ │
+│ │ - Outstanding payables (AP)                                │ │
+│ │ - Overdue amounts and invoices                             │ │
 │ │                                                            │ │
 │ │ Returns:                                                   │ │
 │ │ {                                                          │ │
-│ │   "receivables": {"total": 2700, "overdue": 2700},        │ │
-│ │   "payables": {"total": 700, "overdue": 700},             │ │
-│ │   "net_position": 2000                                    │ │
+│ │   "receivables": {"total": 2700, "overdue": 2700},         │ │
+│ │   "payables": {"total": 700, "overdue": 700},              │ │
+│ │   "net_position": 2000                                     │ │
 │ │ }                                                          │ │
 │ └────────────────────────────────────────────────────────────┘ │
-│ AI Reasoning: "! Found $2,700 overdue receivables - flag"     │
+│ AI Reasoning: "! Found $2,700 overdue receivables - flag"      │
 └──────────────────────┬─────────────────────────────────────────┘
                        ↓
 ┌────────────────────────────────────────────────────────────────┐
-│ STEP 5: Check Pending Approvals                               │
+│ STEP 5: Check Pending Approvals                                │
 │ ┌────────────────────────────────────────────────────────────┐ │
 │ │ Tool: CheckPendingApprovals(company, period)               │ │
 │ │                                                            │ │
 │ │ Queries:                                                   │ │
-│ │ - All documents requiring approval                        │ │
-│ │ - Check workflow states                                   │ │
+│ │ - All documents requiring approval                         │ │
+│ │ - Check workflow states                                    │ │
 │ │                                                            │ │
 │ │ Returns:                                                   │ │
 │ │ {                                                          │ │
-│ │   "total_pending": 0,                                     │ │
-│ │   "ready_for_close": true                                 │ │
+│ │   "total_pending": 0,                                      │ │
+│ │   "ready_for_close": true                                  │ │
 │ │ }                                                          │ │
 │ └────────────────────────────────────────────────────────────┘ │
-│ AI Reasoning: "✓ No pending approvals - good to close"        │
+│ AI Reasoning: "✓ No pending approvals - good to close"         │
 └──────────────────────┬─────────────────────────────────────────┘
                        ↓
 ┌────────────────────────────────────────────────────────────────┐
-│ STEP 6: AI Generates Comprehensive Report                     │
+│ STEP 6: AI Generates Comprehensive Report                      │
 │ ┌────────────────────────────────────────────────────────────┐ │
-│ │ AI synthesizes all results into actionable report:        │ │
+│ │ AI synthesizes all results into actionable report:         │ │
 │ │                                                            │ │
-│ │ [✓] All 7 invoices submitted                              │ │
-│ │ [✓] All payments reconciled                               │ │
-│ │ [!] Outstanding items: $2,700 AR, $700 AP                 │ │
-│ │ [✓] No pending approvals                                  │ │
+│ │ [✓] All 7 invoices submitted                               │ │
+│ │ [✓] All payments reconciled                                │ │
+│ │ [!] Outstanding items: $2,700 AR, $700 AP                  │ │
+│ │ [✓] No pending approvals                                   │ │
 │ │                                                            │ │
-│ │ Overall: READY for close                                  │ │
-│ │ Action Required: Follow up on overdue receivables         │ │
-│ │ Priority: High - Palmer Productions Ltd. ($2,700)         │ │
+│ │ Overall: READY for close                                   │ │
+│ │ Action Required: Follow up on overdue receivables          │ │
+│ │ Priority: High - Palmer Productions Ltd. ($2,700)          │ │
 │ └────────────────────────────────────────────────────────────┘ │
 └────────────────────────────────────────────────────────────────┘
 
