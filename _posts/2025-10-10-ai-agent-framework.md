@@ -23,7 +23,7 @@ tags: [ERPNext, LangChain, LangGraph, AI Agents, Finance Automation, Month-End C
 
 We built an AI Agent Framework for ERPNext that automates complex finance workflows using LangChain and LangGraph. The Pre-Close Checklist workflow reduces 2 hours of manual work to 15 seconds while maintaining 100% compliance with Frappe/ERPNext standards. It's production-ready, fully extensible, and available as an open-source Frappe app.
 
-[GitHub Repository](#) | [Video Tutorial](#) | [Documentation](#)
+[GitHub Repository](#) | [Video Tutorial](https://www.youtube.com/watch?v=RQvpHSMtgJA) | [Documentation](#)
 
 ---
 
@@ -44,7 +44,7 @@ Here's what this looks like in practice:
 ```
 TRADITIONAL MONTH-END CLOSE PROCESS
 ┌─────────────────────────────────────────────────────────────┐
-│  Step 1: Check Invoice Status        │  Manual │  20 mins   │
+│  Step 1: Check Invoice Status         │  Manual │  20 mins  │
 │  Step 2: Payment Reconciliation       │  Manual │  30 mins  │
 │  Step 3: Review Outstanding Items     │  Manual │  25 mins  │
 │  Step 4: Check Pending Approvals      │  Manual │  15 mins  │
