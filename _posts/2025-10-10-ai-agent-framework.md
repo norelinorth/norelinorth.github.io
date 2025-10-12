@@ -23,7 +23,7 @@ tags: [ERPNext, LangChain, LangGraph, AI Agents, Finance Automation, Month-End C
 
 We built an AI Agent Framework for ERPNext that automates complex finance workflows using LangChain and LangGraph. The Pre-Close Checklist workflow reduces 2 hours of manual work to 15 seconds while maintaining 100% compliance with Frappe/ERPNext standards. It's production-ready, fully extensible, and available as an open-source Frappe app.
 
-[GitHub Repository](#) | [Video Tutorial](https://www.youtube.com/watch?v=RQvpHSMtgJA) | [Documentation](#)
+[Video Tutorial](https://www.youtube.com/watch?v=RQvpHSMtgJA) | [Documentation](https://norelinorth.github.io/ai/automation/erp/finance/2025/10/10/ai-agent-framework.html)
 
 ---
 
@@ -776,36 +776,36 @@ The **AI Action Log** is a standard ERPNext DocType that captures every workflow
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  AI Action Log (DocType)                                     │
+│  AI Action Log (DocType)                                    │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  Header Fields:                                              │
-│  • Name: AI-ACT-2025-00224 (auto-generated)                │
+│                                                             │
+│  Header Fields:                                             │
+│  • Name: AI-ACT-2025-00224 (auto-generated)                 │
 │  • Workflow Type: Pre-Close Checklist                       │
 │  • Company: Noreli North                                    │
 │  • User: john.doe@company.com                               │
 │  • Status: Success | Failed | In Progress                   │
-│                                                              │
-│  Execution Metrics:                                          │
+│                                                             │
+│  Execution Metrics:                                         │
 │  • Start Time: 2025-10-10 14:23:15                          │
 │  • End Time: 2025-10-10 14:23:30                            │
-│  • Duration: 15.3 seconds                                    │
+│  • Duration: 15.3 seconds                                   │
 │  • Token Usage: 1,423 tokens                                │
-│  • Cost: $0.021                                              │
-│                                                              │
-│  Input Parameters:                                           │
+│  • Cost: $0.021                                             │
+│                                                             │
+│  Input Parameters:                                          │
 │  • from_date: 2025-10-01                                    │
 │  • to_date: 2025-10-31                                      │
 │  • Additional filters: {...}                                │
-│                                                              │
-│  Output Data (JSON):                                         │
+│                                                             │
+│  Output Data (JSON):                                        │
 │  • Structured results from workflow                         │
 │  • Summary statistics                                       │
 │  • Action items generated                                   │
-│                                                              │
-│  Child Table: AI Message                                     │
+│                                                             │
+│  Child Table: AI Message                                    │
 │  (see below for details)                                    │
-│                                                              │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -834,43 +834,43 @@ The **AI Message** child table stores the complete conversation history between 
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  AI Message (Child Table)                                    │
+│  AI Message (Child Table)                                   │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  Message 1 (System):                                         │
-│  • Role: system                                              │
+│                                                             │
+│  Message 1 (System):                                        │
+│  • Role: system                                             │
 │  • Content: "You are a finance assistant helping with       │
-│              month-end pre-close validation. Use the         │
-│              provided tools in this order: 1. Check..."      │
+│              month-end pre-close validation. Use the        │
+│              provided tools in this order: 1. Check..."     │
 │  • Timestamp: 2025-10-10 14:23:15.001                       │
-│                                                              │
+│                                                             │
 │  Message 2 (AI → Tool):                                     │
-│  • Role: assistant                                           │
+│  • Role: assistant                                          │
 │  • Content: "I will now check invoice status..."            │
 │  • Tool Calls: [{name: "CheckInvoiceStatus",                │
 │                   args: {company: "Noreli North", ...}}]    │
 │  • Timestamp: 2025-10-10 14:23:16.234                       │
-│                                                              │
+│                                                             │
 │  Message 3 (Tool → AI):                                     │
-│  • Role: tool                                                │
+│  • Role: tool                                               │
 │  • Tool Name: CheckInvoiceStatus                            │
 │  • Content: {"success": true, "sales_invoices": {...}}      │
 │  • Timestamp: 2025-10-10 14:23:18.567                       │
-│                                                              │
-│  Message 4 (AI Reasoning):                                   │
-│  • Role: assistant                                           │
+│                                                             │
+│  Message 4 (AI Reasoning):                                  │
+│  • Role: assistant                                          │
 │  • Content: "All 7 invoices are submitted. Proceeding to    │
-│              payment reconciliation check..."                │
+│              payment reconciliation check..."               │
 │  • Timestamp: 2025-10-10 14:23:19.123                       │
-│                                                              │
+│                                                             │
 │  ... (continues for all tool calls and responses)           │
-│                                                              │
-│  Final Message (AI Report):                                  │
-│  • Role: assistant                                           │
+│                                                             │
+│  Final Message (AI Report):                                 │
+│  • Role: assistant                                          │
 │  • Content: "### Pre-Close Checklist Results\n[✓] All       │
 │              invoices submitted\n[!] $2,700 overdue..."     │
 │  • Timestamp: 2025-10-10 14:23:30.001                       │
-│                                                              │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -995,7 +995,7 @@ This level of transparency and auditability is what makes the AI Agent Framework
 
 ## Key Features & Benefits
 
-### 1. Professional Formatting (No Emojis!)
+### 1. Professional Formatting
 
 One of the unique aspects of this implementation: **we don't use emojis**. Instead, we use text-based indicators that align with standard Frappe/ERPNext patterns:
 
@@ -1533,11 +1533,6 @@ Key takeaways:
 3. **Process understanding is key** - The framework works because it deeply integrates with ERPNext's finance processes
 4. **Extensibility unlocks value** - Build once, reuse for unlimited workflows
 
-The framework is **open source and available on GitHub**. We've built it to Frappe Marketplace standards because we believe it can benefit the entire ERPNext community.
-
 ### Get Started
 
-- **GitHub Repository**: [Link]
-- **Video Tutorial**: [Link]
-- **Documentation**: [Link]
-- **Installation Guide**: See above
+- **Video Tutorial**: [Link](https://www.youtube.com/watch?v=RQvpHSMtgJA)
