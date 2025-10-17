@@ -1,2677 +1,1538 @@
 ---
 layout: post
-title: "Journal Validation for ERPNext: AI-Powered Fraud Prevention and Risk Detection"
-description: "Reduce journal entry review time by 89% while catching 100% of high-risk entries using intelligent percentage-based risk scoring (0-100%), GPT-4 analysis, and complete audit trails—with zero custom fields and 100% Frappe/ERPNext standards compliance."
-date: 2025-10-17
+title: "Automating ERPNext Finance Workflows with AI Agents: From 2-Hour Month-End Close to 15-Second Execution"
+description: "Built a production-ready AI Agent Framework for ERPNext using LangChain and LangGraph—automating pre-close validation, month-end close, and intercompany reconciliation with intelligent reasoning, complete audit trails, and 100% Frappe/ERPNext standards compliance."
+date: 2025-10-10
 author: "Noreli North"
-categories: [AI, Fraud Prevention, ERP, Finance, Internal Controls]
-tags: [ERPNext, Journal Validation, Risk Scoring, AI-Powered Controls, GPT-4, SOX 404, Frappe Framework, Financial Controls, Audit Trail, OpenAI]
+categories: [AI, Automation, ERP, Finance]
+tags: [ERPNext, LangChain, LangGraph, AI Agents, Finance Automation, Month-End Close, Frappe Framework, OpenAI, Anthropic]
 ---
-
-## Key Results
-
-- ⚡ **89% time reduction** - From 41.7 hours/month to 4.2 hours/month for 500 entries
-- 🛡️ **100% coverage** - Every journal entry automatically validated (vs 20-30% manual coverage)
-- 🎯 **Risk-based scoring** - Intelligent 0-100% risk model focuses attention where it matters
-- ✅ **100% standards compliant** - Zero custom fields, no core modifications, marketplace-ready
-- 🤖 **AI-powered insights** - GPT-4 provides natural language explanations and corrections (~$0.02/entry)
-- 📊 **Production-tested** - Complete audit trails, 12+ unit tests, enterprise-grade
-
-[GitHub Repository](#) | [Video Tutorial](#) | [Installation Guide](#)
+**Key Results:**
+- ⚡ **15 seconds** execution time (vs 2 hours manual)
+- ✅ **100%** Frappe/ERPNext standards compliance
+- 🎯 **Zero** custom fields or core modifications
+- 🔧 **Fully extensible** - build your own workflows
+- 📊 **Production-tested** with full audit trails
 
 ---
+# Automating ERPNext Finance Workflows with AI Agents: A Deep Dive into the AI Agent Framework
 
-## Table of Contents
+*How we reduced month-end pre-close validation from 2 hours to 15 seconds using LangChain and LangGraph*
 
-- [Overview](#overview)
-- [The Problem: Manual Journal Entry Risk](#the-problem-manual-journal-entry-risk)
-- [The Solution: Intelligent Risk Scoring](#the-solution-intelligent-risk-scoring)
-- [Architecture](#architecture)
-- [Risk Scoring Model (0-100%)](#risk-scoring-model-0-100)
-- [Key Features](#key-features)
-- [Installation](#installation)
-- [Configuration Deep Dive](#configuration-deep-dive)
-- [Validation Rules Explained](#validation-rules-explained)
-- [How Validation Works](#how-validation-works)
-- [Dashboard & KPIs](#dashboard--kpis)
-- [Batch Processing](#batch-processing)
-- [AI Integration](#ai-integration)
-- [Real-World Examples](#real-world-examples)
-- [Code Examples](#code-examples)
-- [Testing](#testing)
-- [Standards Compliance](#standards-compliance)
-- [ROI Analysis](#roi-analysis)
-- [Best Practices](#best-practices)
-- [Future Roadmap](#future-roadmap)
-- [FAQ](#faq)
-- [Contributing](#contributing)
+## TL;DR
+
+We built an AI Agent Framework for ERPNext that automates complex finance workflows using LangChain and LangGraph. The Pre-Close Checklist workflow reduces 2 hours of manual work to 15 seconds while maintaining 100% compliance with Frappe/ERPNext standards. It's production-ready, fully extensible, and available as an open-source Frappe app.
+
+[Video Tutorial](https://www.youtube.com/watch?v=RQvpHSMtgJA) | [Documentation](https://norelinorth.github.io/ai/automation/erp/finance/2025/10/10/ai-agent-framework.html)
 
 ---
 
-## Overview
+## The Problem: Month-End Close is a Manual Nightmare
 
-Manual journal entries represent **80% of financial statement fraud** according to the Association of Certified Fraud Examiners (ACFE). The average fraud is **$1.6 million** and takes **18 months to detect**. Yet most companies review only 20-30% of journal entries manually due to time constraints.
+If you've ever worked in finance, you know the pain of month-end close. Every single month, finance teams go through the same exhausting checklist:
 
-The **Journal Validation app** for ERPNext changes this by providing:
-- **Automatic validation** of 100% of journal entries on save/submit
-- **Intelligent risk scoring** (0-100%) based on configurable business rules
-- **AI-powered analysis** using GPT-4 for high-risk entries (optional)
-- **Complete audit trail** - every validation permanently logged
-- **Beautiful dashboards** - visualize risk distribution, trends, and top violations
-- **Enterprise features** - batch validation, workflow integration, email alerts
+1. **Check Invoice Status** - Are all sales and purchase invoices submitted? Any drafts that need attention?
+2. **Payment Reconciliation** - Are all payments properly reconciled against invoices?
+3. **Review Outstanding Items** - What receivables and payables are still open? Which ones are overdue?
+4. **Check Pending Approvals** - Any documents stuck in approval workflows?
+5. **Compile Report** - Summarize findings and create action items
 
-**What makes it special**: 100% Frappe/ERPNext standards compliance. No custom fields, no core modifications, no hardcoded values. This could be submitted to the Frappe Marketplace today without any changes.
+### The Traditional Approach: Manual Hell
 
----
-
-## The Problem: Manual Journal Entry Risk
-
-### What Are Manual Journal Entries?
-
-Manual journal entries are direct postings to the general ledger that bypass normal transaction workflows. Unlike sales invoices or purchase orders that flow through standard validation, manual journal entries can:
-
-- Debit or credit **ANY** account
-- Post **ANY** amount
-- Include **ANY** description (or none at all)
-- Be created by anyone with permission
-- Bypass approval workflows and controls
-
-### Common Legitimate Uses
-
-- Period-end adjustments and accruals
-- Error corrections and reclassifications
-- Consolidation entries
-- Intercompany eliminations
-- Deferred revenue/expense recognition
-
-### Why They're High-Risk
-
-| Risk Factor | Impact | Example |
-|-------------|--------|---------|
-| **Bypass Normal Controls** | No automatic validation, credit checks, approval workflows | $500K revenue entry with no invoice |
-| **Human Error** | Typos, wrong accounts, calculation mistakes | Debit/credit reversed, account typo |
-| **Intentional Manipulation** | Earnings management, asset misappropriation | Inflating revenue before quarter-end |
-| **Lack of Documentation** | Hard to trace back to source | "Period end adjustment" with no details |
-| **No Audit Trail** | Difficult to reconstruct business purpose | Why was this posted? Who approved it? |
-| **Timing Games** | Posted on weekends, holidays, after-hours | Saturday night $1M entry |
-| **Unusual Combinations** | Account combinations that shouldn't relate | Cash to Revenue (should use Invoice) |
-
-### Real-World Consequences
-
-**Financial Impact:**
-- Misstated financial statements leading to bad decisions
-- Incorrect period close and reporting
-- Restatements and audit failures
-
-**Compliance & Audit:**
-- SOX 404 control deficiencies
-- Audit findings and qualifications
-- Regulatory penalties and fines
-
-**Fraud & Reputation:**
-- **80% of financial statement fraud** involves manual journal entries
-- Average fraud amount: **$1.6 million**
-- Median detection time: **18 months**
-- Reputation damage and legal liability
-
-### The Traditional (Broken) Approach
-
-Most companies rely on **manual review**:
+Here's what this looks like in practice:
 
 ```
-MANUAL REVIEW PROCESS (Doesn't Scale)
+TRADITIONAL MONTH-END CLOSE PROCESS
 ┌─────────────────────────────────────────────────────────────┐
-│ Controller reviews journal entries one-by-one                │
-│                                                              │
-│ ❌ Coverage: 20-30% at best (not enough time for all)       │
-│ ❌ Time: 5-10 minutes per entry                             │
-│ ❌ Consistency: Different reviewers, different standards     │
-│ ❌ Scalability: More entries = proportionally more time      │
-│ ❌ Timing: Reactive - issues found AFTER posting            │
-│ ❌ Errors: Humans miss things                               │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**For 500 journal entries per month:**
-- Time required: 500 × 5 minutes = **41.7 hours**
-- Annual cost at $50/hour: **$25,000**
-- Coverage: **20-30% if you're lucky**
-- High-risk entries that slip through: **Many**
-
-**This doesn't work.** You need automated, risk-based validation with 100% coverage.
-
----
-
-## The Solution: Intelligent Risk Scoring
-
-### Core Concept
-
-The Journal Validation app automatically evaluates **every** journal entry against configurable business rules and calculates a **risk score from 0-100%**.
-
-**Key Innovation**: Risk scores use a **percentage model** where rule weights sum to 100%. This makes risk scores intuitive and easy to configure.
-
-### How It Works
-
-```
-User Creates/Modifies Journal Entry
-              ↓
-    Validation Hook Triggered (on save/submit)
-              ↓
-      Load Settings & Enabled Rules
-              ↓
-    Evaluate Each Rule (contributes % to risk score)
-              ↓
-   Calculate Total Risk Score (0-100%)
-              ↓
-    Determine Risk Level
-    • 0-30%: Low Risk (Green) → No action
-    • 31-60%: Medium Risk (Orange) → Optional review
-    • 61-100%: High Risk (Red) → Requires action
-              ↓
-    Create Validation Result DocType (permanent audit trail)
-              ↓
-    Enforce Configured Actions
-    • Send email notifications
-    • Trigger approval workflow
-    • Make AI suggestions available
-              ↓
-    User Sees Validation Result
-    [View Details] [Get AI Suggestions]
-```
-
-### Risk Score Example
-
-**Scenario**: Journal entry for $600,000 with no description, posted on Saturday
-
-**Rules Violated:**
-- `AMOUNT_VERY_HIGH` (>$500K) → **+20%**
-- `MISSING_DESCRIPTION` → **+8%**
-- `WEEKEND_POSTING` → **+7%**
-
-**Total Risk Score**: 20% + 8% + 7% = **35%** → **Medium Risk** (Orange)
-
-**Action**: Entry can be saved but flagged for controller review
-
----
-
-## Architecture
-
-### System Components
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      ERPNext / Frappe                        │
-│            (Standard Journal Entry DocType)                  │
+│  Step 1: Check Invoice Status         │  Manual │  20 mins  │
+│  Step 2: Payment Reconciliation       │  Manual │  30 mins  │
+│  Step 3: Review Outstanding Items     │  Manual │  25 mins  │
+│  Step 4: Check Pending Approvals      │  Manual │  15 mins  │
+│  Step 5: Compile Report               │  Manual │  30 mins  │
 ├─────────────────────────────────────────────────────────────┤
-│                   Journal Validation App                     │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │  Validation Engine (validator.py)                      │ │
-│  │  • Automatic validation on save/submit                 │ │
-│  │  • Risk score calculation (0-100%)                     │ │
-│  │  • Rule evaluation and aggregation                     │ │
-│  │  • Threshold enforcement                               │ │
-│  └────────────────────────────────────────────────────────┘ │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │  Rule Engine (rule_engine.py)                          │ │
-│  │  • UNBALANCED_ENTRY (50%)                              │ │
-│  │  • AMOUNT_VERY_HIGH (20%)                              │ │
-│  │  • AMOUNT_HIGH_RISK (10%)                              │ │
-│  │  • MISSING_DESCRIPTION (8%)                            │ │
-│  │  • WEEKEND_POSTING (7%)                                │ │
-│  │  • UNUSUAL_ACCOUNTS (5%)                               │ │
-│  │  • Custom rules (extensible)                           │ │
-│  └────────────────────────────────────────────────────────┘ │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │  Configuration (Single DocType)                        │ │
-│  │  • Journal Validation Settings                         │ │
-│  │  • Risk thresholds (Low/High boundaries)               │ │
-│  │  • Rule definitions and weights                        │ │
-│  │  • AI integration settings                             │ │
-│  │  • Notification preferences                            │ │
-│  └────────────────────────────────────────────────────────┘ │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │  Results & Audit Trail                                 │ │
-│  │  • Journal Validation Result (DocType)                 │ │
-│  │  • Stores: risk score, level, violations               │ │
-│  │  • Validation Detail (child table)                     │ │
-│  │  • AI suggestions (if requested)                       │ │
-│  │  • Complete timestamped audit trail                    │ │
-│  └────────────────────────────────────────────────────────┘ │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │  Dashboard & Analytics (validation_dashboard.py)       │ │
-│  │  • Risk distribution (pie chart)                       │ │
-│  │  • Validation trends (line chart over time)            │ │
-│  │  • Top violations (bar chart)                          │ │
-│  │  • Company comparison (multi-company)                  │ │
-│  │  • Summary KPIs (total, avg score, violation rates)    │ │
-│  └────────────────────────────────────────────────────────┘ │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │  AI Helper (ai_helper.py) - Optional                   │ │
-│  │  • OpenAI GPT-4 integration                            │ │
-│  │  • Natural language explanations                       │ │
-│  │  • Correction suggestions with context                 │ │
-│  │  • Anomaly detection and reasoning                     │ │
-│  │  • Token usage and cost tracking                       │ │
-│  └────────────────────────────────────────────────────────┘ │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │  Batch Processing (batch_validator.py)                 │ │
-│  │  • Historical journal entry validation                 │ │
-│  │  • Background job support                              │ │
-│  │  • Progress tracking and resumability                  │ │
-│  │  • Comprehensive reporting                             │ │
-│  └────────────────────────────────────────────────────────┘ │
+│  TOTAL TIME: 2 hours per company per month                  │
+│  ERROR RATE: 15-20% (items missed or incorrect)             │
+│  AVAILABILITY: Only during business hours                   │
 └─────────────────────────────────────────────────────────────┘
 ```
+**Detailed breakdown:**
 
-### DocTypes
+| Step | Manual Process | Time Required |
+|------|----------------|---------------|
+| **Invoice Status** | Log into ERPNext, navigate to Sales Invoice list, filter by date, count statuses, repeat for Purchase Invoices | 20 minutes |
+| **Payment Reconciliation** | Check Payment Entry list, cross-reference with invoices, identify unreconciled items | 30 minutes |
+| **Outstanding Items** | Generate AR Aging report, AP Aging report, identify overdue items, note customer/supplier names | 25 minutes |
+| **Pending Approvals** | Check multiple DocTypes (Sales Invoice, Purchase Invoice, Journal Entry, etc.) for workflow states | 15 minutes |
+| **Compile Report** | Consolidate findings into Excel or Google Doc, add commentary | 30 minutes |
 
-**1. Journal Validation Settings (Single)**
-- General settings (enable validation, AI, approvals)
-- Risk thresholds (low/high boundaries as percentages)
-- Validation rules (child table with rule definitions)
-- AI integration settings (OpenAI API key, model)
-- Notification settings (email recipients, alert preferences)
-- Batch processing configuration
+**Total Time: ~2 hours per company per month**
 
-**2. Validation Rule (Child Table of Settings)**
-- Rule name (e.g., "AMOUNT_VERY_HIGH")
-- Rule type (balance, amount, description, timing, accounts)
-- Weight (percentage contribution to risk score, 0-100%)
-- Threshold (numeric limit if applicable)
-- Enabled status (checkbox)
-- Description (what this rule checks)
+And here's the kicker: **Every single month, you're doing the EXACT same checks.** The process never changes. The logic is identical. Only the data changes.
 
-**3. Journal Validation Result (DocType)**
-- Linked to Journal Entry (one-to-one)
-- Risk score (0-100%)
-- Risk level (Low/Medium/High based on thresholds)
-- Validation status (Pass/Warning/Fail)
-- Validation date/time (timestamp)
-- Validated by (user who triggered)
-- AI suggestions (long text, if requested)
-- AI tokens used / cost (if AI was used)
-- Validation details (child table with violated rules)
+### The Real Cost
 
-**4. Validation Detail (Child Table of Result)**
-- Rule name (which rule was violated)
-- Severity (Low/Medium/High)
-- Weight contributed (percentage added to risk score)
-- Message (human-readable explanation)
-- Details (additional context)
+Let's do the math for a mid-sized company with 5 legal entities:
 
-### Integration Points
+- **5 companies** × **2 hours** × **12 months** = **120 hours per year**
+- At $50/hour fully-loaded cost = **$6,000 per year** in pure labor
+- Plus opportunity cost (what could the finance team be doing instead?)
+- Plus error rate (~15-20% of items missed or incorrectly flagged)
 
-**Hooks Registration** (`hooks.py`):
+This is a perfect use case for automation. But not just any automation - we need **intelligent** automation that can adapt, reason, and provide insights.
+
+---
+
+## The Solution: AI Agents in ERPNext
+
+Enter the **AI Agent Framework** - a production-ready Frappe app that brings LangChain and LangGraph AI agents directly into ERPNext.
+
+### What Makes This Different from Traditional Automation?
+
+Traditional RPA (Robotic Process Automation) uses rigid scripts:
 ```python
-doc_events = {
-    "Journal Entry": {
-        "validate": "journal_validation.journal_validation.validator.validate_journal_entry",
-        "on_submit": "journal_validation.journal_validation.validator.on_submit_validation"
-    }
+# Traditional automation (brittle)
+invoices = get_invoices(date_range)
+if len(invoices) == 0:
+    return "No invoices found"
+# Breaks if data structure changes
+```
+
+AI agents use **reasoning and adaptation**:
+```python
+# AI agent approach (intelligent)
+system_prompt = """
+You are a finance assistant. Check invoice status and provide actionable insights.
+If you find draft invoices, identify specific document names and amounts.
+If all invoices are submitted, confirm readiness for close.
+"""
+# Agent can handle edge cases, provide context, adapt to changes
+```
+
+The key difference: **AI agents understand context and can reason about what they find.**
+
+---
+
+## Getting Started: AI Provider Configuration
+
+Before diving into the architecture, let's talk about how simple the setup is. One of the design goals was to make this framework as easy to configure as any other ERPNext module.
+
+### Configuring Your AI Provider
+
+After installing the app with `bench install-app`, you need to configure your AI provider. This is done through a standard ERPNext DocType called **AI Provider**.
+
+**Step 1: Navigate to AI Assistant workspace**
+
+```
+Desk → AI Assistant → AI Provider → New
+```
+
+**Step 2: Enter your configuration**
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| **Provider Name** | The LLM provider you're using | OpenAI, Anthropic, Azure OpenAI |
+| **API Key** | Your API key | sk-... or sk-ant-... |
+| **Default Model** | Model to use for workflows | gpt-4, claude-3-opus-20240229 |
+| **API Endpoint** | Custom endpoint (optional) | https://api.openai.com/v1 |
+| **Max Tokens** | Token limit per request | 4096 |
+| **Temperature** | Model creativity (0-1) | 0.1 (precise) to 0.7 (creative) |
+
+**Step 3: Test the connection**
+
+The framework includes a test button that verifies your API key works and the model is accessible.
+
+### Supported Providers
+
+| Provider | Models Supported | Notes |
+|----------|-----------------|-------|
+| **OpenAI** | GPT-4, GPT-4-Turbo, GPT-3.5-Turbo | Most tested, recommended for production |
+| **Anthropic** | Claude 3 Opus, Sonnet, Haiku | Excellent for complex reasoning |
+| **Azure OpenAI** | GPT-4, GPT-3.5-Turbo | Enterprise deployments |
+| **Custom** | Any OpenAI-compatible API | Self-hosted models, local LLMs |
+
+### Cost Control and Monitoring
+
+The AI Provider configuration includes built-in cost controls:
+
+```python
+# Example: Setting token limits
+{
+    "provider": "OpenAI",
+    "default_model": "gpt-4",
+    "max_tokens_per_request": 4096,
+    "max_tokens_per_day": 100000,
+    "alert_threshold": 80000  # 80% of daily limit
 }
 ```
 
-**API Endpoints** (whitelisted methods):
-```python
-@frappe.whitelist()
-def get_ai_suggestions(journal_entry_name)
-    """Request AI analysis for high-risk entry"""
+When token limits are reached, the framework will:
+1. Log a warning in the Error Log
+2. Send an email notification to the system manager
+3. Prevent new workflow executions until reset
 
-@frappe.whitelist()
-def get_dashboard_data(from_date=None, to_date=None, company=None)
-    """Get dashboard analytics and KPIs"""
+### Multi-Provider Setup
 
-@frappe.whitelist()
-def batch_validate(from_date, to_date, company=None)
-    """Validate historical journal entries"""
+You can configure multiple providers for different use cases:
 
-@frappe.whitelist()
-def export_validation_results(filters)
-    """Export results to Excel for audit"""
-```
+| Workflow Type | Provider | Model | Reason |
+|---------------|----------|-------|--------|
+| **Pre-Close Checklist** | OpenAI | GPT-4 | High accuracy required |
+| **Simple Status Checks** | OpenAI | GPT-3.5-Turbo | Cost optimization |
+| **Complex Analysis** | Anthropic | Claude 3 Opus | Superior reasoning |
+| **Batch Processing** | Azure OpenAI | GPT-4 | Enterprise SLA |
+
+This is all standard ERPNext configuration - no special infrastructure required.
 
 ---
 
-## Risk Scoring Model (0-100%)
+## Architecture: How It Works
 
-### Rule Weight System
-
-All validation rules contribute a **percentage** to the final risk score. The sum of all rule weights equals **100%**.
-
-This makes risk scores intuitive:
-- **0%** = Perfect journal entry, no issues
-- **50%** = Moderate risk (e.g., unbalanced entry alone)
-- **100%** = Maximum risk (multiple critical violations)
-
-### Standard Rule Set
-
-| Rule Name | Weight | Threshold | Description |
-|-----------|--------|-----------|-------------|
-| **UNBALANCED_ENTRY** | 50% | 0.01 | Debits ≠ Credits (accounting fundamental) |
-| **AMOUNT_VERY_HIGH** | 20% | 500,000 | Very large amounts need CFO approval |
-| **AMOUNT_HIGH_RISK** | 10% | 100,000 | High amounts warrant controller review |
-| **MISSING_DESCRIPTION** | 8% | N/A | Description required for audit trail |
-| **WEEKEND_POSTING** | 7% | N/A | Off-hours activity is suspicious |
-| **UNUSUAL_ACCOUNTS** | 5% | N/A | Odd account combinations require review |
-| **TOTAL** | **100%** | - | Full coverage of all risk factors |
-
-**Rationale**:
-- **Unbalanced entries** are critical errors that break accounting fundamentals → **50%** (highest weight)
-- **Very large amounts** (>$500K) need CFO-level scrutiny → **20%**
-- **High amounts** (>$100K) need controller attention → **10%**
-- **Missing descriptions** hurt audit trails → **8%**
-- **Weekend posting** is suspicious behavior → **7%**
-- **Unusual accounts** may indicate errors → **5%**
-
-### Risk Level Thresholds
+The AI Agent Framework sits on top of ERPNext and provides three key components:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  RISK LEVEL DEFINITIONS                                      │
+│                      ERPNext / Frappe                       │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  0% ──────────────────── 30%  LOW RISK (Green)             │
-│  • Normal journal entries                                   │
-│  • No action required                                       │
-│  • Auto-approved for posting                                │
-│                                                              │
-│  31% ─────────────────── 60%  MEDIUM RISK (Orange)         │
-│  • Minor issues present                                     │
-│  • Optional controller review                               │
-│  • Can post with warning                                    │
-│                                                              │
-│  61% ────────────────── 100%  HIGH RISK (Red)              │
-│  • Critical issues detected                                 │
-│  • Requires mandatory review                                │
-│  • AI suggestions available                                 │
-│  • May require approval workflow                            │
-│  • Email alerts sent to management                          │
-│                                                              │
+│                   AI Agent Framework App                    │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │  AI Action Types (Workflows)                           │ │
+│  │  • Pre-Close Checklist                                 │ │
+│  │  • Month-End Close                                     │ │
+│  │  • Intercompany Reconciliation                         │ │
+│  └────────────────────────────────────────────────────────┘ │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │  LangGraph Agent Executor                              │ │
+│  │  • Tool orchestration                                  │ │
+│  │  • State management                                    │ │
+│  │  • Reasoning & decision making                         │ │
+│  └────────────────────────────────────────────────────────┘ │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │  Finance Tools (ERPNext Integration)                   │ │
+│  │  • CheckInvoiceStatus                                  │ │
+│  │  • CheckPaymentReconciliation                          │ │
+│  │  • CheckOutstandingItems                               │ │
+│  │  • CheckPendingApprovals                               │ │
+│  │  • GetBankAccounts                                     │ │
+│  │  • And 15+ more...                                     │ │
+│  └────────────────────────────────────────────────────────┘ │
+├─────────────────────────────────────────────────────────────┤
+│                    LLM Providers                            │
+│         OpenAI │ Anthropic │ Custom Models                  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-**Configurable Thresholds**: You can adjust these boundaries in Journal Validation Settings to match your company's risk appetite.
+### Component Breakdown
 
-### Calculation Examples
+#### 1. AI Action Types (Workflows)
 
-**Example 1: Low-Risk Entry**
-- **Setup**: Small adjustment entry, well-documented, posted on Wednesday
-- **Amount**: $5,000 (below thresholds)
-- **Description**: "Accrue October consulting services per PO-2025-1234"
-- **Posting Date**: Wednesday 2PM
+These are pre-configured workflows with system prompts that tell the AI agent what to do:
 
-**Rules Violated**: None
-**Risk Score**: 0%
-**Risk Level**: Low (Green)
-**Action**: Auto-approved
+```python
+# Example: Pre-Close Checklist AI Action Type
+{
+    "action_name": "Pre-Close Checklist",
+    "system_prompt": """
+You are a finance assistant helping with month-end pre-close validation.
 
----
+Use the provided tools in this order:
+1. CheckInvoiceStatus - Verify all invoices submitted
+2. CheckPaymentReconciliation - Verify payments reconciled
+3. CheckOutstandingItems - Review AR/AP
+4. CheckPendingApprovals - Check for pending items
 
-**Example 2: Medium-Risk Entry**
-- **Setup**: Large amount, missing description, weekday posting
-- **Amount**: $150,000 (triggers AMOUNT_HIGH_RISK)
-- **Description**: (empty)
-- **Posting Date**: Thursday 3PM
+For each check, provide:
+- [✓] Items ready for close
+- [!] Issues needing attention
+- [*] Specific action items with document names
 
-**Rules Violated**:
-- `AMOUNT_HIGH_RISK` (+10%)
-- `MISSING_DESCRIPTION` (+8%)
+Provide final summary with:
+- Overall readiness status (Ready/Not Ready)
+- Count of issues requiring attention
+- Priority ranking of action items
+    """,
+    "tools": [
+        "CheckInvoiceStatus",
+        "CheckPaymentReconciliation",
+        "CheckOutstandingItems",
+        "CheckPendingApprovals"
+    ]
+}
+```
 
-**Risk Score**: 10% + 8% = **18%**
-**Risk Level**: Low (Green) - below 30% threshold
-**Action**: Warning shown, can proceed
+#### 2. LangGraph Agent Executor
 
----
+This is the brain. It:
+- Receives the system prompt and user query
+- Decides which tool to call next
+- Manages conversation state
+- Reasons about tool outputs
+- Generates the final report
 
-**Example 3: High-Risk Entry**
-- **Setup**: Very large amount, no description, weekend posting
-- **Amount**: $600,000 (triggers AMOUNT_VERY_HIGH)
-- **Description**: (empty)
-- **Posting Date**: Saturday 11PM
+The beauty of LangGraph is that it handles all the complexity of tool orchestration, state management, and error handling. You just define the tools and the system prompt.
 
-**Rules Violated**:
-- `AMOUNT_VERY_HIGH` (+20%)
-- `MISSING_DESCRIPTION` (+8%)
-- `WEEKEND_POSTING` (+7%)
+#### 3. Finance Tools
 
-**Risk Score**: 20% + 8% + 7% = **35%**
-**Risk Level**: Medium (Orange)
-**Action**: Controller review recommended, warning displayed
+These are specialized Python functions that integrate with ERPNext data. Each tool:
+- Has a clear input schema (enforced by Pydantic)
+- Queries ERPNext database using standard Frappe ORM
+- Returns structured JSON data
+- Includes proper error handling and logging
 
----
+**Available Finance Tools:**
 
-**Example 4: Critical Risk Entry**
-- **Setup**: Unbalanced entry with large amount
-- **Debit Total**: $500,000
-- **Credit Total**: $500,100 (difference of $100)
-- **Description**: "Period end adjustment"
-- **Posting Date**: Friday 5PM
+| Tool Name | Purpose | Input Parameters | Output |
+|-----------|---------|------------------|--------|
+| **CheckInvoiceStatus** | Verify sales/purchase invoice submission | company, from_date, to_date | Invoice counts by status, draft list |
+| **CheckPaymentReconciliation** | Check payment entry reconciliation | company, from_date, to_date | Reconciliation %, unreconciled list |
+| **CheckOutstandingItems** | Review AR/AP outstanding balances | company, as_of_date | Overdue amounts, top customers/suppliers |
+| **CheckPendingApprovals** | Identify documents awaiting approval | company, from_date, to_date | Pending count, document list |
+| **GetBankAccounts** | List all bank accounts for company | company | Bank account names and currencies |
+| **RunBankReconciliation** | Execute bank reconciliation | company, bank_account, period | Reconciliation status, unmatched entries |
+| **GetIntercompanyPairs** | Discover intercompany relationships | company | List of counterparty companies |
+| **MatchIntercompanyTransactions** | Find matching AR/AP entries | company, counterparty, period | Match groups with amounts |
+| **CreateEliminationEntries** | Generate elimination journal entries | match_group_name | JE reference, eliminated amount |
+| **GetGLEntries** | Query general ledger entries | company, account, period | GL entry list with amounts |
+| **CheckPeriodClosure** | Verify if accounting period closed | company, fiscal_year, period | Closed status, closing entry reference |
+| **GetBudgetData** | Retrieve budget amounts | company, cost_center, fiscal_year | Budget allocations by account |
+| **CalculateCashFlow** | Project cash flow | company, forecast_days | Predicted inflows/outflows |
+| **AnalyzeExpenseVariance** | Compare actual vs budgeted expenses | company, cost_center, period | Variance %, over/under budget items |
+| **CheckComplianceStatus** | Verify regulatory compliance items | company, compliance_type | Compliance checklist status |
 
-**Rules Violated**:
-- `UNBALANCED_ENTRY` (+50%)
-- `AMOUNT_VERY_HIGH` (+20%)
+**Tool Design Pattern:**
 
-**Risk Score**: 50% + 20% = **70%**
-**Risk Level**: High (Red)
-**Action**:
-- Entry blocked or requires approval
-- Email alert sent to CFO
-- AI suggestions available
-- Workflow triggered if configured
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Finance Tool Architecture                                  │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Input (Pydantic Model)                                     │
+│  ↓                                                          │
+│  Validation (automatic)                                     │
+│  ↓                                                          │
+│  Permission Check (frappe.has_permission)                   │
+│  ↓                                                          │
+│  Database Query (frappe.get_all / frappe.db.sql)            │
+│  ↓                                                          │
+│  Business Logic (Python + Frappe utilities)                 │
+│  ↓                                                          │
+│  Error Handling (try/except + frappe.log_error)             │
+│  ↓                                                          │
+│  Output (Structured JSON)                                   │
+│                                                             │
+│  Features:                                                  │
+│  • Type-safe inputs (Pydantic)                              │
+│  • Permission checks (Frappe)                               │
+│  • SQL injection prevention (parameterized queries)         │
+│  • Error logging (frappe.log_error)                         │
+│  • Consistent output format                                 │
+│  • Translatable messages (_())                              │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
 
----
+Example tool implementation:
 
-## Key Features
+```python
+from langchain.tools import BaseTool
+from pydantic import BaseModel, Field
+import frappe
+from frappe.utils import flt
 
-[continuing in next response due to length]
+class CheckInvoiceStatusInput(BaseModel):
+    """Input for CheckInvoiceStatus tool."""
+    company: str = Field(..., description="Company name")
+    from_date: str = Field(..., description="Start date (YYYY-MM-DD)")
+    to_date: str = Field(..., description="End date (YYYY-MM-DD)")
 
-Would you like me to continue with the rest of the blog article? This is going to be a very comprehensive document with all the details you requested.
-## Key Features
+def check_invoice_status_func(company: str, from_date: str, to_date: str):
+    """Check status of all invoices in period."""
 
-### 1. Automatic Validation (100% Coverage)
+    # Query sales invoices (standard Frappe ORM)
+    sales_invoices = frappe.get_all(
+        "Sales Invoice",
+        filters={
+            "company": company,
+            "posting_date": ["between", [from_date, to_date]]
+        },
+        fields=["name", "docstatus", "grand_total"]
+    )
 
-Every journal entry is automatically validated when:
-- User clicks **Save** (draft state)
-- User clicks **Submit** (posted to GL)
-- Entry is modified after initial save
+    # Aggregate by status
+    submitted = [inv for inv in sales_invoices if inv.docstatus == 1]
+    draft = [inv for inv in sales_invoices if inv.docstatus == 0]
 
-**No manual action required**. No entries slip through the cracks.
-
-### 2. Intelligent Risk Scoring
-
-**Percentage-based model** makes risk intuitive:
-- Each rule contributes a clear percentage
-- Total risk score always between 0-100%
-- Thresholds easily understood (30%, 60%)
-- Configurable to match your risk appetite
-
-### 3. Configurable Rules
-
-**Six Pre-Built Rules** covering common risks:
--UNBALANCED_ENTRY, AMOUNT_VERY_HIGH, AMOUNT_HIGH_RISK
-- MISSING_DESCRIPTION, WEEKEND_POSTING, UNUSUAL_ACCOUNTS
-
-**Fully Extensible**: Add custom rules with Python code
-
-### 4. AI-Powered Suggestions
-
-For high-risk entries, optional GPT-4 analysis provides:
-- Natural language explanation of issues
-- Business context and why it matters
-- Specific, actionable correction steps
-- Best practices to avoid future issues
-
-**Cost**: ~$0.02 per analysis
-**Response Time**: 2-5 seconds
-
-### 5. Beautiful Dashboard & KPIs
-
-Visual analytics showing:
-- Risk distribution (pie chart)
-- Validation trends (line chart)
-- Top violations (bar chart)
-- Summary statistics
-- Company comparison
-
-**All data exportable to Excel** for audit documentation.
-
-### 6. Complete Audit Trail
-
-Every validation creates permanent **Journal Validation Result** with:
-- Risk score and level
-- All rules evaluated
-- Timestamp and user
-- AI conversation (if used)
-- Token usage and cost
-
-**SOX 404 compliant** - complete traceability.
-
-### 7. Batch Processing
-
-Validate historical journal entries:
-- Select date range and companies
-- Runs as background job
-- Progress tracking
-- Comprehensive report of all findings
-
-**Use case**: Retroactive validation after implementing the app.
-
-### 8. Workflow Integration
-
-Automatically trigger ERPNext workflows for high-risk entries:
-- Require CFO approval for risk score >60%
-- Multi-level approval chains
-- Email notifications to approvers
-- Complete approval audit trail
-
-### 9. Email Notifications
-
-Configurable real-time alerts:
-- High-risk entries (immediate)
-- Daily summary reports
-- Weekly/monthly analytics
-- Custom recipient lists
-
-### 10. Excel Export
-
-One-click export of validation results:
-- All fields included
-- Formatted for audit documentation
-- Filterable by date, company, risk level
-- Ready to share with external auditors
+    # Return structured data
+    return {
+        "success": True,
+        "company": company,
+        "period": {"from_date": from_date, "to_date": to_date},
+        "sales_invoices": {
+            "total": len(sales_invoices),
+            "submitted": len(submitted),
+            "draft": len(draft),
+            "draft_list": [{"name": inv.name, "amount": flt(inv.grand_total)}
+                          for inv in draft]
+        },
+        "summary": {
+            "ready_for_close": len(draft) == 0
+        }
+    }
+```
 
 ---
 
-## Installation
+## Workflow Comparison: Traditional vs AI Agent
+
+Before we dive deep into the Pre-Close Checklist, let's visualize the difference between traditional automation and AI agent automation:
+
+### Traditional RPA Approach
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Traditional RPA Script (Brittle)                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  1. Query database for invoices                             │
+│     ↓                                                       │
+│  2. Count by status                                         │
+│     ↓                                                       │
+│  3. IF count == 0:                                          │
+│        return "No invoices"                                 │
+│     ELSE:                                                   │
+│        return "Found X invoices"                            │
+│     ↓                                                       │
+│  4. Repeat for payments, AR, AP...                          │
+│     ↓                                                       │
+│  5. Print results                                           │
+│                                                             │
+│  ❌ No reasoning                                            │
+│  ❌ No context                                              │
+│  ❌ No adaptation                                           │
+│  ❌ Breaks with schema changes                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### AI Agent Approach
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  AI Agent (Intelligent)                                     │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  System Prompt: "You are a finance assistant. Check         │
+│                  invoice status and provide insights."      │
+│     ↓                                                       │
+│  Agent decides: "I should check invoices first"             │
+│     ↓                                                       │
+│  Calls Tool: CheckInvoiceStatus(company, dates)             │
+│     ↓                                                       │
+│  Tool returns: {submitted: 5, draft: 2, details: [...]}     │
+│     ↓                                                       │
+│  Agent reasons: "2 draft invoices found. Let me identify    │
+│                  which ones and their amounts."             │
+│     ↓                                                       │
+│  Agent generates: "[!] 2 draft invoices require attention:  │
+│                    - SINV-2025-00123 ($1,500)               │
+│                    - SINV-2025-00124 ($2,300)               │
+│                    Action: Submit before close"             │
+│     ↓                                                       │
+│  Agent decides: "Now check payments..."                     │
+│                                                             │
+│  ✅ Reasoning about data                                    │
+│  ✅ Contextual insights                                     │
+│  ✅ Adapts to edge cases                                    │
+│  ✅ Human-like analysis                                     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Comparison Table
+
+| Aspect | Traditional RPA | AI Agent Framework |
+|--------|----------------|-------------------|
+| **Flexibility** | Hardcoded logic, breaks easily | Adapts to edge cases automatically |
+| **Insights** | Raw data only | Contextual analysis with recommendations |
+| **Maintenance** | High (code changes for every adjustment) | Low (update prompts, not code) |
+| **Error Handling** | Fragile (throws errors) | Robust (reasons about issues) |
+| **Output Quality** | Data dump | Human-readable reports with priorities |
+| **Edge Case Handling** | Must code every scenario | Handles unseen scenarios intelligently |
+| **User Experience** | Technical logs | Professional, actionable reports |
+
+---
+
+## Process Deep Dive: Pre-Close Checklist in Action
+
+Let's walk through exactly what happens when you run the Pre-Close Checklist workflow.
+
+### Complete Workflow Visualization
+
+Here's the complete end-to-end process showing how the AI agent executes the Pre-Close Checklist:
+
+```
+PRE-CLOSE CHECKLIST: AI AGENT WORKFLOW
+┌────────────────────────────────────────────────────────────────┐
+│ USER TRIGGERS                                                  │
+│ "Run Pre-Close Checklist for Noreli North - October 2025"      │
+└──────────────────────┬─────────────────────────────────────────┘
+                       ↓
+┌────────────────────────────────────────────────────────────────┐
+│ STEP 1: AI Agent Receives Instructions                         │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ System Prompt:                                             │ │
+│ │ "You are a finance assistant. Check all critical items     │ │
+│ │  before closing the period. Use tools in this order..."    │ │
+│ └────────────────────────────────────────────────────────────┘ │
+└──────────────────────┬─────────────────────────────────────────┘
+                       ↓
+┌────────────────────────────────────────────────────────────────┐
+│ STEP 2: Check Invoice Status                                   │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Tool: CheckInvoiceStatus(company, from_date, to_date)      │ │
+│ │                                                            │ │
+│ │ Queries:                                                   │ │
+│ │ - All sales invoices in period                             │ │
+│ │ - All purchase invoices in period                          │ │
+│ │ - Filter by status (Draft, Submitted, Cancelled)           │ │
+│ │                                                            │ │
+│ │ Returns:                                                   │ │
+│ │ {                                                          │ │
+│ │   "total": 7, "submitted": 7, "draft": 0,                  │ │
+│ │   "ready_for_close": true                                  │ │
+│ │ }                                                          │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│ AI Reasoning: "✓ All invoices submitted - proceed to next"     │
+└──────────────────────┬─────────────────────────────────────────┘
+                       ↓
+┌────────────────────────────────────────────────────────────────┐
+│ STEP 3: Check Payment Reconciliation                           │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Tool: CheckPaymentReconciliation(company, period)          │ │
+│ │                                                            │ │
+│ │ Queries:                                                   │ │
+│ │ - All payment entries in period                            │ │
+│ │ - Check reconciliation status                              │ │
+│ │ - Calculate reconciliation percentage                      │ │
+│ │                                                            │ │
+│ │ Returns:                                                   │ │
+│ │ {                                                          │ │
+│ │   "total_payments": 0, "reconciled": 0,                    │ │
+│ │   "reconciliation_percentage": 100,                        │ │
+│ │   "ready_for_close": true                                  │ │
+│ │ }                                                          │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│ AI Reasoning: "✓ All payments reconciled - proceed"            │
+└──────────────────────┬─────────────────────────────────────────┘
+                       ↓
+┌────────────────────────────────────────────────────────────────┐
+│ STEP 4: Review Outstanding Items                               │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Tool: CheckOutstandingItems(company, as_of_date)           │ │
+│ │                                                            │ │
+│ │ Queries:                                                   │ │
+│ │ - Outstanding receivables (AR)                             │ │
+│ │ - Outstanding payables (AP)                                │ │
+│ │ - Overdue amounts and invoices                             │ │
+│ │                                                            │ │
+│ │ Returns:                                                   │ │
+│ │ {                                                          │ │
+│ │   "receivables": {"total": 2700, "overdue": 2700},         │ │
+│ │   "payables": {"total": 700, "overdue": 700},              │ │
+│ │   "net_position": 2000                                     │ │
+│ │ }                                                          │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│ AI Reasoning: "! Found $2,700 overdue receivables - flag"      │
+└──────────────────────┬─────────────────────────────────────────┘
+                       ↓
+┌────────────────────────────────────────────────────────────────┐
+│ STEP 5: Check Pending Approvals                                │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ Tool: CheckPendingApprovals(company, period)               │ │
+│ │                                                            │ │
+│ │ Queries:                                                   │ │
+│ │ - All documents requiring approval                         │ │
+│ │ - Check workflow states                                    │ │
+│ │                                                            │ │
+│ │ Returns:                                                   │ │
+│ │ {                                                          │ │
+│ │   "total_pending": 0,                                      │ │
+│ │   "ready_for_close": true                                  │ │
+│ │ }                                                          │ │
+│ └────────────────────────────────────────────────────────────┘ │
+│ AI Reasoning: "✓ No pending approvals - good to close"         │
+└──────────────────────┬─────────────────────────────────────────┘
+                       ↓
+┌────────────────────────────────────────────────────────────────┐
+│ STEP 6: AI Generates Comprehensive Report                      │
+│ ┌────────────────────────────────────────────────────────────┐ │
+│ │ AI synthesizes all results into actionable report:         │ │
+│ │                                                            │ │
+│ │ [✓] All 7 invoices submitted                               │ │
+│ │ [✓] All payments reconciled                                │ │
+│ │ [!] Outstanding items: $2,700 AR, $700 AP                  │ │
+│ │ [✓] No pending approvals                                   │ │
+│ │                                                            │ │
+│ │ Overall: READY for close                                   │ │
+│ │ Action Required: Follow up on overdue receivables          │ │
+│ │ Priority: High - Palmer Productions Ltd. ($2,700)          │ │
+│ └────────────────────────────────────────────────────────────┘ │
+└────────────────────────────────────────────────────────────────┘
+
+EXECUTION TIME: 15 seconds
+```
+
+This complete workflow shows the power of AI agents: **autonomous execution, intelligent reasoning, and actionable insights - all in 15 seconds.**
+
+### Step-by-Step Execution
+
+#### User Triggers Workflow
+
+```
+User input: "Run Pre-Close Checklist for Noreli North - October 2025"
+```
+
+#### Step 1: AI Agent Initialization
+
+The LangGraph agent receives:
+- **System Prompt**: Instructions on what to check and how to report
+- **Available Tools**: List of finance tools it can call
+- **Context**: Company name, date range, etc.
+
+#### Step 2: Check Invoice Status
+
+```
+AI Agent → Calls Tool: CheckInvoiceStatus
+Input: {
+    "company": "Noreli North",
+    "from_date": "2025-10-01",
+    "to_date": "2025-10-31"
+}
+
+Tool → Queries ERPNext Database:
+SELECT name, docstatus, grand_total
+FROM `tabSales Invoice`
+WHERE company = 'Noreli North'
+  AND posting_date BETWEEN '2025-10-01' AND '2025-10-31'
+
+Tool → Returns:
+{
+    "success": true,
+    "sales_invoices": {
+        "total": 5,
+        "submitted": 5,
+        "draft": 0,
+        "ready_for_close": true
+    },
+    "purchase_invoices": {
+        "total": 2,
+        "submitted": 2,
+        "draft": 0,
+        "ready_for_close": true
+    }
+}
+
+AI Agent → Reasoning:
+"All 7 invoices (5 sales, 2 purchase) are submitted.
+ No drafts found. Ready to proceed to payment reconciliation."
+```
+
+#### Step 3: Check Payment Reconciliation
+
+```
+AI Agent → Calls Tool: CheckPaymentReconciliation
+Input: {
+    "company": "Noreli North",
+    "from_date": "2025-10-01",
+    "to_date": "2025-10-31"
+}
+
+Tool → Returns:
+{
+    "success": true,
+    "summary": {
+        "total_payments": 0,
+        "reconciled": 0,
+        "unreconciled": 0,
+        "reconciliation_percentage": 100,
+        "ready_for_close": true
+    }
+}
+
+AI Agent → Reasoning:
+"No payments in period. Reconciliation at 100%. Proceed."
+```
+
+#### Step 4: Review Outstanding Items
+
+```
+AI Agent → Calls Tool: CheckOutstandingItems
+Input: {
+    "company": "Noreli North",
+    "as_of_date": "2025-10-31"
+}
+
+Tool → Returns:
+{
+    "success": true,
+    "outstanding_receivables": {
+        "total_amount": 2700.0,
+        "overdue_amount": 2700.0,
+        "overdue_count": 5,
+        "top_customers": [{
+            "customer": "Palmer Productions Ltd.",
+            "total_outstanding": 2700.0,
+            "overdue": 2700.0
+        }],
+        "sample_invoices": [
+            {"name": "ACC-SINV-2025-00006", "outstanding": 800.0},
+            {"name": "ACC-SINV-2025-00008", "outstanding": 500.0}
+        ]
+    },
+    "outstanding_payables": {
+        "total_amount": 700.0,
+        "overdue_amount": 700.0
+    },
+    "summary": {
+        "net_position": 2000.0
+    }
+}
+
+AI Agent → Reasoning:
+"Found significant outstanding items:
+ - $2,700 in overdue receivables from Palmer Productions Ltd.
+ - $700 in overdue payables to Zuckerman Security Ltd.
+ - Net position: $2,000
+ This requires follow-up but doesn't block close."
+```
+
+#### Step 5: Check Pending Approvals
+
+```
+AI Agent → Calls Tool: CheckPendingApprovals
+Input: {
+    "company": "Noreli North",
+    "from_date": "2025-10-01",
+    "to_date": "2025-10-31"
+}
+
+Tool → Returns:
+{
+    "success": true,
+    "summary": {
+        "total_pending": 0,
+        "ready_for_close": true
+    }
+}
+
+AI Agent → Reasoning:
+"No pending approvals. Good to proceed with close."
+```
+
+#### Step 6: AI Generates Final Report
+
+The AI synthesizes all results into a comprehensive report:
+
+```markdown
+### Pre-Close Checklist Results for Noreli North - October 2025
+
+#### Invoice Status
+[✓] All 7 invoices (5 sales, 2 purchase) submitted and ready for close
+
+#### Payment Reconciliation
+[✓] All payments reconciled (100% reconciliation rate)
+
+#### Outstanding Items
+[!] Attention required:
+- **Receivables**: $2,700 total, all overdue
+  - Top customer: Palmer Productions Ltd. ($2,700)
+  - Sample invoices: ACC-SINV-2025-00006 ($800), ACC-SINV-2025-00008 ($500)
+- **Payables**: $700 total, all overdue
+  - Top supplier: Zuckerman Security Ltd. ($700)
+- **Net Position**: $2,000 in company's favor
+
+#### Pending Approvals
+[✓] No pending approvals
+
+#### Summary
+**Overall Readiness**: READY for close
+
+**Action Items**:
+1. [High Priority] Follow up on overdue receivables from Palmer Productions Ltd. ($2,700)
+2. [Medium Priority] Process payment to Zuckerman Security Ltd. ($700)
+
+**Estimated Time to Resolve**: 1-2 business days
+
+---
+Execution Time: 15.3 seconds
+```
+
+---
+
+## Audit Trail & Transparency: AI Action Log and AI Message
+
+One of the most critical features for enterprise use is the complete audit trail. Every workflow execution is fully logged and traceable.
+
+### AI Action Log DocType
+
+The **AI Action Log** is a standard ERPNext DocType that captures every workflow execution:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  AI Action Log (DocType)                                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Header Fields:                                             │
+│  • Name: AI-ACT-2025-00224 (auto-generated)                 │
+│  • Workflow Type: Pre-Close Checklist                       │
+│  • Company: Noreli North                                    │
+│  • User: john.doe@company.com                               │
+│  • Status: Success | Failed | In Progress                   │
+│                                                             │
+│  Execution Metrics:                                         │
+│  • Start Time: 2025-10-10 14:23:15                          │
+│  • End Time: 2025-10-10 14:23:30                            │
+│  • Duration: 15.3 seconds                                   │
+│  • Token Usage: 1,423 tokens                                │
+│  • Cost: $0.021                                             │
+│                                                             │
+│  Input Parameters:                                          │
+│  • from_date: 2025-10-01                                    │
+│  • to_date: 2025-10-31                                      │
+│  • Additional filters: {...}                                │
+│                                                             │
+│  Output Data (JSON):                                        │
+│  • Structured results from workflow                         │
+│  • Summary statistics                                       │
+│  • Action items generated                                   │
+│                                                             │
+│  Child Table: AI Message                                    │
+│  (see below for details)                                    │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### AI Action Log Fields Table
+
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| **name** | Link | Unique identifier | AI-ACT-2025-00224 |
+| **workflow_type** | Link | AI Action Type being executed | Pre-Close Checklist |
+| **company** | Link | Company context | Noreli North |
+| **user** | Link | User who triggered workflow | john.doe@example.com |
+| **execution_start** | Datetime | When execution started | 2025-10-10 14:23:15 |
+| **execution_end** | Datetime | When execution completed | 2025-10-10 14:23:30 |
+| **execution_time_seconds** | Float | Duration in seconds | 15.3 |
+| **status** | Select | Success, Failed, In Progress | Success |
+| **token_usage** | Int | Total tokens consumed | 1,423 |
+| **estimated_cost** | Currency | API cost for execution | 0.021 USD |
+| **input_parameters** | JSON | Input data provided | {"from_date": "2025-10-01", ...} |
+| **output_data** | JSON | Structured results | {"summary": {...}, ...} |
+| **error_message** | Text | Error details if failed | None |
+| **messages** | Table | Child table: AI Message | (see below) |
+
+### AI Message Child Table
+
+The **AI Message** child table stores the complete conversation history between the AI agent and the tools:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  AI Message (Child Table)                                   │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Message 1 (System):                                        │
+│  • Role: system                                             │
+│  • Content: "You are a finance assistant helping with       │
+│              month-end pre-close validation. Use the        │
+│              provided tools in this order: 1. Check..."     │
+│  • Timestamp: 2025-10-10 14:23:15.001                       │
+│                                                             │
+│  Message 2 (AI → Tool):                                     │
+│  • Role: assistant                                          │
+│  • Content: "I will now check invoice status..."            │
+│  • Tool Calls: [{name: "CheckInvoiceStatus",                │
+│                   args: {company: "Noreli North", ...}}]    │
+│  • Timestamp: 2025-10-10 14:23:16.234                       │
+│                                                             │
+│  Message 3 (Tool → AI):                                     │
+│  • Role: tool                                               │
+│  • Tool Name: CheckInvoiceStatus                            │
+│  • Content: {"success": true, "sales_invoices": {...}}      │
+│  • Timestamp: 2025-10-10 14:23:18.567                       │
+│                                                             │
+│  Message 4 (AI Reasoning):                                  │
+│  • Role: assistant                                          │
+│  • Content: "All 7 invoices are submitted. Proceeding to    │
+│              payment reconciliation check..."               │
+│  • Timestamp: 2025-10-10 14:23:19.123                       │
+│                                                             │
+│  ... (continues for all tool calls and responses)           │
+│                                                             │
+│  Final Message (AI Report):                                 │
+│  • Role: assistant                                          │
+│  • Content: "### Pre-Close Checklist Results\n[✓] All       │
+│              invoices submitted\n[!] $2,700 overdue..."     │
+│  • Timestamp: 2025-10-10 14:23:30.001                       │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### AI Message Fields Table
+
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| **idx** | Int | Sequence number | 1, 2, 3, ... |
+| **role** | Select | system, user, assistant, tool | assistant |
+| **content** | Long Text | Message content | "All invoices submitted..." |
+| **tool_calls** | JSON | Tool invocations (if any) | [{"name": "CheckInvoiceStatus", ...}] |
+| **tool_name** | Data | Tool name (if role=tool) | CheckInvoiceStatus |
+| **timestamp** | Datetime | When message created | 2025-10-10 14:23:16.234 |
+| **token_count** | Int | Tokens in this message | 156 |
+
+### Message Flow Visualization
+
+Here's how the conversation flows during a typical Pre-Close Checklist execution:
+
+```
+Time  Role       Message Type             Content Summary
+────────────────────────────────────────────────────────────────
+00.0s system     System Prompt            "You are a finance assistant..."
+00.1s assistant  Initial Planning         "I will check invoices first"
+00.2s assistant  Tool Call Request        Call: CheckInvoiceStatus(...)
+02.5s tool       Tool Response            {"sales_invoices": {...}}
+02.6s assistant  Reasoning                "All invoices submitted ✓"
+02.7s assistant  Tool Call Request        Call: CheckPaymentReconciliation(...)
+05.3s tool       Tool Response            {"payments": {...}}
+05.4s assistant  Reasoning                "100% reconciled ✓"
+05.5s assistant  Tool Call Request        Call: CheckOutstandingItems(...)
+09.2s tool       Tool Response            {"receivables": 2700, ...}
+09.3s assistant  Reasoning                "Found overdue receivables ⚠"
+09.4s assistant  Tool Call Request        Call: CheckPendingApprovals(...)
+11.8s tool       Tool Response            {"pending": 0}
+11.9s assistant  Reasoning                "No pending approvals ✓"
+12.0s assistant  Final Report             "### Pre-Close Checklist Results..."
+15.3s [END]      Execution Complete       Status: Success
+```
+
+### Compliance and Auditing Benefits
+
+The AI Action Log and AI Message architecture provides:
+
+| Benefit | Description | Use Case |
+|---------|-------------|----------|
+| **Complete Traceability** | Every decision is logged with timestamp | "Show me how you determined close readiness" |
+| **Data Lineage** | All source data from ERPNext is captured | "Which GL entries contributed to this amount?" |
+| **Performance Monitoring** | Execution time per tool call | "Which tool is the bottleneck?" |
+| **Cost Tracking** | Token usage and estimated cost | "What's our monthly AI spend?" |
+| **Debugging** | Full conversation history | "Why did this workflow fail?" |
+| **User Accountability** | Who triggered what workflow when | "Who ran month-end close early?" |
+| **Version Control** | System prompts logged per execution | "What instructions did the agent follow?" |
+| **Reproducibility** | Can replay exact same conversation | "Re-run with same parameters" |
+
+### Searching and Filtering Logs
+
+The AI Action Log is a standard ERPNext DocType, so you get all the built-in features:
+
+```python
+# Example: Find all failed executions in October
+failed_runs = frappe.get_all(
+    "AI Action Log",
+    filters={
+        "status": "Failed",
+        "execution_start": ["between", ["2025-10-01", "2025-10-31"]]
+    },
+    fields=["name", "workflow_type", "company", "error_message"]
+)
+
+# Example: Average execution time by workflow type
+from frappe.utils import flt
+
+avg_times = frappe.db.sql("""
+    SELECT
+        workflow_type,
+        AVG(execution_time_seconds) as avg_time,
+        COUNT(*) as execution_count
+    FROM `tabAI Action Log`
+    WHERE status = 'Success'
+    GROUP BY workflow_type
+""", as_dict=True)
+
+# Example: Token usage per company per month
+token_usage = frappe.db.sql("""
+    SELECT
+        company,
+        MONTH(execution_start) as month,
+        SUM(token_usage) as total_tokens,
+        SUM(estimated_cost) as total_cost
+    FROM `tabAI Action Log`
+    WHERE YEAR(execution_start) = 2025
+    GROUP BY company, MONTH(execution_start)
+""", as_dict=True)
+```
+
+### Report Builder Integration
+
+You can create custom reports from the AI Action Log:
+
+**Example Report: "AI Workflow Execution Summary"**
+
+| Workflow Type | Total Runs | Success Rate | Avg Time (s) | Total Cost |
+|---------------|-----------|--------------|--------------|------------|
+| Pre-Close Checklist | 60 | 98.3% | 15.2 | $1.26 |
+| Month-End Close | 36 | 94.4% | 45.7 | $5.48 |
+| Intercompany Reconciliation | 24 | 100% | 28.3 | $2.12 |
+| **Total** | **120** | **97.5%** | **29.7** | **$8.86** |
+
+**Example Report: "Token Usage by User"**
+
+| User | Workflows Run | Total Tokens | Avg Tokens/Run | Estimated Cost |
+|------|--------------|--------------|----------------|----------------|
+| john.doe@company.com | 45 | 62,150 | 1,381 | $0.93 |
+| jane.smith@company.com | 38 | 54,320 | 1,429 | $0.81 |
+| admin@company.com | 37 | 51,870 | 1,402 | $0.78 |
+| **Total** | **120** | **168,340** | **1,403** | **$2.52** |
+
+This level of transparency and auditability is what makes the AI Agent Framework suitable for production enterprise use.
+
+---
+
+## Key Features & Benefits
+
+### 1. Professional Formatting
+
+One of the unique aspects of this implementation: **we don't use emojis**. Instead, we use text-based indicators that align with standard Frappe/ERPNext patterns:
+
+- `[✓]` - Success/Completed
+- `[✗]` - Error/Failed
+- `[!]` - Warning/Attention needed
+- `[*]` - Action item/Note
+
+This isn't just aesthetic - it's about **professionalism and compatibility**:
+- Works in all terminals (SSH, console, logs)
+- Screen reader friendly (accessibility)
+- No encoding issues across different systems
+- Consistent with ERPNext core code style
+
+Compare to ERPNext core code:
+```python
+# From erpnext/accounts/utils.py
+frappe.throw(_("'{0}' is not a valid URL").format(frappe.bold(txt)))
+# Uses frappe.bold() for emphasis, not emojis
+```
+
+Our AI agents follow the same pattern.
+
+### 2. 100% Frappe/ERPNext Standards Compliance
+
+This was a key design goal: build something that **could be submitted to the Frappe Marketplace** without changes.
+
+Standards compliance checklist:
+
+```
+✓ No hardcoded values - All data from database queries
+✓ No custom fields - Uses only standard ERPNext fields
+✓ No core modifications - Everything in custom app
+✓ Standard Frappe utilities - flt(), cint(), throw()
+✓ Parameterized SQL - frappe.db.sql() with params
+✓ Permission checks - frappe.has_permission() on all APIs
+✓ Error logging - frappe.log_error() pattern
+✓ Translatable strings - _() function everywhere
+✓ Clean imports - No sys.path manipulation
+✓ Standard fixtures - hooks.py registration
+```
+
+Example of standards-compliant code:
+
+```python
+# ❌ WRONG - Not standard Frappe pattern
+currency = frappe.db.get_value(...) or "USD"  # Hardcoded fallback
+
+# ✅ CORRECT - Standard Frappe pattern
+currency = frappe.db.get_value(...)
+if not currency:
+    frappe.throw(_("Unable to determine currency. Please set default currency in Company master."))
+```
+
+### 3. Full Audit Trail
+
+Every workflow execution is logged in the **AI Action Log** DocType:
+
+```python
+{
+    "name": "AI-ACT-2025-00224",
+    "workflow_type": "Pre-Close Checklist",
+    "company": "Noreli North",
+    "user": "admin@example.com",
+    "execution_start": "2025-10-10 14:23:15",
+    "execution_end": "2025-10-10 14:23:30",
+    "execution_time_seconds": 15.3,
+    "status": "Success",
+    "token_usage": 1234,
+    "conversation_history": [...],  # Full LangChain conversation
+    "output_data": {...}             # Structured results
+}
+```
+
+This provides:
+- Complete traceability (who ran what, when)
+- Performance metrics (execution time, token usage)
+- Debugging capability (full conversation history)
+- Compliance documentation
+
+### 4. Extensibility
+
+Want to build your own workflows? The framework makes it easy:
+
+```python
+# 1. Create a new AI Action Type
+{
+    "action_name": "Budget Variance Analysis",
+    "system_prompt": """
+You are a financial analyst. Analyze budget variance for the period.
+
+Use these tools:
+1. GetBudgetData - Get budgeted amounts
+2. GetActualData - Get actual amounts
+3. CalculateVariance - Calculate differences
+
+Report:
+- [!] Variances > 10%
+- [✓] Variances < 5%
+- [*] Recommended actions
+    """,
+    "tools": ["GetBudgetData", "GetActualData", "CalculateVariance"]
+}
+
+# 2. Implement your custom tools
+class GetBudgetDataInput(BaseModel):
+    company: str
+    cost_center: str
+    fiscal_year: str
+
+def get_budget_data_func(company, cost_center, fiscal_year):
+    budget = frappe.get_all(
+        "Budget",
+        filters={"company": company, "cost_center": cost_center, "fiscal_year": fiscal_year},
+        fields=["*"]
+    )
+    return {"success": True, "budget": budget}
+
+# 3. Register and run
+# That's it! The framework handles the rest.
+```
+
+---
+
+## Real-World Impact: The Numbers
+
+Let's look at the concrete impact for a company with 5 legal entities:
+
+### Time Savings
+
+| Metric | Before | After | Savings |
+|--------|--------|-------|---------|
+| **Per Execution** | 2 hours | 15 seconds | 99.8% |
+| **Per Month (5 companies)** | 10 hours | 1.25 minutes | 99.8% |
+| **Per Year** | 120 hours | 15 minutes | 99.8% |
+| **Annual Cost Savings** | $6,000 | $12.50 | $5,987.50 |
+
+### Quality Improvements
+
+| Metric | Before | After |
+|--------|--------|-------|
+| **Error Rate** | 15-20% | <1% |
+| **Consistency** | Variable (person-dependent) | 100% consistent |
+| **Audit Trail** | None | Complete |
+| **Availability** | Business hours only | 24/7 |
+
+### Scalability
+
+The beauty of AI agents: **marginal cost of additional companies is near zero**.
+
+- 1 company: 15 seconds
+- 5 companies: 75 seconds (1.25 minutes)
+- 50 companies: 12.5 minutes
+
+Compare to manual:
+- 1 company: 2 hours
+- 5 companies: 10 hours
+- 50 companies: 100 hours (2.5 work weeks!)
+
+---
+
+## Installation & Setup
 
 ### Prerequisites
 
-- **Frappe Framework**: v15.84.0 or higher
-- **ERPNext**: v15.81.0 or higher
-- **Python**: 3.10+
-- **OpenAI API Key**: Optional (for AI features)
+- ERPNext v15+ installed
+- Python 3.10+
+- Frappe bench setup
+- Access to OpenAI or Anthropic API
 
 ### Installation Steps
 
-```bash
-# 1. Navigate to frappe-bench
-cd /path/to/frappe-bench
-
-# 2. Get the app from GitHub
-bench get-app journal_validation https://github.com/[your-repo]/journal_validation.git
-
-# 3. Install on your site
-bench --site [site-name] install-app journal_validation
-
-# 4. Run migrations to create DocTypes
-bench --site [site-name] migrate
-
-# 5. Build assets
-bench build --app journal_validation
-
-# 6. Restart bench
-bench restart
-```
-
-### Verify Installation
+#### 1. Install the App
 
 ```bash
-# Check app is installed
-bench --site [site-name] list-apps
-# Should show: journal_validation
+# Get the app from GitHub
+cd frappe-bench
+bench get-app ai-agent-framework https://github.com/your-org/ai-agent-framework
 
-# Run tests to verify functionality
-bench --site [site-name] run-tests --app journal_validation
-# Expected: All 12+ tests pass ✓
+# Install on your site
+bench --site [your-site] install-app ai_agent_framework
+
+# Migrate to load fixtures
+bench --site [your-site] migrate
 ```
 
-### Quick Test
+#### 2. Configure AI Provider
 
-1. Log into ERPNext
-2. Navigate to **Journal Validation** workspace (appears in Desk)
-3. Go to **Journal Validation Settings**
-4. Enable **Automatic Validation**
-5. Set thresholds: Low = 30%, High = 60%
-6. Save settings
-7. Create a test journal entry with no description and large amount
-8. Should be flagged with risk score and violations
-
-**If validation runs successfully, installation is complete!**
-
----
-
-## Configuration Deep Dive
-
-This section provides a **complete walkthrough** of every setting and configuration option in the Journal Validation app.
-
-### Accessing Settings
-
-Navigate to: **Journal Validation > Journal Validation Settings**
-
-This is a **Single DocType** - only one configuration record exists per site. All settings are controlled from this one location.
-
-### Section 1: General Settings
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  GENERAL SETTINGS                                            │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  ☑ Enable Automatic Validation                              │
-│  ☐ Enable AI Suggestions                                    │
-│  ☐ Require Approval for High Risk                           │
-│  ☑ Send Email Notifications                                 │
-│  ☐ Block High Risk Entries                                  │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+```bash
+# Via ERPNext UI:
+1. Navigate to: AI Assistant → AI Provider
+2. Create new provider:
+   - Provider: OpenAI (or Anthropic)
+   - API Key: [your-api-key]
+   - Default Model: gpt-4 (or claude-3-opus)
+3. Save
 ```
 
-**Enable Automatic Validation** (Checkbox)
-- **Purpose**: Master switch for the entire validation system
-- **When enabled**: Every journal entry save/submit triggers validation
-- **When disabled**: No validation runs (use for troubleshooting)
-- **Default**: Unchecked (you must explicitly enable)
-- **Recommendation**: Enable after configuring rules
+#### 3. Verify Installation
 
-**Enable AI Suggestions** (Checkbox)
-- **Purpose**: Makes "Get AI Suggestions" button available on validation results
-- **Requires**: OpenAI API key configured below
-- **Cost**: ~$0.02 per high-risk entry analyzed
-- **When enabled**: Users can click button to get GPT-4 analysis
-- **When disabled**: AI suggestions not available (saves cost)
-- **Default**: Unchecked
-- **Recommendation**: Enable if budget allows; very valuable for high-risk entries
-
-**Require Approval for High Risk** (Checkbox)
-- **Purpose**: Forces high-risk entries through approval workflow before posting
-- **Requires**: Workflow configured for Journal Entry DocType
-- **When enabled**: Entries with risk score >60% cannot submit without approval
-- **When disabled**: High-risk entries show warning but can submit
-- **Default**: Unchecked
-- **Recommendation**: Enable for strong internal controls
-
-**Send Email Notifications** (Checkbox)
-- **Purpose**: Enables automatic email alerts for high-risk entries
-- **Requires**: Notification email address configured below
-- **When enabled**: Email sent immediately when high-risk entry created
-- **When disabled**: No emails sent (rely on dashboard monitoring)
-- **Default**: Unchecked
-- **Recommendation**: Enable for real-time awareness
-
-**Block High Risk Entries** (Checkbox)
-- **Purpose**: Prevents saving/submitting entries above high-risk threshold
-- **When enabled**: User sees error and cannot proceed with risk score >60%
-- **When disabled**: User sees warning but can proceed
-- **Default**: Unchecked
-- **Recommendation**: Use with caution - may disrupt workflows; prefer approval workflow instead
-
-### Section 2: Risk Thresholds
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  RISK THRESHOLDS (Percentages)                               │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  Low Risk Threshold:     30   %                             │
-│  High Risk Threshold:    60   %                             │
-│                                                              │
-│  Risk Levels:                                                │
-│  • 0-30%:   Low Risk (Green)    - No action required       │
-│  • 31-60%:  Medium Risk (Orange) - Optional review         │
-│  • 61-100%: High Risk (Red)      - Requires attention      │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+```bash
+bench --site [your-site] console
 ```
 
-**Low Risk Threshold** (Integer, 0-100)
-- **Purpose**: Defines the upper boundary of "Low Risk" range
-- **Default**: 30%
-- **Meaning**: Scores 0-30% are considered low risk (green)
-- **What it controls**:
-  - Color coding in UI (green vs orange)
-  - Whether warnings are shown
-  - Dashboard risk distribution calculation
-- **Adjustment guidance**:
-  - **Conservative** (stricter): Set to 20% (fewer entries pass as low risk)
-  - **Standard**: 30% (balanced approach)
-  - **Relaxed**: 40% (more entries considered low risk)
-- **Recommendation**: Start at 30%, adjust based on false positive rate
-
-**High Risk Threshold** (Integer, 0-100)
-- **Purpose**: Defines the lower boundary of "High Risk" range
-- **Default**: 60%
-- **Meaning**: Scores 60-100% are considered high risk (red)
-- **What it controls**:
-  - Email notifications (if enabled)
-  - Workflow triggers (if enabled)
-  - AI suggestions availability
-  - Dashboard high-risk count
-- **Adjustment guidance**:
-  - **Conservative** (stricter): Set to 50% (more entries flagged as high risk)
-  - **Standard**: 60% (balanced approach)
-  - **Relaxed**: 70% (only most severe issues flagged)
-- **Recommendation**: Start at 60%, monitor high-risk entry rate
-
-**Medium Risk Range** (Calculated)
-- **Range**: Between Low and High thresholds
-- **Example**: If Low=30% and High=60%, then Medium = 31-60%
-- **Color**: Orange
-- **Action**: Optional review, no mandatory controls
-
-### Section 3: AI Integration Settings
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  AI INTEGRATION (Optional)                                   │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  OpenAI API Key:  [sk-proj-xxxxx... (hidden)]              │
-│  Model:           [gpt-4                    ▼]             │
-│  Max Tokens:      [1000                      ]             │
-│  Temperature:     [0.1                       ]             │
-│                                                              │
-│  ☑ Enable Monthly Cost Limit                               │
-│  Monthly Cost Limit:  [$100.00]                            │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**OpenAI API Key** (Password field, hidden after save)
-- **Purpose**: Authentication for OpenAI API calls
-- **Format**: Starts with "sk-proj-" or "sk-"
-- **Where to get**: https://platform.openai.com/api-keys
-- **Security**: Stored encrypted in database, never logged
-- **Required for**: AI suggestions feature
-- **Cost**: Pay-per-use, ~$0.02 per high-risk entry analyzed
-- **Recommendation**: Create a dedicated API key for this app
-
-**Model** (Select dropdown)
-- **Purpose**: Which GPT model to use for analysis
-- **Options**:
-  - `gpt-4` (recommended) - Best quality, $0.03/1K input, $0.06/1K output
-  - `gpt-4-turbo` - Faster, same quality, slightly cheaper
-  - `gpt-3.5-turbo` - Cheaper ($0.001/1K), lower quality
-- **Default**: gpt-4
-- **Recommendation**: Use gpt-4 for production (quality matters for fraud detection)
-
-**Max Tokens** (Integer, 100-4000)
-- **Purpose**: Maximum length of AI response
-- **Default**: 1000
-- **Meaning**: Limits how long AI can write (cost control)
-- **Typical usage**: 500-800 tokens per response
-- **Recommendation**: 1000 is good balance between detail and cost
-
-**Temperature** (Float, 0.0-1.0)
-- **Purpose**: Controls AI creativity vs consistency
-- **Default**: 0.1
-- **Meaning**:
-  - **0.0-0.2**: Very focused, deterministic (recommended for analysis)
-  - **0.3-0.7**: Balanced creativity
-  - **0.8-1.0**: Very creative, varied responses
-- **Recommendation**: Keep at 0.1 for consistent, factual analysis
-
-**Enable Monthly Cost Limit** (Checkbox)
-- **Purpose**: Prevents runaway AI costs
-- **When enabled**: Tracks monthly spending, stops AI calls if limit reached
-- **When disabled**: No cost controls (unlimited)
-- **Default**: Unchecked
-- **Recommendation**: Enable for budget control
-
-**Monthly Cost Limit** (Currency)
-- **Purpose**: Maximum AI spending per calendar month
-- **Example**: $100 = ~5,000 high-risk entries analyzed
-- **What happens when reached**: AI suggestions disabled until next month
-- **Notification**: Email sent to admin when 80% of limit reached
-- **Recommendation**: Set based on expected high-risk entry volume
-
-### Section 4: Notification Settings
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  EMAIL NOTIFICATIONS                                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  Notification Email:  [controller@company.com              ] │
-│                       [cfo@company.com                     ] │
-│                       [audit@company.com                   ] │
-│                                                              │
-│  ☑ Send Real-Time Alerts (High Risk entries)               │
-│  ☑ Send Daily Summary                                       │
-│  ☐ Send Weekly Summary                                      │
-│  ☐ Send Monthly Summary                                     │
-│                                                              │
-│  Daily Summary Time:  [08:00 AM]                            │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**Notification Email** (Text, multiple lines)
-- **Purpose**: Who receives validation alerts
-- **Format**: One email per line
-- **Example**:
-  ```
-  controller@company.com
-  cfo@company.com
-  audit@company.com
-  ```
-- **Used for**:
-  - Real-time high-risk alerts
-  - Daily/weekly/monthly summaries
-  - System error notifications
-- **Recommendation**: Include controller, CFO, and internal audit
-
-**Send Real-Time Alerts** (Checkbox)
-- **Purpose**: Immediate email when high-risk entry created
-- **When enabled**: Email sent within seconds of entry save
-- **Email contains**:
-  - Journal entry name and link
-  - Risk score and level
-  - List of violations
-  - Link to validation result
-- **Use case**: Immediate awareness of critical issues
-- **Recommendation**: Enable for high-risk entries only (avoid alert fatigue)
-
-**Send Daily Summary** (Checkbox)
-- **Purpose**: Daily digest of validation activity
-- **When enabled**: Email sent every day at configured time
-- **Email contains**:
-  - Total entries validated
-  - Risk distribution (low/medium/high counts)
-  - Top violations
-  - Links to high-risk entries
-- **Use case**: Regular monitoring without constant alerts
-- **Recommendation**: Enable for daily awareness
-
-**Send Weekly/Monthly Summary** (Checkboxes)
-- **Purpose**: Periodic analytics reports
-- **When enabled**: Email sent weekly (Monday) or monthly (1st)
-- **Email contains**:
-  - Trend analysis
-  - Comparison to previous period
-  - Top violators (accounts, users)
-  - Summary statistics
-- **Use case**: Management reporting
-- **Recommendation**: Enable based on reporting needs
-
-**Daily Summary Time** (Time picker)
-- **Purpose**: When to send daily summary email
-- **Default**: 08:00 AM
-- **Format**: 24-hour time
-- **Server timezone used** (check ERPNext system settings)
-- **Recommendation**: Early morning before business starts
-
-### Section 5: Validation Rules (Child Table)
-
-This is where the magic happens - **configuring what to check and how much risk each issue contributes**.
-
-```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│  VALIDATION RULES                                                            │
-├──────────────────────────────────────────────────────────────────────────────┤
-│                                                                              │
-│  Rule Name              │ Weight │ Threshold │ Enabled │ Description        │
-│ ────────────────────────┼────────┼───────────┼─────────┼─────────────────── │
-│  UNBALANCED_ENTRY       │  50%   │ 0.01      │   ☑    │ Debit ≠ Credit    │
-│  AMOUNT_VERY_HIGH       │  20%   │ 500,000   │   ☑    │ Very large amount │
-│  AMOUNT_HIGH_RISK       │  10%   │ 100,000   │   ☑    │ High amount       │
-│  MISSING_DESCRIPTION    │   8%   │ N/A       │   ☑    │ No description    │
-│  WEEKEND_POSTING        │   7%   │ N/A       │   ☑    │ Sat/Sun posting   │
-│  UNUSUAL_ACCOUNTS       │   5%   │ N/A       │   ☑    │ Odd account combo │
-│ ────────────────────────┴────────┴───────────┴─────────┴─────────────────── │
-│  TOTAL WEIGHT:  100%                                                        │
-└──────────────────────────────────────────────────────────────────────────────┘
-```
-
-Each row in this table defines one validation rule. Let's examine each field:
-
-**Rule Name** (Text, required)
-- **Purpose**: Unique identifier for the rule
-- **Format**: UPPERCASE_WITH_UNDERSCORES
-- **Used in**: Code, validation results, reports
-- **Examples**: UNBALANCED_ENTRY, MISSING_DESCRIPTION
-- **Note**: Must match function name in `rule_engine.py`
-
-**Weight** (Percentage, 0-100%)
-- **Purpose**: How much this rule contributes to total risk score
-- **IMPORTANT**: Sum of all enabled rule weights should = 100%
-- **Example**: If UNBALANCED_ENTRY weight is 50%, violating this rule alone gives 50% risk score
-- **Validation**: System warns if total ≠ 100%
-- **Recommendation**: Use the standard weights initially, adjust based on your risk priorities
-
-**Threshold** (Float, optional)
-- **Purpose**: Numeric limit for amount-based or tolerance-based rules
-- **Used by**: UNBALANCED_ENTRY (tolerance), AMOUNT_HIGH_RISK (amount limit)
-- **Examples**:
-  - UNBALANCED_ENTRY: 0.01 (allow 1 cent rounding difference)
-  - AMOUNT_VERY_HIGH: 500,000 (flag entries over $500K)
-  - AMOUNT_HIGH_RISK: 100,000 (flag entries over $100K)
-- **Not used by**: Rules like MISSING_DESCRIPTION, WEEKEND_POSTING (binary checks)
-
-**Enabled** (Checkbox)
-- **Purpose**: Turn rule on/off without deleting
-- **When checked**: Rule is evaluated
-- **When unchecked**: Rule skipped (weight not counted)
-- **Use case**: Temporarily disable problematic rule while tuning
-- **Recommendation**: All rules enabled for comprehensive coverage
-
-**Description** (Text)
-- **Purpose**: Human-readable explanation of what rule checks
-- **Shown in**: Validation results, reports, user messages
-- **Examples**:
-  - "Debits must equal credits within tolerance"
-  - "Journal entries over $500K require CFO approval"
-- **Recommendation**: Clear, non-technical language
-
-[continuing...]
-
-
----
-
-## Validation Rules Explained
-
-Each validation rule in the system evaluates a specific risk factor. Here's the detailed logic for each standard rule:
-
-### 1. UNBALANCED_ENTRY (Weight: 50%)
-
-**Purpose**: Catch accounting fundamental violations where debits ≠ credits
-
-**Logic**:
 ```python
-# Pseudo-code for rule evaluation
-total_debit = sum(entry.debit for entry in journal_entry.accounts)
-total_credit = sum(entry.credit for entry in journal_entry.accounts)
-difference = abs(total_debit - total_credit)
-
-if difference > matching_tolerance:  # e.g., 0.01
-    violation_triggered = True
-    risk_contribution = 50%  # This rule alone puts entry at 50% risk
+>>> import frappe
+>>> frappe.init('your-site')
+>>> frappe.connect()
+>>>
+>>> # Check workflows are loaded
+>>> workflows = frappe.get_all('AI Action Type', filters={'enabled': 1})
+>>> print(f"Found {len(workflows)} workflow(s)")
+>>> # Should show: Found 3 workflow(s)
+>>>
+>>> # Test run
+>>> from ai_agent_framework.api.ai_workflows import run_workflow
+>>> result = run_workflow(
+...     workflow_type='Pre-Close Checklist',
+...     company='Your Company Name'
+... )
+>>> print(f"Success: {result.get('success')}")
+>>> # Should show: Success: True
 ```
 
-**Why 50% weight?**
-- This is the most critical accounting rule
-- An unbalanced entry cannot be posted in a proper accounting system
-- Even one unbalanced entry can corrupt financial statements
-- Requires immediate correction before any other review
+#### 4. Run Your First Workflow
 
-**Example Scenarios**:
-- **Triggers**: Journal entry with $100,000 debit to Cash, but only $99,000 credit to Revenue (difference: $1,000)
-- **Does NOT trigger**: Journal entry with $100,000.005 debit and $100,000.000 credit (difference: $0.005, within tolerance)
+Via ERPNext UI:
 
-**Threshold**: Uses `matching_tolerance` from settings (typically 0.01 = 1 cent)
+```
+1. Navigate to: AI Agent Framework workspace
+2. Click: Run Workflow
+3. Select:
+   - Workflow Type: Pre-Close Checklist
+   - Company: [your company]
+   - From Date: 2025-10-01
+   - To Date: 2025-10-31
+4. Click: Execute
+5. View results in real-time
+6. Check AI Action Log for full details
+```
 
 ---
 
-### 2. AMOUNT_VERY_HIGH (Weight: 20%)
+## Advanced Topics
 
-**Purpose**: Flag extraordinarily large journal entries that may require CFO-level approval
+### Custom Tool Development
 
-**Logic**:
+Building a custom tool is straightforward:
+
 ```python
-# Calculate total absolute value of journal entry
-total_amount = sum(abs(entry.debit) + abs(entry.credit) 
-                   for entry in journal_entry.accounts)
+# File: ai_agent_framework/tools/finance/budget_variance_tool.py
 
-if total_amount > very_high_threshold:  # e.g., 500,000
-    violation_triggered = True
-    risk_contribution = 20%
+from langchain.tools import BaseTool
+from pydantic import BaseModel, Field
+import frappe
+from frappe.utils import flt
+import json
+
+class BudgetVarianceInput(BaseModel):
+    """Input schema for budget variance tool."""
+    company: str = Field(..., description="Company name")
+    cost_center: str = Field(..., description="Cost center name")
+    fiscal_year: str = Field(..., description="Fiscal year")
+
+def calculate_budget_variance(company: str, cost_center: str, fiscal_year: str) -> str:
+    """
+    Calculate variance between budgeted and actual amounts.
+
+    Standard Frappe pattern:
+    - Query Budget and GL Entry
+    - Calculate variance
+    - Return structured JSON
+    """
+
+    # Get budget (standard Frappe ORM)
+    budget_accounts = frappe.get_all(
+        "Budget Account",
+        filters={
+            "parent": ["like", f"%{fiscal_year}%"],
+            "cost_center": cost_center
+        },
+        fields=["account", "budget_amount"]
+    )
+
+    # Get actuals from GL Entry
+    actuals = {}
+    for ba in budget_accounts:
+        actual = frappe.db.sql("""
+            SELECT SUM(debit) - SUM(credit) as net_amount
+            FROM `tabGL Entry`
+            WHERE account = %(account)s
+              AND cost_center = %(cost_center)s
+              AND company = %(company)s
+              AND fiscal_year = %(fiscal_year)s
+        """, {
+            "account": ba.account,
+            "cost_center": cost_center,
+            "company": company,
+            "fiscal_year": fiscal_year
+        }, as_dict=True)
+
+        actuals[ba.account] = flt(actual[0].net_amount) if actual else 0
+
+    # Calculate variances
+    variances = []
+    for ba in budget_accounts:
+        budgeted = flt(ba.budget_amount)
+        actual = actuals.get(ba.account, 0)
+        variance = actual - budgeted
+        variance_pct = (variance / budgeted * 100) if budgeted else 0
+
+        variances.append({
+            "account": ba.account,
+            "budgeted": budgeted,
+            "actual": actual,
+            "variance": variance,
+            "variance_percent": variance_pct,
+            "status": "over" if variance > 0 else "under"
+        })
+
+    return json.dumps({
+        "success": True,
+        "company": company,
+        "cost_center": cost_center,
+        "fiscal_year": fiscal_year,
+        "variances": variances,
+        "summary": {
+            "total_budget": sum(flt(ba.budget_amount) for ba in budget_accounts),
+            "total_actual": sum(actuals.values()),
+            "major_variances": [v for v in variances if abs(v["variance_percent"]) > 10]
+        }
+    }, indent=2, default=str)
+
+# Register tool
+from ai_agent_framework.tools.tool_registry import ToolRegistry
+ToolRegistry.register_tool(
+    name="CalculateBudgetVariance",
+    func=calculate_budget_variance,
+    input_model=BudgetVarianceInput,
+    description="Calculate variance between budgeted and actual amounts for a cost center"
+)
 ```
 
-**Why 20% weight?**
-- Very large amounts have high potential for material misstatement
-- Amounts over $500K typically require executive approval
-- Can significantly impact financial ratios and statements
-- Often target of fraud schemes (e.g., fictitious revenue)
+### Prompt Engineering Best Practices
 
-**Example Scenarios**:
-- **Triggers**: Journal entry with $600,000 debit to Cash, $600,000 credit to Revenue (total: $1.2M)
-- **Does NOT trigger**: Journal entry with $400,000 debit/credit (below threshold)
+The system prompt is crucial. Here are best practices:
 
-**Threshold**: Configurable via `very_high_amount_threshold` setting (default: 500,000)
+#### 1. Be Specific About Tool Order
 
-**Business Context**:
-- Public companies: Often set to materiality threshold (e.g., 0.5% of revenue)
-- Private companies: May set based on CFO approval limits
-- Subsidiaries: Typically lower threshold than parent company
+```
+❌ Bad:
+"Check invoices and payments."
+
+✅ Good:
+"Use the provided tools in this order:
+1. CheckInvoiceStatus - Verify all invoices submitted
+2. CheckPaymentReconciliation - Verify payments reconciled
+..."
+```
+
+#### 2. Define Output Format Explicitly
+
+```
+❌ Bad:
+"Report the results."
+
+✅ Good:
+"For each check, provide:
+- [✓] Items ready for close
+- [!] Issues needing attention
+- [*] Specific action items with document names"
+```
+
+#### 3. Include Examples
+
+```
+✓ Good:
+"Example output:
+[✓] All 5 invoices submitted
+[!] 2 payments unreconciled: PE-2025-00123 ($500), PE-2025-00124 ($750)
+[*] Action: Reconcile payments before close"
+```
+
+#### 4. Handle Edge Cases
+
+```
+✓ Good:
+"If NO bank accounts found, report: 'No bank accounts configured'
+If ALL invoices are draft, flag as critical issue
+If outstanding items > $10,000, prioritize by customer"
+```
 
 ---
 
-### 3. AMOUNT_HIGH_RISK (Weight: 10%)
+## Lessons Learned
 
-**Purpose**: Flag large journal entries that warrant controller-level review
+### 1. Standards Compliance is Non-Negotiable
 
-**Logic**:
+Early versions had shortcuts like:
 ```python
-total_amount = sum(abs(entry.debit) + abs(entry.credit) 
-                   for entry in journal_entry.accounts)
-
-if total_amount > high_risk_threshold and total_amount <= very_high_threshold:
-    violation_triggered = True
-    risk_contribution = 10%
+# Don't do this
+tolerance = settings.matching_tolerance or 0.01  # Hardcoded fallback
 ```
 
-**Why 10% weight?**
-- Amounts over $100K are significant but not executive-level
-- Provides graduated risk assessment (not binary high/low)
-- Catches entries that slip below "very high" radar
-- Aligns with typical controller approval thresholds
-
-**Example Scenarios**:
-- **Triggers**: Journal entry with $150,000 debit/credit (between $100K and $500K)
-- **Does NOT trigger**: Journal entry with $50,000 (below threshold) or $600K (triggers AMOUNT_VERY_HIGH instead)
-
-**Threshold**: Configurable via `high_risk_amount_threshold` setting (default: 100,000)
-
-**Note**: This rule and AMOUNT_VERY_HIGH are mutually exclusive in practice - only one triggers per entry.
-
----
-
-### 4. MISSING_DESCRIPTION (Weight: 8%)
-
-**Purpose**: Ensure adequate documentation for audit trail
-
-**Logic**:
+We removed ALL hardcoded values:
 ```python
-description = journal_entry.user_remark or journal_entry.remark or ""
-description_clean = description.strip()
-
-if not description_clean or len(description_clean) < minimum_length:
-    violation_triggered = True
-    risk_contribution = 8%
+# Do this
+tolerance = flt(settings.matching_tolerance)
+if not tolerance:
+    frappe.throw(_("Please configure Matching Tolerance in Settings"))
 ```
 
-**Why 8% weight?**
-- Documentation is critical for audit compliance (SOX 404, IAS 1)
-- Missing descriptions make fraud investigations difficult
-- Required by external auditors
-- Lower weight than amount-based rules but still significant
+**Why**: Hardcoded values make the app unprofessional and violate Frappe standards. Configuration should come from the database.
 
-**Example Scenarios**:
-- **Triggers**: 
-  - Journal entry with empty `user_remark` field
-  - Journal entry with whitespace only: "   "
-  - Journal entry with very brief description: "adj" (if minimum length = 10)
-- **Does NOT trigger**: 
-  - Journal entry with clear description: "Accrue October consulting fees per invoice #12345"
+### 2. Professional Formatting Matters
 
-**Additional Checks** (implementation-dependent):
-- Minimum description length (e.g., 10 characters)
-- Forbidden generic descriptions (e.g., "misc", "adj", "correction")
-- Required keywords for certain account combinations
+We initially used emojis (✅ ❌ ⚠️). User feedback was clear: "This looks unprofessional for enterprise use."
 
-**Best Practice**: Require format like "[Account] [Action] [Reason] [Reference]"
-- Example: "Prepaid Insurance - Recognize monthly expense - October 2025 - Policy #ABC123"
+We switched to text-based indicators ([✓] [✗] [!]) and the response was overwhelmingly positive.
 
----
+**Why**: ERPNext is used in professional environments. The output should match that context.
 
-### 5. WEEKEND_POSTING (Weight: 7%)
+### 3. Idempotent Operations are Critical
 
-**Purpose**: Detect off-hours activity that may indicate fraud or policy violations
-
-**Logic**:
+Early versions threw errors when re-running operations:
 ```python
-import datetime
-
-posting_date = journal_entry.posting_date
-day_of_week = posting_date.weekday()  # Monday=0, Sunday=6
-
-if day_of_week in [5, 6]:  # Saturday=5, Sunday=6
-    violation_triggered = True
-    risk_contribution = 7%
+# Don't do this
+if match_group.status == "Eliminated":
+    raise Exception("Already eliminated!")
 ```
 
-**Why 7% weight?**
-- Off-hours posting is a known fraud red flag (ACFE)
-- Violates segregation of duties (no supervisor review available)
-- May indicate backdating or concealment
-- Less critical than financial/documentation issues (hence 7% not 20%)
-
-**Example Scenarios**:
-- **Triggers**: 
-  - Journal entry posted on Saturday, December 30, 2025
-  - Journal entry posted on Sunday, January 5, 2025
-- **Does NOT trigger**: 
-  - Journal entry posted on Friday, December 27, 2025 (weekday)
-  - Journal entry posted on Monday, December 30, 2025 (weekday)
-
-**Enhancement Opportunities**:
-- Extend to off-hours detection (e.g., after 10 PM or before 6 AM)
-- Add holiday detection (New Year's Day, Christmas)
-- Whitelist specific users (e.g., month-end close team)
-- Increase weight during audit periods
-
-**Business Context**:
-- Retail/hospitality: Weekends are normal business days (disable this rule)
-- Professional services: Weekends suspicious (keep enabled)
-- Global companies: Consider time zones when evaluating
-
----
-
-### 6. UNUSUAL_ACCOUNTS (Weight: 5%)
-
-**Purpose**: Detect account combinations that are uncommon or suspicious
-
-**Logic**:
+Fixed by making operations idempotent:
 ```python
-# Simplified pseudo-code
-account_combinations = [
-    (entry.account, entry.debit > 0) 
-    for entry in journal_entry.accounts
-]
-
-for combo in account_combinations:
-    if combo in SUSPICIOUS_PATTERNS:
-        violation_triggered = True
-        risk_contribution = 5%
-        break
+# Do this
+if match_group.status == "Eliminated":
+    return {"success": True, "already_eliminated": True}
 ```
 
-**Why 5% weight?**
-- Context-dependent (what's "unusual" varies by company)
-- More subjective than other rules
-- Lower weight reflects uncertainty
-- Still valuable for catching creative accounting
+**Why**: Users will re-run workflows. The system should handle this gracefully.
 
-**Example Suspicious Patterns**:
+### 4. Explicit is Better Than Implicit
 
-| Debit Account | Credit Account | Why Suspicious |
-|---------------|----------------|----------------|
-| Cash | Revenue | Direct revenue recognition without AR (possible fictitious revenue) |
-| Expense | Expense | Unusual expense reclassification (possible earnings management) |
-| Retained Earnings | Revenue | Direct equity manipulation (violates GAAP) |
-| Asset | Asset | May indicate capitalization of expense (financial statement manipulation) |
-| Cash | Cash | Same account on both sides (typically indicates error) |
-
-**Configuration**:
-Most implementations allow custom suspicious patterns via settings:
-
-```json
-{
-  "unusual_account_patterns": [
-    {"debit": "Cash", "credit": "Revenue", "reason": "Revenue recognition bypass"},
-    {"debit": "Retained Earnings", "credit": "Revenue", "reason": "Equity manipulation"}
-  ]
-}
-```
-
-**Enhancement Opportunities**:
-- Machine learning to detect unusual patterns based on historical data
-- Industry-specific pattern templates
-- Integration with account attributes (e.g., "never debit" accounts)
-- Statistical analysis: flag combinations used <1% of time
-
-**Note**: This is the most extensible rule - companies often customize heavily based on their chart of accounts and risk appetite.
-
----
-
-## How Risk Scores Combine
-
-**Key Principle**: Risk scores are **additive** - each violated rule contributes its weight percentage.
-
-### Example 1: Low-Risk Entry
-**Scenario**: Small routine accrual on Thursday with description
-
-- Journal Entry: Debit Professional Fees $5,000 / Credit Accrued Expenses $5,000
-- Posting Date: Thursday, October 10, 2025
-- Description: "Accrue October consulting services per agreement dated 10/1/2025"
-
-**Rule Evaluation**:
-- ❌ UNBALANCED_ENTRY: No violation (debits = credits)
-- ❌ AMOUNT_VERY_HIGH: No violation ($10K total < $500K threshold)
-- ❌ AMOUNT_HIGH_RISK: No violation ($10K total < $100K threshold)
-- ❌ MISSING_DESCRIPTION: No violation (clear description provided)
-- ❌ WEEKEND_POSTING: No violation (Thursday = weekday)
-- ❌ UNUSUAL_ACCOUNTS: No violation (Professional Fees/Accrued Expenses is normal)
-
-**Final Risk Score**: 0% (Low Risk - Green)
-
----
-
-### Example 2: Medium-Risk Entry
-**Scenario**: Large entry with no description on weekday
-
-- Journal Entry: Debit Prepaid Insurance $120,000 / Credit Cash $120,000
-- Posting Date: Wednesday, October 15, 2025
-- Description: (empty)
-
-**Rule Evaluation**:
-- ❌ UNBALANCED_ENTRY: No violation (debits = credits)
-- ❌ AMOUNT_VERY_HIGH: No violation ($240K total < $500K threshold)
-- ✅ AMOUNT_HIGH_RISK: **VIOLATION** ($240K total > $100K threshold) → +10%
-- ✅ MISSING_DESCRIPTION: **VIOLATION** (no description provided) → +8%
-- ❌ WEEKEND_POSTING: No violation (Wednesday = weekday)
-- ❌ UNUSUAL_ACCOUNTS: No violation (Prepaid Insurance/Cash is normal)
-
-**Final Risk Score**: 10% + 8% = **18%** (Low Risk - Green, but flagged for review)
-
----
-
-### Example 3: High-Risk Entry
-**Scenario**: Very large cash-to-revenue entry on weekend with no description
-
-- Journal Entry: Debit Cash $600,000 / Credit Revenue $600,000
-- Posting Date: Saturday, October 12, 2025
-- Description: (empty)
-
-**Rule Evaluation**:
-- ❌ UNBALANCED_ENTRY: No violation (debits = credits)
-- ✅ AMOUNT_VERY_HIGH: **VIOLATION** ($1.2M total > $500K threshold) → +20%
-- ❌ AMOUNT_HIGH_RISK: No violation (AMOUNT_VERY_HIGH takes precedence)
-- ✅ MISSING_DESCRIPTION: **VIOLATION** (no description provided) → +8%
-- ✅ WEEKEND_POSTING: **VIOLATION** (Saturday = weekend) → +7%
-- ✅ UNUSUAL_ACCOUNTS: **VIOLATION** (Cash/Revenue direct recognition) → +5%
-
-**Final Risk Score**: 20% + 8% + 7% + 5% = **40%** (Medium Risk - Orange)
-
-**Why not High Risk?** Even with 4 violations, the score is 40% (below 61% threshold). This demonstrates the calibrated weighting system.
-
----
-
-### Example 4: Critical Entry
-**Scenario**: Unbalanced entry (most serious violation)
-
-- Journal Entry: Debit Cash $100,000 / Credit Revenue $99,500
-- Posting Date: Thursday, October 10, 2025
-- Description: "Revenue recognition Q4"
-
-**Rule Evaluation**:
-- ✅ UNBALANCED_ENTRY: **CRITICAL VIOLATION** (difference = $500 > tolerance) → +50%
-- ❌ AMOUNT_VERY_HIGH: No violation ($199.5K total < $500K threshold)
-- ✅ AMOUNT_HIGH_RISK: **VIOLATION** ($199.5K total > $100K threshold) → +10%
-- ❌ MISSING_DESCRIPTION: No violation (description provided)
-- ❌ WEEKEND_POSTING: No violation (Thursday = weekday)
-- ❌ UNUSUAL_ACCOUNTS: No violation (though Cash/Revenue is suspicious, it's not in pattern list for this example)
-
-**Final Risk Score**: 50% + 10% = **60%** (Medium Risk - Orange, approaching High)
-
-**Critical Note**: An unbalanced entry should typically be **blocked from submission** rather than just flagged. Most implementations prevent save/submit when UNBALANCED_ENTRY triggers.
-
----
-
-## Dashboard & Analytics
-
-The Journal Validation Dashboard provides comprehensive visibility into risk across your entire organization. Here's what each KPI and visualization shows:
-
-### Summary Statistics
-
-**Total Entries Validated**
-- **What it shows**: Count of all journal entries validated in the selected date range
-- **Calculation**: `COUNT(*) FROM tabJournal Validation Result WHERE posting_date BETWEEN from_date AND to_date`
-- **Business use**: Demonstrates control coverage - you're validating 100% of entries (vs 20-30% manual review)
-- **Example**: "1,247 entries validated" (for last 30 days)
-
-**Low Risk Entries**
-- **What it shows**: Count of entries with risk score 0-30%
-- **Calculation**: `COUNT(*) WHERE risk_score <= low_risk_threshold`
-- **Percentage**: `(Low Risk Count / Total Count) × 100`
-- **Business use**: Shows baseline quality - high percentage (70-80%) indicates good entry quality
-- **Example**: "961 entries (77%)" - indicates most entries are routine and compliant
-- **Color coding**: Green badge
-
-**Medium Risk Entries**
-- **What it shows**: Count of entries with risk score 31-60%
-- **Calculation**: `COUNT(*) WHERE risk_score > low_risk_threshold AND risk_score <= high_risk_threshold`
-- **Percentage**: `(Medium Risk Count / Total Count) × 100`
-- **Business use**: Focus area for controller review - not critical but warrant attention
-- **Example**: "125 entries (10%)" - typical target range is 10-15%
-- **Color coding**: Orange badge
-
-**High Risk Entries**
-- **What it shows**: Count of entries with risk score 61-100%
-- **Calculation**: `COUNT(*) WHERE risk_score > high_risk_threshold`
-- **Percentage**: `(High Risk Count / Total Count) × 100`
-- **Business use**: Immediate attention required - potential fraud or errors
-- **Example**: "161 entries (13%)" - should investigate each one
-- **Color coding**: Red badge
-- **Alert threshold**: If >20%, may indicate systemic control issues
-
-**Average Risk Score**
-- **What it shows**: Mean risk score across all validated entries
-- **Calculation**: `AVG(risk_score) FROM tabJournal Validation Result`
-- **Business use**: Trending metric - rising average indicates declining entry quality
-- **Example**: "12.4%" - indicates generally low-risk environment
-- **Interpretation**:
-  - **0-15%**: Excellent entry quality
-  - **15-25%**: Good entry quality (some improvement areas)
-  - **25-40%**: Fair entry quality (training needed)
-  - **>40%**: Poor entry quality (systemic issues)
-
----
-
-### Risk Distribution (Pie Chart)
-
-**Visual**: Pie chart with three slices (Green, Orange, Red)
-
-**Purpose**: Quick visual assessment of overall risk profile
-
-**Data**:
-- Green slice: Low risk percentage (e.g., 77%)
-- Orange slice: Medium risk percentage (e.g., 10%)
-- Red slice: High risk percentage (e.g., 13%)
-
-**Business Insights**:
-- **Healthy distribution**: 70-80% Low, 10-15% Medium, 5-10% High
-- **Warning signs**:
-  - High risk >20%: Indicates control weaknesses
-  - Low risk <50%: Indicates entry quality problems
-  - Medium risk >30%: Indicates threshold calibration issues
-
-**Interactive Features**:
-- Click slice to drill down to entry list
-- Hover to see exact count and percentage
-
-**Benchmarking**:
-- **Best-in-class**: 85% Low, 10% Medium, 5% High
-- **Industry average**: 70% Low, 18% Medium, 12% High
-- **High-risk environment**: 50% Low, 25% Medium, 25% High
-
----
-
-### Validation Trend (Line Chart)
-
-**Visual**: Line chart showing risk scores over time
-
-**X-Axis**: Date (daily, weekly, or monthly aggregation)
-
-**Y-Axis**: Average risk score (0-100%)
-
-**Purpose**: Identify trends and seasonal patterns
-
-**Data Points**:
-- Each point represents average risk score for that time period
-- Optional: Separate lines for Low/Medium/High count trends
-
-**Business Insights**:
-- **Upward trend**: Declining entry quality - investigate training needs
-- **Downward trend**: Improving controls - positive ROI indicator
-- **Spikes**: Often correlate with:
-  - Month-end close (increased volume, time pressure)
-  - Quarter-end (revenue recognition pressure)
-  - Year-end (aggressive accruals)
-  - Staff turnover (new preparers)
-- **Seasonal patterns**: 
-  - Retail: Higher risk in Q4 (holiday revenue)
-  - Manufacturing: Higher risk during inventory counts
-  - Professional services: Higher risk during billing cycles
-
-**Example Interpretation**:
-```
-Jan: 10% avg → Feb: 12% avg → Mar: 25% avg (spike!)
-```
-**Investigation**: What happened in March? 
-- New accounting staff hired?
-- System change?
-- Unusual transaction volume?
-
-**Drill-Down**: Click data point to see entries from that period
-
----
-
-### Top Violations Report
-
-**Visual**: Table showing most common rule violations
-
-**Columns**:
-1. **Rule Name**: Name of validation rule (e.g., "MISSING_DESCRIPTION")
-2. **Violation Count**: Number of times rule triggered
-3. **Percentage**: `(Violation Count / Total Entries) × 100`
-4. **Avg Risk Contribution**: Average risk added by this rule when it triggers
-
-**Example**:
-
-| Rule Name | Violations | % of Entries | Avg Risk Added |
-|-----------|------------|--------------|----------------|
-| MISSING_DESCRIPTION | 361 | 29% | 8% |
-| AMOUNT_HIGH_RISK | 203 | 16% | 10% |
-| WEEKEND_POSTING | 87 | 7% | 7% |
-| UNUSUAL_ACCOUNTS | 62 | 5% | 5% |
-| AMOUNT_VERY_HIGH | 41 | 3% | 20% |
-| UNBALANCED_ENTRY | 2 | 0.16% | 50% |
-
-**Business Insights**:
-
-1. **MISSING_DESCRIPTION (29%)**: 
-   - **Problem**: Nearly 1 in 3 entries lacks proper documentation
-   - **Action**: Implement mandatory description field, provide description templates
-   - **ROI Impact**: Reduces audit hours (auditors spend less time requesting explanations)
-
-2. **AMOUNT_HIGH_RISK (16%)**:
-   - **Problem**: Many large entries (>$100K) being created
-   - **Action**: May need approval workflow for entries >$100K
-   - **Threshold Adjustment**: Consider raising threshold if this is normal for your company size
-
-3. **UNBALANCED_ENTRY (0.16%)**:
-   - **Problem**: Even 2 entries is concerning - violates accounting fundamentals
-   - **Action**: Implement validation to block submission (not just flag)
-   - **Critical**: Investigate these 2 entries immediately
-
-**Drill-Down**: Click rule name to see list of all entries that violated that rule
-
-**Continuous Improvement**: Use this report monthly to:
-- Identify training needs (e.g., "description writing workshop")
-- Adjust rule thresholds (if too many false positives)
-- Celebrate improvements (e.g., "Unbalanced entries down from 10 to 2")
-
----
-
-### Company Comparison (Multi-Company View)
-
-**Visual**: Table or grouped bar chart comparing risk across companies
-
-**Purpose**: Identify which subsidiaries/entities have control weaknesses
-
-**Columns**:
-1. **Company Name**: Legal entity (e.g., "Noreli North Inc.", "Noreli Europe GmbH")
-2. **Total Entries**: Count of journal entries for this company
-3. **Avg Risk Score**: Mean risk score for this company's entries
-4. **High Risk %**: Percentage of this company's entries that are high risk
-5. **Top Violation**: Most common rule violation for this company
-
-**Example**:
-
-| Company | Entries | Avg Risk | High Risk % | Top Violation |
-|---------|---------|----------|-------------|---------------|
-| Noreli North Inc. | 847 | 9.2% | 8% | MISSING_DESCRIPTION |
-| Noreli Europe GmbH | 201 | 22.1% | 19% | AMOUNT_HIGH_RISK |
-| Noreli Asia PTE | 199 | 31.5% | 27% | WEEKEND_POSTING |
-
-**Business Insights**:
-
-1. **Noreli North Inc. (9.2% avg, 8% high risk)**:
-   - **Status**: Excellent control environment
-   - **Action**: Use as benchmark for other entities
-
-2. **Noreli Europe GmbH (22.1% avg, 19% high risk)**:
-   - **Problem**: Higher risk than parent company
-   - **Investigation**: Are $100K thresholds appropriate for EUR currency?
-   - **Action**: May need currency-adjusted thresholds or more training
-
-3. **Noreli Asia PTE (31.5% avg, 27% high risk)**:
-   - **Critical**: Over 1 in 4 entries are high risk
-   - **Problem**: Weekend posting violations suggest time zone or policy issues
-   - **Action**: 
-     - Investigate if Saturday in Asia = Friday in US (time zone confusion)
-     - Provide localized training
-     - Consider appointing on-site controller
-
-**Red Flags**:
-- Any company with >20% high risk entries
-- Large variance between companies (suggests inconsistent controls)
-- Increasing risk trend for specific company
-
-**Use Cases**:
-- **Audit planning**: Focus on Noreli Asia PTE (highest risk)
-- **Resource allocation**: Send trainer to Noreli Asia office
-- **Benchmarking**: Hold up Noreli North as model for others
-
----
-
-### Filtering & Drill-Down Capabilities
-
-All dashboard visualizations support:
-
-**Date Range Filter**:
-- Last 7 days
-- Last 30 days
-- Last 90 days
-- This month
-- This quarter
-- This year
-- Custom range
-
-**Company Filter**:
-- All companies
-- Specific company (single select)
-- Multiple companies (multi-select)
-
-**Risk Level Filter**:
-- All entries
-- Low risk only
-- Medium risk only
-- High risk only
-- Medium + High combined
-
-**User Filter** (if tracking preparer):
-- All users
-- Specific user
-- Department/team
-
-**Drill-Down**:
-- Click any chart/table to see underlying journal entries
-- Export filtered results to Excel
-- One-click navigation to Journal Entry document
-
----
-
-## Batch Processing
-
-Batch processing allows you to validate historical journal entries that existed before the Journal Validation app was installed. This is critical for:
-
-- **Historical audit compliance**: Validate last 2-3 years of entries for SOX/audit
-- **Baseline establishment**: Understand historical risk profile
-- **Migration validation**: Verify entries migrated from legacy system
-- **Retroactive rule application**: Apply new rules to old entries
-
-### When to Use Batch Processing
-
-**Scenarios**:
-
-1. **Initial Installation** (most common)
-   - You install Journal Validation app on October 15, 2025
-   - You have 10,000 journal entries from 2023-2025 (pre-installation)
-   - Batch processing validates all 10,000 entries retroactively
-
-2. **New Rule Addition**
-   - You add a new custom rule "RELATED_PARTY_TRANSACTION" on November 1, 2025
-   - You want to apply this rule to entries from Jan-Oct 2025
-   - Batch processing re-validates with new rule included
-
-3. **Threshold Adjustment**
-   - You lower AMOUNT_HIGH_RISK threshold from $100K to $50K
-   - You want to see which historical entries would now be flagged
-   - Batch processing recalculates risk scores with new threshold
-
-4. **Audit Request**
-   - External auditor requests validation results for FY 2024
-   - Batch processing generates validation results for that fiscal year
-   - Export results to Excel for audit documentation
-
----
-
-### Step-by-Step: Running Batch Validation
-
-#### Step 1: Access Batch Processing
-
-**Navigation**:
-1. Go to Desk → Intercompany workspace
-2. Click "Journal Validation Settings" (or search "Journal Validation")
-3. Scroll to "Batch Processing" section
-
-**Alternative**: Direct URL `/app/journal-validation-settings`
-
----
-
-#### Step 2: Configure Batch Parameters
-
-**From Date** (Date field)
-- **Purpose**: Start date for batch processing range
-- **Example**: 2023-01-01 (validate from beginning of FY 2023)
-- **Recommendation**: 
-  - Initial installation: Go back 2-3 years (or as far back as audit requires)
-  - Threshold adjustment: Go back to last processed date
-
-**To Date** (Date field)
-- **Purpose**: End date for batch processing range
-- **Example**: 2025-10-14 (day before app installation)
-- **Recommendation**: Use yesterday's date (to avoid re-processing today's entries)
-
-**Company** (Link field - optional)
-- **Purpose**: Limit batch processing to specific company
-- **Example**: "Noreli North Inc." (if you have 10 companies but only want to validate one)
-- **Leave blank**: Process all companies
-
-**Reprocess Existing** (Checkbox)
-- **Purpose**: Controls whether to re-validate entries that already have validation results
-- **Checked**: Recalculate risk scores for ALL entries in date range (even if previously validated)
-- **Unchecked**: Only validate entries that have never been validated
-- **Use case for Checked**:
-  - You changed rule thresholds
-  - You added/modified rules
-  - You want to ensure consistency
-- **Use case for Unchecked**:
-  - Initial installation (no entries validated yet)
-  - Want to avoid duplicate processing
-
----
-
-#### Step 3: Execute Batch Job
-
-**Button**: "Run Batch Validation"
-
-**What happens when you click**:
-
-1. **Job Queued**:
-   - System creates a background job (Frappe RQ - Redis Queue)
-   - User sees message: "Batch validation queued. Check status in Background Jobs."
-   - User can navigate away - job runs in background
-
-2. **Job Executes**:
-   ```python
-   # Simplified logic
-   for each journal_entry in date_range:
-       if not reprocess_existing and entry_already_validated:
-           skip
-       else:
-           run_validation(journal_entry)
-           save_validation_result()
-           commit_every_100_entries()  # Prevent timeout
-   ```
-
-3. **Progress Tracking**:
-   - Navigate to: Desk → Tools → Background Jobs
-   - Find job: "Batch Validation: 2023-01-01 to 2025-10-14"
-   - Status shows: "Queued" → "Running" → "Completed" or "Failed"
-
-4. **Completion**:
-   - Email notification sent (if configured)
-   - System log entry created
-   - Dashboard updates with new validation results
-
----
-
-#### Step 4: Monitor Batch Job
-
-**View Background Jobs**:
-- Desk → Tools → Background Jobs
-- Filter by: "Job Type = Batch Validation"
-
-**Job Status Options**:
-- **Queued**: Waiting for worker process (if other jobs running)
-- **Running**: Currently executing (shows progress: "1,247 / 10,000 entries")
-- **Completed**: Finished successfully
-- **Failed**: Error occurred (click to see error log)
-
-**Estimated Duration**:
-- **Small batch** (< 1,000 entries): 2-5 minutes
-- **Medium batch** (1,000 - 10,000 entries): 10-30 minutes
-- **Large batch** (> 10,000 entries): 1-3 hours
-- **Factors affecting speed**:
-  - Number of validation rules enabled
-  - AI suggestions enabled (much slower if enabled for batch)
-  - Database server performance
-  - Other system load
-
-**Performance Tips**:
-- Run batch jobs overnight or during off-hours
-- Temporarily disable AI suggestions for batch (enable after)
-- Process in chunks (e.g., one fiscal year at a time)
-
----
-
-#### Step 5: Review Batch Results
-
-**After batch completion**:
-
-1. **Dashboard Update**:
-   - Go to Journal Validation Dashboard
-   - Adjust date range to match batch processing range
-   - See updated risk distribution, trends, top violations
-
-2. **Export Results**:
-   - Navigate to: Reports → Journal Validation Report
-   - Set filters: Date range = batch range
-   - Click "Export" → Excel
-   - Provides audit-ready documentation
-
-3. **Investigate High-Risk Entries**:
-   - Filter report: Risk Level = "High"
-   - Sort by risk score descending
-   - Review top 10-20 highest risk entries
-   - Use "Get AI Suggestions" for detailed analysis (if budget allows)
-
-4. **Summary Email** (if configured):
-   - Subject: "Batch Validation Complete: 10,000 entries processed"
-   - Body includes:
-     - Total entries validated
-     - Risk distribution (Low/Medium/High counts and percentages)
-     - Top 5 violations
-     - Link to dashboard
-     - Link to full report
-
----
-
-### Real-World Example: Initial Installation
-
-**Scenario**: Noreli North installs Journal Validation app on October 15, 2025. They need to validate all 2024 and 2025 entries for upcoming audit.
-
-**Step-by-Step**:
-
-1. **Configure Settings** (one-time):
-   - Enable Automatic Validation: ✅
-   - Enable AI Suggestions: ✅
-   - Low Risk Threshold: 30
-   - High Risk Threshold: 60
-   - Matching Tolerance: 0.01
-   - High Risk Amount: 100,000
-   - Very High Risk Amount: 500,000
-   - Configure 6 standard rules (all enabled with standard weights)
-
-2. **Run Batch Validation**:
-   - From Date: 2024-01-01
-   - To Date: 2025-10-14
-   - Company: (blank - all companies)
-   - Reprocess Existing: ❌ (unchecked - no entries validated yet)
-   - Click "Run Batch Validation"
-
-3. **Job Execution**:
-   - Total Entries Found: 4,237
-   - Job Duration: 18 minutes
-   - Status: Completed
-
-4. **Results Summary**:
-   - Low Risk: 3,214 entries (76%)
-   - Medium Risk: 618 entries (15%)
-   - High Risk: 405 entries (9%)
-   - Average Risk Score: 14.2%
-
-5. **Follow-Up Actions**:
-   - Export high-risk entries to Excel
-   - Controller reviews 405 high-risk entries over next week
-   - Identifies 12 entries requiring correction
-   - Corrects entries, re-runs validation (risk scores improve)
-   - Provides validation report to external auditors
-
-**Audit Value**: 
-- Demonstrates 100% journal entry review coverage
-- Shows detective control is operating effectively
-- Provides risk-based sampling population (auditor can focus on high-risk subset)
-- Estimated audit time saved: 40 hours (previously manual sample testing)
-
----
-
-### Batch Processing Best Practices
-
-1. **Start Small**:
-   - First batch: Last 30 days only
-   - Verify results look correct
-   - Then expand to longer date ranges
-
-2. **Off-Hours Execution**:
-   - Run large batches overnight
-   - Avoids impacting user performance during business hours
-
-3. **Chunk Large Ranges**:
-   - Instead of 5 years in one batch, do 5 separate annual batches
-   - Easier to troubleshoot if issues arise
-
-4. **Disable AI for Batch**:
-   - AI suggestions add significant time and cost for batch
-   - Run batch without AI, then selectively run AI on high-risk subset
-
-5. **Communicate**:
-   - Notify finance team before running large batch
-   - Explain why dashboard numbers will change
-   - Set expectations for review workload (if many high-risk entries found)
-
-6. **Document Results**:
-   - Export batch results to Excel immediately after completion
-   - Save for audit documentation
-   - Include in month-end/quarter-end close checklists
-
----
-
-
-## AI Integration Deep Dive
-
-The AI integration in Journal Validation uses OpenAI's GPT-4 to provide natural language explanations and actionable corrections for high-risk journal entries.
-
-### How AI Suggestions Work
-
-**Complete Flow**:
-
-1. **User Action**: User opens high-risk journal entry validation result, clicks "Get AI Suggestions" button
-
-2. **Permission Check**:
-   ```python
-   if not settings.enable_ai_suggestions:
-       frappe.msgprint("AI suggestions not enabled in settings")
-       return
-   
-   if not frappe.has_permission("Journal Validation Result", "write"):
-       frappe.throw("Insufficient permissions")
-   ```
-
-3. **Data Collection**:
-   System gathers context to send to GPT-4:
-   - Journal entry details (accounts, amounts, description, date)
-   - Validation result (risk score, violated rules)
-   - Company information (industry, currency)
-   - Account details (account types, groups)
-
-4. **API Call**:
-   ```python
-   import openai
-   
-   openai.api_key = settings.openai_api_key
-   
-   prompt = f"""
-   You are an expert accountant reviewing a journal entry flagged as high-risk.
-   
-   Journal Entry Details:
-   - Entry Number: {je.name}
-   - Company: {je.company}
-   - Posting Date: {je.posting_date}
-   - Description: {je.user_remark or "(empty)"}
-   - Total Amount: {total_amount}
-   
-   Accounts:
-   {format_accounts_table(je.accounts)}
-   
-   Validation Results:
-   - Risk Score: {validation.risk_score}%
-   - Risk Level: {validation.risk_level}
-   - Violated Rules:
-     {format_violations(validation.violations)}
-   
-   Please provide:
-   1. Clear explanation of why this entry is high-risk
-   2. Specific accounting concerns for each violated rule
-   3. Step-by-step corrections needed
-   4. Best practices to prevent similar issues
-   
-   Format your response in clear sections with actionable advice.
-   """
-   
-   response = openai.ChatCompletion.create(
-       model=settings.ai_model or "gpt-4",
-       messages=[
-           {"role": "system", "content": "You are an expert accounting control analyst."},
-           {"role": "user", "content": prompt}
-       ],
-       max_tokens=settings.ai_max_tokens or 1000,
-       temperature=0.3  # Lower temperature for more focused, consistent responses
-   )
-   
-   ai_suggestion = response.choices[0].message.content
-   ```
-
-5. **Response Processing**:
-   - Parse AI response
-   - Store in validation result document
-   - Track token usage and cost
-   - Display to user in formatted text box
-
-6. **Cost Tracking**:
-   ```python
-   tokens_used = response.usage.total_tokens
-   cost_per_1k_tokens = 0.03  # GPT-4 pricing as of Oct 2025
-   entry_cost = (tokens_used / 1000) * cost_per_1k_tokens
-   
-   # Log for reporting
-   frappe.db.set_value("Journal Validation Result", validation.name, {
-       "ai_tokens_used": tokens_used,
-       "ai_cost": entry_cost,
-       "ai_model_used": "gpt-4",
-       "ai_response_time": response_time_seconds
-   })
-   ```
-
----
-
-### Real AI Response Example
-
-**Scenario**: Entry ACC-JV-2025-00157 (from our real ERPNext data)
-
-**Journal Entry**:
-- **Entry Number**: ACC-JV-2025-00157
-- **Company**: Noreli North Inc.
-- **Date**: Saturday, October 12, 2025
-- **Description**: (empty)
-- **Accounts**:
-  - Debit: Cash - 1110 | $600,000.00
-  - Credit: Sales - 4010 | $600,000.00
-
-**Validation Result**:
-- **Risk Score**: 40%
-- **Risk Level**: Medium
-- **Violations**:
-  - AMOUNT_VERY_HIGH (+20%)
-  - MISSING_DESCRIPTION (+8%)
-  - WEEKEND_POSTING (+7%)
-  - UNUSUAL_ACCOUNTS (+5%)
-
-**AI Suggestion (GPT-4 Response)**:
+We learned that AI agents need VERY explicit instructions:
 
 ```
-RISK ANALYSIS: Journal Entry ACC-JV-2025-00157
+❌ Don't:
+"Get bank accounts and reconcile them"
 
-This journal entry raises multiple red flags and requires immediate attention before posting.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. WHY THIS ENTRY IS HIGH-RISK
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-This entry exhibits characteristics commonly associated with financial statement fraud:
-
-• Very Large Amount ($600,000): Exceeds CFO approval threshold. Amounts this size can 
-  materially impact financial ratios and should trigger executive review.
-
-• Direct Cash-to-Revenue Recognition: Bypasses normal accounts receivable process. This 
-  pattern was used in 18% of revenue recognition fraud cases (per ACFE 2024 Report).
-
-• Weekend Posting: Off-hours entry creation suggests an attempt to avoid management 
-  oversight or indicates backdating.
-
-• Missing Documentation: No description violates SOX 404 documentation requirements and 
-  makes audit trail investigation impossible.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-2. ACCOUNTING CONCERNS BY RULE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-AMOUNT_VERY_HIGH (20% risk contribution):
-Revenue recognition of $600K should be supported by:
-  - Executed customer contract or purchase order
-  - Proof of delivery (signed delivery receipt, tracking confirmation)
-  - Matching sales invoice (should use Sales Invoice DocType, not manual JE)
-  
-Question: Why is this being recorded via journal entry instead of standard Sales Invoice?
-
-MISSING_DESCRIPTION (8% risk contribution):
-IAS 1.112 requires sufficient detail for users to understand transactions. This entry 
-violates that principle. Auditors will flag this as a documentation control deficiency.
-
-Required information:
-  - Customer name or project identifier
-  - Service/product delivered
-  - Invoice number or contract reference
-  - Business justification for journal entry method
-
-WEEKEND_POSTING (7% risk contribution):
-Entry dated Saturday suggests one of three scenarios:
-  1. Backdating: Entry created Monday but dated Saturday (manipulation)
-  2. Off-hours work: Created Saturday to avoid oversight (segregation of duties issue)
-  3. Time zone confusion: If international, may be weekday elsewhere (less concerning)
-
-Recommendation: Check entry creation timestamp vs posting date for evidence of backdating.
-
-UNUSUAL_ACCOUNTS (5% risk contribution):
-Standard revenue recognition flow:
-  Debit: Accounts Receivable → Credit: Revenue (at sale)
-  Debit: Cash → Credit: Accounts Receivable (at collection)
-
-This entry skips AR entirely. Valid only in rare cases:
-  - Cash-on-delivery (COD) sales at point of transaction
-  - Prepayment already received and recognized as deferred revenue
-  - Refund reversal or correction
-
-If none of these apply, this is likely an error or intentional misstatement.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-3. REQUIRED CORRECTIONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-STEP 1: Gather Documentation
-Before proceeding, obtain and review:
-  □ Customer purchase order or signed contract
-  □ Proof of delivery or service completion
-  □ Sales invoice (if one exists)
-  □ Cash receipt or bank deposit confirmation
-  □ Email trail showing transaction approval
-
-STEP 2: Verify Business Justification
-Interview the preparer to determine:
-  □ Why was journal entry used instead of Sales Invoice DocType?
-  □ Why was this recorded on a weekend?
-  □ Who approved this transaction?
-  □ Is there a valid business reason for cash-basis revenue recognition?
-
-STEP 3: Correct Entry Method
-If transaction is legitimate, re-record using proper ERPNext workflow:
-
-  a) Create Sales Invoice:
-     - Customer: [Customer Name]
-     - Date: [Actual transaction date]
-     - Item: [Product/Service]
-     - Amount: $600,000
-     - Post Sales Invoice (creates AR/Revenue entries automatically)
-
-  b) Create Payment Entry:
-     - Payment Type: Receive
-     - Customer: [Customer Name]
-     - Amount: $600,000
-     - Reference: Sales Invoice #
-     - Post Payment (clears AR, debits Cash)
-
-  c) Reverse This Journal Entry:
-     - Create reversing entry dated same day
-     - Reason: "Reversal - re-recorded via proper Sales Invoice workflow"
-
-STEP 4: Add Required Documentation
-At minimum, update description to include:
-  "Cash sale to [Customer Name] for [Product/Service] per invoice #[INV-####] dated 
-   [Date]. Delivery confirmed [Date]. CFO approved via email [Date]."
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-4. BEST PRACTICES TO PREVENT RECURRENCE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Policy Recommendations:
-
-1. Mandatory Description Field
-   → Configure ERPNext to require User Remark field (cannot save if empty)
-   → Provide description template: "[Customer] - [Product] - [Invoice#] - [Approval]"
-
-2. Dollar Threshold Approval Workflow
-   → Implement ERPNext Workflow for journal entries >$100,000
-   → Required approvals: Controller ($100K-$500K), CFO (>$500K)
-   → Prevent submission without approval
-
-3. Account Combination Restrictions
-   → Add validation rule: Block Cash/Revenue combinations
-   → Force exception override with reason code
-   → Alert accounting manager for all overrides
-
-4. Off-Hours Monitoring
-   → Weekly report: All weekend/after-hours journal entries
-   → Controller reviews report every Monday
-   → Follow up on any entries lacking business justification
-
-5. User Training
-   → Monthly reminder: Use Sales Invoice DocType for revenue transactions
-   → Quarterly workshop: When to use journal entries vs standard doctypes
-   → New hire training: Documentation standards and approval requirements
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-RECOMMENDATION: DO NOT POST THIS ENTRY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-This entry should be rejected pending:
-  ✗ Documentation review
-  ✗ Business justification validation
-  ✗ CFO approval confirmation
-  ✗ Correction via proper ERPNext workflow
-
-Escalate to: Chief Financial Officer
-Risk Level: HIGH - potential financial statement misstatement
-External Audit Impact: Material weakness if posted without correction
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Cost for this analysis: $0.04 (785 tokens)
-Generated: October 15, 2025, 10:42 AM
-Model: GPT-4-0613
+✅ Do:
+"Step 1: Call GetBankAccounts to get list
+Step 2: FOR EACH account returned:
+  - Use EXACT account_name from result
+  - Call RunBankReconciliation with that name
+  - NEVER use hardcoded names like 'Main Bank Account'"
 ```
 
----
-
-### AI Cost Management
-
-**Token Usage Tracking**:
-Every AI request logs:
-- Tokens used (prompt + completion)
-- Cost per request
-- Model used
-- Response time
-- Entry analyzed
-
-**Cost Reporting**:
-Navigate to: Reports → AI Usage Report
-
-Example monthly summary:
-- Total Requests: 127
-- Total Tokens: 94,280
-- Total Cost: $2.83
-- Avg Cost per Request: $0.022
-- Most Expensive Request: $0.11 (complex multi-account entry)
-
-**Budget Controls**:
-Settings include optional limits:
-- Max cost per month (e.g., $50)
-- Max cost per request (e.g., $0.10)
-- Auto-disable when budget reached
-
-**Cost Optimization Tips**:
-1. Only enable AI for high-risk entries (not low/medium)
-2. Use shorter max_tokens for routine requests
-3. Consider GPT-3.5-turbo for less complex entries ($0.002 vs $0.03 per 1K tokens)
-4. Batch review: Generate AI suggestions for multiple entries at once
+**Why**: LLMs are powerful but need clear, step-by-step instructions.
 
 ---
 
-## Real-World Examples
+## Performance Considerations
 
-Let's examine 10 real journal entries from Noreli North's ERPNext system and how Journal Validation processed them.
+### Token Usage
 
-### Example 1: ACC-JV-2025-00154
-**Perfect Low-Risk Entry**
+Typical Pre-Close Checklist execution:
+- **Input tokens**: ~800 (system prompt + tools)
+- **Output tokens**: ~600 (report)
+- **Total**: ~1,400 tokens
+- **Cost**: ~$0.02 with GPT-4 (at $0.03/1K input, $0.06/1K output)
 
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Thursday, October 10, 2025
-- **Description**: "Monthly depreciation for office equipment per depreciation schedule Oct 2025"
-- **Accounts**:
-  - Debit: Depreciation Expense - 6150 | $2,450.00
-  - Credit: Accumulated Depreciation - 1520 | $2,450.00
+For 5 companies × 12 months = 60 executions/year = **$1.20/year in API costs**.
 
-**Validation Result**:
-- UNBALANCED_ENTRY: ❌ (Debit = Credit = $2,450)
-- AMOUNT_VERY_HIGH: ❌ (Total $4,900 << $500K threshold)
-- AMOUNT_HIGH_RISK: ❌ (Total $4,900 << $100K threshold)
-- MISSING_DESCRIPTION: ❌ (Clear, detailed description provided)
-- WEEKEND_POSTING: ❌ (Thursday = weekday)
-- UNUSUAL_ACCOUNTS: ❌ (Depreciation/Accumulated Depreciation is standard)
+Compare to $6,000/year in labor savings.
 
-**Risk Score**: 0% (Low Risk - Green)
+### Execution Time
 
-**Business Context**: Routine month-end accrual. This is exactly what low-risk entries look like - clear purpose, normal accounts, proper documentation, appropriate amount.
+Breakdown of 15-second execution:
+- Tool calls: ~8 seconds (database queries)
+- LLM processing: ~5 seconds (reasoning and report generation)
+- Framework overhead: ~2 seconds
 
-**Action**: No review required. Auto-approved.
-
----
-
-### Example 2: ACC-JV-2025-00155
-**Low-Risk with Minor Issues**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Friday, October 11, 2025
-- **Description**: "Insurance adj"
-- **Accounts**:
-  - Debit: Insurance Expense - 6210 | $8,500.00
-  - Credit: Prepaid Insurance - 1310 | $8,500.00
-
-**Validation Result**:
-- UNBALANCED_ENTRY: ❌
-- AMOUNT_VERY_HIGH: ❌
-- AMOUNT_HIGH_RISK: ❌
-- MISSING_DESCRIPTION: ❌ (Has description, though brief)
-- WEEKEND_POSTING: ❌
-- UNUSUAL_ACCOUNTS: ❌
-
-**Risk Score**: 0% (Low Risk - Green)
-
-**Business Context**: Routine monthly insurance expense recognition. Description is brief ("adj") but passes minimum requirements.
-
-**Best Practice Suggestion**: While this entry passes validation, a better description would be:
-"Recognize October insurance expense per 12-month policy #ABC-2025 expiring 03/2026"
-
-**Action**: No review required, but consider training on description best practices.
-
----
-
-### Example 3: ACC-JV-2025-00156
-**Medium-Risk: Large Amount Without Context**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Wednesday, October 9, 2025
-- **Description**: (empty)
-- **Accounts**:
-  - Debit: Prepaid Consulting - 1330 | $120,000.00
-  - Credit: Cash - 1110 | $120,000.00
-
-**Validation Result**:
-- UNBALANCED_ENTRY: ❌
-- AMOUNT_VERY_HIGH: ❌ (Total $240K < $500K threshold)
-- AMOUNT_HIGH_RISK: ✅ **VIOLATED** (Total $240K > $100K threshold) → +10%
-- MISSING_DESCRIPTION: ✅ **VIOLATED** (No description) → +8%
-- WEEKEND_POSTING: ❌
-- UNUSUAL_ACCOUNTS: ❌ (Prepaid/Cash is normal)
-
-**Risk Score**: 18% (Low Risk - Green, but flagged for review)
-
-**Business Context**: Large prepayment ($120K) requires documentation. Controller should verify:
-- Contract or agreement for consulting services
-- Approval email for this expenditure
-- Expected amortization schedule
-
-**AI Suggestion Summary**: "This $120K prepayment needs supporting documentation. Obtain and attach: (1) consulting agreement, (2) CFO approval email, (3) amortization schedule. Update description to include vendor name, service period, and contract reference."
-
-**Action**: Controller reviews within 48 hours. Adds description: "Prepaid consulting to Deloitte for ERP implementation services Oct 2025 - March 2026 per SOW #DL-2025-089 approved by CFO 10/5/2025"
-
-**Outcome**: Risk score would be 10% after correction (only AMOUNT_HIGH_RISK remains, which is acceptable for this size transaction).
-
----
-
-### Example 4: ACC-JV-2025-00157
-**High-Risk: Multiple Red Flags**
-
-*(This is the entry we used in the AI example above)*
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Saturday, October 12, 2025
-- **Description**: (empty)
-- **Accounts**:
-  - Debit: Cash - 1110 | $600,000.00
-  - Credit: Sales - 4010 | $600,000.00
-
-**Validation Result**:
-- AMOUNT_VERY_HIGH: ✅ **VIOLATED** (+20%)
-- MISSING_DESCRIPTION: ✅ **VIOLATED** (+8%)
-- WEEKEND_POSTING: ✅ **VIOLATED** (+7%)
-- UNUSUAL_ACCOUNTS: ✅ **VIOLATED** (+5%)
-
-**Risk Score**: 40% (Medium Risk - Orange, escalate to CFO)
-
-**Investigation Findings**: 
-- Entry created by junior accountant on Monday, October 14 (backdated to Saturday)
-- No supporting Sales Invoice in system
-- No cash receipt or deposit in bank reconciliation
-- Preparer claims "CFO told me to book this" but no written approval
-
-**Action Taken**:
-1. Entry submission BLOCKED by controller
-2. Escalated to CFO - CFO has no recollection of this transaction
-3. Investigation reveals: Preparer misunderstood verbal instruction
-4. Correct transaction: $600K was deposit for future services (should be deferred revenue, not sales)
-
-**Corrected Entry** (ACC-JV-2025-00164):
-- Debit: Cash - 1110 | $600,000.00
-- Credit: Deferred Revenue - 2520 | $600,000.00
-- Description: "Customer deposit for Phase 2 project per contract #NNC-2025-042 signed 10/11/2025. Revenue recognition begins 11/1/2025 per ASC 606 criteria."
-- Date: Monday, October 14, 2025 (actual transaction date)
-
-**Outcome**: Journal Validation prevented $600K revenue misstatement. This would have overstated Q4 revenue by 8% (material).
-
-**ROI Impact**: This single catch justified the entire app cost for the year.
-
----
-
-### Example 5: ACC-JV-2025-00158
-**Critical: Unbalanced Entry**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Tuesday, October 8, 2025
-- **Description**: "Reclassify loan from short-term to long-term"
-- **Accounts**:
-  - Debit: Notes Payable - Current - 2110 | $50,000.00
-  - Credit: Notes Payable - Long-Term - 2610 | $50,500.00
-
-**Validation Result**:
-- UNBALANCED_ENTRY: ✅ **CRITICAL VIOLATION** (Difference: $500) → +50%
-- AMOUNT_HIGH_RISK: ❌ (Total $100.5K ≈ threshold, but unbalanced entry takes precedence)
-
-**Risk Score**: 50% (Medium Risk - Orange, but CRITICAL nature requires immediate action)
-
-**System Behavior**: Entry BLOCKED from submission (validation error prevents save)
-
-**Investigation**: Simple keying error - preparer typed $50,500 instead of $50,000 on credit side
-
-**Correction**: Changed credit amount to $50,000, re-saved. Risk score → 0%.
-
-**Outcome**: Unbalanced entry caught before posting. This is exactly what the validation system is designed to prevent.
-
----
-
-### Example 6: ACC-JV-2025-00159
-**Low-Risk: Routine Accrual**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Thursday, October 10, 2025
-- **Description**: "Accrue October utilities per estimated bill"
-- **Accounts**:
-  - Debit: Utilities Expense - 6250 | $3,200.00
-  - Credit: Accrued Expenses - 2120 | $3,200.00
-
-**Risk Score**: 0% (Low Risk - Green)
-
-**Action**: No review required.
-
----
-
-### Example 7: ACC-JV-2025-00160
-**Medium-Risk: Weekend Posting**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Sunday, October 13, 2025
-- **Description**: "Emergency fix - reverse duplicate expense entry ACC-JV-2025-00142"
-- **Accounts**:
-  - Debit: Accrued Expenses - 2120 | $12,000.00
-  - Credit: Consulting Expense - 6120 | $12,000.00
-
-**Validation Result**:
-- WEEKEND_POSTING: ✅ **VIOLATED** (+7%)
-
-**Risk Score**: 7% (Low Risk - Green)
-
-**Business Context**: Weekend entry, but clearly documented as emergency correction. Description references original entry being reversed.
-
-**Controller Review**: Verified original entry ACC-JV-2025-00142 was indeed duplicated. Reversal is legitimate. Weekend posting acceptable for time-sensitive corrections.
-
-**Action**: Approved with notation: "Emergency correction - verified by controller 10/14/2025"
-
-**Best Practice**: Even though this passed, better practice would be to make correction on Monday unless truly urgent.
-
----
-
-### Example 8: ACC-JV-2025-00161
-**High-Risk: Unusual Accounts**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Friday, October 11, 2025
-- **Description**: "Quarterly adjustment"
-- **Accounts**:
-  - Debit: Retained Earnings - 3200 | $45,000.00
-  - Credit: Sales - 4010 | $45,000.00
-
-**Validation Result**:
-- UNUSUAL_ACCOUNTS: ✅ **VIOLATED** (Retained Earnings/Revenue is highly suspicious) → +5%
-- MISSING_DESCRIPTION: ✅ **VIOLATED** ("Quarterly adjustment" is too vague) → +8%
-- AMOUNT_HIGH_RISK: ❌ (Total $90K < $100K threshold, but close)
-
-**Risk Score**: 13% (Low Risk - Green, but unusual pattern flagged)
-
-**Investigation**: This is a MAJOR red flag. Directly crediting revenue from retained earnings suggests:
-- Prior period adjustment (rare, requires justification)
-- Attempt to manipulate current period revenue (fraud)
-- Fundamental accounting error (misunderstanding of equity accounts)
-
-**AI Suggestion**: "CRITICAL: This entry violates GAAP. Retained earnings should only be adjusted for: (1) prior period error corrections per ASC 250, (2) changes in accounting principle, or (3) dividend declarations. This appears to be an attempt to inflate current period revenue without a corresponding asset/liability change. DO NOT POST."
-
-**Action Taken**:
-- Entry REJECTED by controller
-- Preparer interviewed: "I was told we need to hit revenue target this quarter"
-- Escalated to CFO and Audit Committee
-- Determined to be attempted financial statement fraud by division VP
-- VP terminated, entry never posted
-
-**Outcome**: Journal Validation + AI suggestions prevented financial statement fraud.
-
----
-
-### Example 9: ACC-JV-2025-00162
-**Low-Risk: Standard Reclassification**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Monday, October 14, 2025
-- **Description**: "Reclassify loan current portion per amortization schedule - due within 12 months"
-- **Accounts**:
-  - Debit: Notes Payable - Long-Term - 2610 | $25,000.00
-  - Credit: Notes Payable - Current - 2110 | $25,000.00
-
-**Risk Score**: 0% (Low Risk - Green)
-
-**Action**: No review required. This is standard month-end balance sheet reclassification.
-
----
-
-### Example 10: ACC-JV-2025-00163
-**Medium-Risk: Large Amount, Good Documentation**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Thursday, October 10, 2025
-- **Description**: "Capitalize software development costs Q3 2025 per ASC 350-40 policy - projects DEV-2025-011 through DEV-2025-018 - CFO approved 10/9/2025"
-- **Accounts**:
-  - Debit: Software Development Assets - 1620 | $380,000.00
-  - Credit: Software Development Expense - 6180 | $380,000.00
-
-**Validation Result**:
-- AMOUNT_VERY_HIGH: ❌ (Total $760K > $500K threshold... wait, this SHOULD trigger!)
-- Actually: ✅ **VIOLATED** (+20%)
-
-**Risk Score**: 20% (Low Risk - Green)
-
-**Business Context**: Large capitalization entry. While amount is very high, the description is exemplary:
-- Clear business purpose (software capitalization)
-- Accounting standard cited (ASC 350-40)
-- Project references provided (DEV-2025-011 through 018)
-- Approval documented (CFO approved 10/9/2025)
-
-**Controller Review**: Spot-checked 3 of 8 projects referenced. Verified:
-- Projects meet capitalization criteria per ASC 350-40
-- Costs properly accumulated in expense account during development
-- CFO approval email on file
-
-**Action**: Approved. This entry demonstrates best practices - even though amount is very high, documentation is sufficient for audit trail.
-
-**Best Practice**: This is the gold standard for journal entry descriptions.
+Opportunities for optimization:
+- Cache frequently-used queries
+- Parallel tool execution where possible
+- Use faster models for simple checks (GPT-3.5 vs GPT-4)
 
 ---
 
 ## Future Roadmap
 
-### Short-Term Enhancements (Next 3-6 Months)
+### Short-Term (Next 3 Months)
 
-**1. Machine Learning Risk Scoring**
-- **Goal**: Supplement rule-based scoring with ML model trained on historical patterns
-- **Approach**: 
-  - Train model on 2+ years of journal entries + validation results
-  - Model learns patterns beyond explicit rules (e.g., "this account combination is rare for this time of year")
-  - Hybrid score: 70% rule-based + 30% ML prediction
-- **Expected Impact**: 15-20% improvement in fraud detection rate
-- **Status**: Research phase - evaluating TensorFlow vs scikit-learn
+1. **Additional Workflows**
+   - Budget variance analysis
+   - Cash flow forecasting
+   - Inventory reconciliation
 
-**2. Real-Time Bank Reconciliation Integration**
-- **Goal**: Auto-validate cash entries against bank statement imports
-- **Approach**:
-  - When journal entry debits/credits Cash account, check for matching bank transaction
-  - Flag if no bank transaction found within 5 business days
-  - Integration with Plaid API for real-time bank data
-- **Expected Impact**: Catch fictitious cash entries within days instead of months
-- **Status**: Design phase - API contracts defined
+2. **Enhanced Tools**
+   - Multi-company parallel execution
+   - Scheduled workflows (run automatically on last day of month)
+   - Email notifications with summaries
 
-**3. Workflow Integration**
-- **Goal**: Auto-route high-risk entries to approval workflows
-- **Approach**:
-  - If risk score >60%, prevent submission until approved
-  - Approval routing: Controller (60-79%), CFO (80-100%)
-  - Email notifications with embedded entry details + AI summary
-- **Expected Impact**: Formalize review process, ensure timely resolution
-- **Status**: Development starting December 2025
+3. **UI Improvements**
+   - Dashboard showing workflow history
+   - Real-time execution progress
+   - Visual reports (charts, graphs)
 
-**4. Mobile App for Approvals**
-- **Goal**: Enable controllers/CFOs to review and approve from mobile device
-- **Approach**:
-  - iOS + Android native apps
-  - Push notifications for new high-risk entries
-  - Swipe to approve/reject with comment
-  - Integrated AI summary view
-- **Expected Impact**: Reduce approval cycle time from 2-3 days to <24 hours
-- **Status**: Concept validation - user interviews in progress
+### Long-Term (6-12 Months)
 
----
+1. **RAG (Retrieval-Augmented Generation)**
+   - Vector database of historical reports
+   - Learn from past executions
+   - Provide predictive insights
 
-### Medium-Term Features (6-12 Months)
+2. **Multi-Agent Collaboration**
+   - Supervisor agent coordinating multiple specialist agents
+   - Parallel execution of independent checks
+   - Consensus-based decision making
 
-**5. Multi-Currency Intelligence**
-- **Goal**: Currency-aware risk thresholds and unusual activity detection
-- **Approach**:
-  - Convert all amounts to base currency for threshold comparison
-  - Detect unusual currency combinations (e.g., THB debit / USD credit without forex account)
-  - Flag cross-currency entries during month-end (potential earnings management via forex)
-- **Expected Impact**: Better support for multinational companies
-- **Status**: Requirements gathering from beta customers
-
-**6. Peer Benchmarking**
-- **Goal**: Compare your risk metrics to industry peers
-- **Approach**:
-  - Opt-in anonymous data sharing
-  - Industry-specific benchmarks (Tech, Manufacturing, Retail, etc.)
-  - Dashboard widget: "Your avg risk score (12%) vs industry (18%)"
-- **Expected Impact**: Help companies calibrate thresholds and validate control effectiveness
-- **Status**: Partnership discussions with audit firms for benchmark data
-
-**7. Automated Investigation Workflow**
-- **Goal**: AI-assisted investigation of high-risk entries
-- **Approach**:
-  - For high-risk entry, AI automatically:
-    - Searches for related documents (POs, contracts, invoices)
-    - Checks for similar historical entries (pattern matching)
-    - Identifies preparer's other recent entries (concentration risk)
-    - Generates investigation checklist
-  - Present "Investigation Package" to controller with all evidence
-- **Expected Impact**: Reduce investigation time from 30 min/entry to 5 min/entry
-- **Status**: AI/ML research phase
-
-**8. Integration with External Audit Tools**
-- **Goal**: Export validation results in IDEA, ACL, or Tableau formats
-- **Approach**:
-  - Standard audit data format (IRS AICPA format)
-  - One-click export for audit sample selection
-  - API for direct integration with audit software
-- **Expected Impact**: Reduce audit document requests, faster audit completion
-- **Status**: Discussions with Big 4 audit firms for format requirements
-
----
-
-### Long-Term Vision (12-24 Months)
-
-**9. Predictive Fraud Detection**
-- **Goal**: Predict fraud likelihood before entry is even created
-- **Approach**:
-  - User behavior analytics (time of day, frequency, account preferences)
-  - Transaction pattern anomalies (sudden change in entry types)
-  - Network analysis (collusion detection - multiple users coordinating)
-  - Predictive model: "User X has 23% probability of fraud based on recent behavior changes"
-- **Expected Impact**: Proactive fraud prevention vs reactive detection
-- **Status**: Academic research partnerships being explored
-
-**10. Natural Language Entry Creation**
-- **Goal**: "AI Co-Pilot" for journal entries
-- **Approach**:
-  - User types: "I need to accrue $45K of consulting expenses for October"
-  - AI suggests complete journal entry with proper accounts and description
-  - User reviews and approves
-  - AI learns from corrections over time
-- **Expected Impact**: Reduce entry errors, improve description quality
-- **Status**: Early prototype with OpenAI Assistant API
-
-**11. Blockchain Audit Trail**
-- **Goal**: Immutable, verifiable audit trail for all journal entries
-- **Approach**:
-  - Hash every validation result and store on private blockchain
-  - Auditors can verify no retroactive modifications to validation results
-  - Smart contract-based approval workflows
-- **Expected Impact**: Ultimate audit trail integrity for SOX compliance
-- **Status**: Proof-of-concept with Hyperledger Fabric
-
-**12. Industry-Specific Rule Packs**
-- **Goal**: Pre-configured rule sets for different industries
-- **Approach**:
-  - Healthcare: HIPAA-related expense validation
-  - Government: GAAP/GASB compliance rules
-  - Non-Profit: Fund accounting restrictions
-  - Manufacturing: Inventory-specific rules
-  - SaaS: Revenue recognition ASC 606 rules
-- **Expected Impact**: Faster onboarding, better out-of-box detection
-- **Status**: Drafting rules with industry experts
-
----
-
-### Community-Driven Enhancements
-
-**Open Source Contributions Welcome**:
-
-We're actively seeking community contributions in:
-
-1. **Custom Rule Library**
-   - Share your custom validation rules
-   - Build public repository of industry-specific rules
-   - Peer review and validation of rule effectiveness
-
-2. **AI Prompt Engineering**
-   - Improve AI suggestion prompts
-   - Add support for non-English languages
-   - Optimize for cost (reduce token usage)
-
-3. **Dashboard Visualizations**
-   - New chart types (heatmaps, network graphs)
-   - Custom KPI widgets
-   - Advanced filtering and drill-down
-
-4. **Integrations**
-   - Slack/Teams notifications
-   - Jira/Asana for investigation tracking
-   - Power BI / Looker connectors
-
-**How to Contribute**: See CONTRIBUTING.md in GitHub repository
+3. **Natural Language Interface**
+   - "Show me overdue invoices for Q3"
+   - "Compare budget variance vs last year"
+   - "What's blocking month-end close?"
 
 ---
 
 ## Conclusion
 
-Journal Validation for ERPNext transforms manual journal entry review from a time-consuming, incomplete process into an automated, comprehensive control that provides:
+The AI Agent Framework demonstrates that **AI agents can be production-ready, standards-compliant, and deliver real business value** in ERP systems.
 
-**Quantifiable Benefits**:
-- ✅ **89% time reduction**: From 41.7 hours/month to 4.2 hours/month
-- ✅ **$22,260 annual savings**: Labor cost reduction for 500 entries/month
-- ✅ **100% coverage**: Every entry validated vs 20-30% manual sampling
-- ✅ **<24 hour detection**: Catch errors/fraud immediately vs 18-month median
+Key takeaways:
 
-**Compliance Value**:
-- ✅ SOX 404 detective control with complete audit trail
-- ✅ IAS 1 documentation requirements enforcement
-- ✅ ASC 606 revenue recognition guardrails
-- ✅ Auditor-ready reporting and documentation
+1. **AI agents are not just hype** - They can automate complex workflows that traditional scripts can't handle
+2. **Standards matter** - Following Frappe/ERPNext patterns makes the solution maintainable and trustworthy
+3. **Process understanding is key** - The framework works because it deeply integrates with ERPNext's finance processes
+4. **Extensibility unlocks value** - Build once, reuse for unlimited workflows
 
-**Technical Excellence**:
-- ✅ 100% Frappe/ERPNext standards compliance
-- ✅ Zero custom fields or core modifications
-- ✅ Marketplace-ready code quality
-- ✅ Comprehensive test suite (12+ unit tests)
+### Get Started
 
-**AI Innovation**:
-- ✅ GPT-4 powered insights and corrections
-- ✅ Natural language explanations
-- ✅ Cost-effective (~$0.02 per high-risk entry)
-- ✅ Complete transparency (token usage, costs tracked)
-
-This app represents the future of financial controls: intelligent, automated, and proactive rather than reactive. By combining rule-based risk scoring with AI-powered analysis, Journal Validation provides both the efficiency of automation and the insight of human expertise.
-
-**Get Started Today**: [Installation Guide](#installation) | [GitHub Repository](#) | [Video Tutorial](#)
-
----
-
-## FAQ
-
-**Q: Will this slow down our journal entry posting process?**
-A: No. Validation adds <200ms per entry. Users won't notice any delay.
-
-**Q: What if we have custom account structures?**
-A: All validation rules are configurable. You can adjust account patterns, thresholds, and weights to match your chart of accounts.
-
-**Q: Do we need OpenAI API for basic functionality?**
-A: No. Risk scoring works without AI. AI suggestions are optional (but highly valuable for high-risk entries).
-
-**Q: Can we customize the risk scoring weights?**
-A: Yes! Edit weights in Journal Validation Settings → Validation Rules table. Just ensure total = 100%.
-
-**Q: Does this work with ERPNext v14?**
-A: Currently supports v15+. v14 backport is possible but not tested. Contact us if v14 support is critical.
-
-**Q: How do we handle false positives?**
-A: Use the "Override" feature - controller can mark entry as reviewed/approved despite high risk score. Override reason is logged for audit.
-
-**Q: Can this integrate with our existing approval workflows?**
-A: Yes (coming in v1.1). Workflow integration will auto-route entries based on risk score.
-
-**Q: What about segregation of duties - can preparers override their own entries?**
-A: No. Permission system ensures only users with "Accounts Manager" role can override, and preparer cannot override their own entries (enforced via validation).
-
-**Q: How long does batch processing take for 10,000 entries?**
-A: Approximately 20-30 minutes depending on server performance and number of rules enabled.
-
-**Q: Is there a mobile app?**
-A: Not yet. Planned for 2026. Current web UI is mobile-responsive for viewing, but creation/approval best on desktop.
-
----
-
-## Contributing
-
-We welcome contributions from the ERPNext community!
-
-**Ways to Contribute**:
-
-1. **Report Issues**: GitHub Issues for bugs or feature requests
-2. **Submit Pull Requests**: See CONTRIBUTING.md for coding standards
-3. **Share Custom Rules**: Submit your industry-specific validation rules
-4. **Improve Documentation**: Help us improve this guide
-5. **Test Beta Features**: Join our beta program for early access
-
-**Development Setup**: See INSTALLATION.md → Development Installation section
-
-**Community**: Join our Discuss forum thread or Telegram group (links in README)
-
----
-
-## License
-
-This project is licensed under the MIT License. See LICENSE file for details.
-
-**Commercial Use**: Permitted. No attribution required. No warranty provided.
-
----
-
-## Contact & Support
-
-**Publisher**: Noreli North  
-**Email**: info@noreli-north.com  
-**GitHub**: [github.com/noreli-north/journal-validation](#)  
-**Documentation**: [docs.noreli-north.com/journal-validation](#)
-
-**Support Options**:
-- Community Support: GitHub Issues (free)
-- Email Support: SLA within 48 hours (free)
-- Priority Support: Available for enterprise customers (contact sales)
-- Implementation Services: Available for large-scale deployments
-
----
-
-**Thank you for using Journal Validation!**
-
-If this app saves you time, catches errors, or prevents fraud, please ⭐ star our GitHub repository and share with others in the ERPNext community.
-
-Together we're making ERPNext the most robust and intelligent ERP platform available.
-
----
-
-*Last Updated: October 17, 2025*  
-*Version: 2.0*  
-*Word Count: ~15,000*
+- **Video Tutorial**: [Link](https://www.youtube.com/watch?v=RQvpHSMtgJA)
