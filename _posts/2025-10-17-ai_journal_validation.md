@@ -8,12 +8,6 @@ categories: [AI, Fraud Prevention, ERP, Finance, Internal Controls]
 tags: [ERPNext, Journal Validation, Risk Scoring, AI-Powered Controls, GPT-4, SOX 404, Frappe Framework, Financial Controls, Audit Trail, OpenAI]
 ---
 
-# Journal Validation for ERPNext: AI-Powered Fraud Prevention and Risk Detection
-
-*How we reduced journal entry review time by 89% while catching 100% of high-risk entries using intelligent risk scoring and AI-powered analysis*
-
----
-
 ## Key Results
 
 - ⚡ **89% time reduction** - From 41.7 hours/month to 4.2 hours/month for 500 entries
