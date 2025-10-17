@@ -42,7 +42,6 @@ tags: [ERPNext, Journal Validation, Risk Scoring, AI-Powered Controls, GPT-4, SO
 - [Best Practices](#best-practices)
 - [Future Roadmap](#future-roadmap)
 - [FAQ](#faq)
-- [Contributing](#contributing)
 
 ---
 
