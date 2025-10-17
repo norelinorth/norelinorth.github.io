@@ -8,12 +8,12 @@ categories: [AI, Fraud Prevention, ERP, Finance, Internal Controls]
 tags: [ERPNext, Journal Validation, Risk Scoring, AI-Powered Controls, GPT-4, SOX 404, Frappe Framework, Financial Controls, Audit Trail, OpenAI]
 ---
 **Key Results:**
-- ⚡ **89% time reduction** - From 41.7 hours/month to 4.2 hours/month for 500 entries
-- 🛡️ **100% coverage** - Every journal entry automatically validated (vs 20-30% manual coverage)
-- 🎯 **Risk-based scoring** - Intelligent 0-100% risk model focuses attention where it matters
-- ✅ **100% standards compliant** - Zero custom fields, no core modifications, marketplace-ready
-- 🤖 **AI-powered insights** - GPT-4 provides natural language explanations and corrections (~$0.02/entry)
-- 📊 **Production-tested** - Complete audit trails, 12+ unit tests, enterprise-grade
+⚡ 89% time reduction (from 41.7 hours/month to 4.2 hours/month for 500 entries)
+🛡️ 100% coverage (every journal entry automatically validated vs 20-30% manual coverage)
+🎯 Risk-based scoring (intelligent 0-100% risk model focuses attention where it matters)
+✅ 100% standards compliant (zero custom fields, no core modifications, marketplace-ready)
+🤖 AI-powered insights (GPT-4 provides natural language explanations and corrections ~$0.02/entry)
+📊 Production-tested (complete audit trails, 12+ unit tests, enterprise-grade)
 
 [GitHub Repository](#) | [Video Tutorial](#) | [Installation Guide](#)
 
