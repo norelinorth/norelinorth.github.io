@@ -53,12 +53,12 @@ Manual journal entries represent **80% of financial statement fraud** according 
 The **Journal Validation app** for ERPNext changes this by providing:
 - **Automatic validation** of 100% of journal entries on save/submit
 - **Intelligent risk scoring** (0-100%) based on configurable business rules
-- **AI-powered analysis** using GPT-4 for high-risk entries (optional)
+- **AI-powered analysis** using AI for high-risk entries (optional)
 - **Complete audit trail** - every validation permanently logged
 - **Beautiful dashboards** - visualize risk distribution, trends, and top violations
 - **Enterprise features** - batch validation, workflow integration, email alerts
 
-**What makes it special**: 100% Frappe/ERPNext standards compliance. No custom fields, no core modifications, no hardcoded values. This could be submitted to the Frappe Marketplace today without any changes.
+**What makes it special**: 100% Frappe/ERPNext standards compliance. No custom fields, no core modifications, no hardcoded values.
 
 ---
 
@@ -119,12 +119,12 @@ Most companies rely on **manual review**:
 ```
 MANUAL REVIEW PROCESS (Doesn't Scale)
 ┌─────────────────────────────────────────────────────────────┐
-│ Controller reviews journal entries one-by-one                │
-│                                                              │
+│ Controller reviews journal entries one-by-one               │
+│                                                             │
 │ ❌ Coverage: 20-30% at best (not enough time for all)       │
 │ ❌ Time: 5-10 minutes per entry                             │
-│ ❌ Consistency: Different reviewers, different standards     │
-│ ❌ Scalability: More entries = proportionally more time      │
+│ ❌ Consistency: Different reviewers, different standards    │
+│ ❌ Scalability: More entries = proportionally more time     │
 │ ❌ Timing: Reactive - issues found AFTER posting            │
 │ ❌ Errors: Humans miss things                               │
 └─────────────────────────────────────────────────────────────┘
@@ -198,10 +198,10 @@ User Creates/Modifies Journal Entry
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      ERPNext / Frappe                        │
-│            (Standard Journal Entry DocType)                  │
+│                      ERPNext / Frappe                       │
+│            (Standard Journal Entry DocType)                 │
 ├─────────────────────────────────────────────────────────────┤
-│                   Journal Validation App                     │
+│                   Journal Validation App                    │
 │  ┌────────────────────────────────────────────────────────┐ │
 │  │  Validation Engine (validator.py)                      │ │
 │  │  • Automatic validation on save/submit                 │ │
@@ -245,7 +245,7 @@ User Creates/Modifies Journal Entry
 │  └────────────────────────────────────────────────────────┘ │
 │  ┌────────────────────────────────────────────────────────┐ │
 │  │  AI Helper (ai_helper.py) - Optional                   │ │
-│  │  • OpenAI GPT-4 integration                            │ │
+│  │  • AI Provider integration                             │ │
 │  │  • Natural language explanations                       │ │
 │  │  • Correction suggestions with context                 │ │
 │  │  • Anomaly detection and reasoning                     │ │
@@ -365,26 +365,26 @@ This makes risk scores intuitive:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  RISK LEVEL DEFINITIONS                                      │
+│  RISK LEVEL DEFINITIONS                                     │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  0% ──────────────────── 30%  LOW RISK (Green)             │
+│                                                             │
+│  0% ──────────────────── 30%  LOW RISK (Green)              │
 │  • Normal journal entries                                   │
 │  • No action required                                       │
 │  • Auto-approved for posting                                │
-│                                                              │
-│  31% ─────────────────── 60%  MEDIUM RISK (Orange)         │
+│                                                             │
+│  31% ─────────────────── 60%  MEDIUM RISK (Orange)          │
 │  • Minor issues present                                     │
 │  • Optional controller review                               │
 │  • Can post with warning                                    │
-│                                                              │
-│  61% ────────────────── 100%  HIGH RISK (Red)              │
+│                                                             │
+│  61% ────────────────── 100%  HIGH RISK (Red)               │
 │  • Critical issues detected                                 │
 │  • Requires mandatory review                                │
 │  • AI suggestions available                                 │
 │  • May require approval workflow                            │
 │  • Email alerts sent to management                          │
-│                                                              │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -461,11 +461,6 @@ This makes risk scores intuitive:
 
 ## Key Features
 
-[continuing in next response due to length]
-
-Would you like me to continue with the rest of the blog article? This is going to be a very comprehensive document with all the details you requested.
-## Key Features
-
 ### 1. Automatic Validation (100% Coverage)
 
 Every journal entry is automatically validated when:
@@ -486,14 +481,14 @@ Every journal entry is automatically validated when:
 ### 3. Configurable Rules
 
 **Six Pre-Built Rules** covering common risks:
--UNBALANCED_ENTRY, AMOUNT_VERY_HIGH, AMOUNT_HIGH_RISK
+- UNBALANCED_ENTRY, AMOUNT_VERY_HIGH, AMOUNT_HIGH_RISK
 - MISSING_DESCRIPTION, WEEKEND_POSTING, UNUSUAL_ACCOUNTS
 
 **Fully Extensible**: Add custom rules with Python code
 
 ### 4. AI-Powered Suggestions
 
-For high-risk entries, optional GPT-4 analysis provides:
+For high-risk entries, the optional AI analysis provides:
 - Natural language explanation of issues
 - Business context and why it matters
 - Specific, actionable correction steps
@@ -632,15 +627,15 @@ This is a **Single DocType** - only one configuration record exists per site. Al
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  GENERAL SETTINGS                                            │
+│  GENERAL SETTINGS                                           │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
+│                                                             │
 │  ☑ Enable Automatic Validation                              │
 │  ☐ Enable AI Suggestions                                    │
 │  ☐ Require Approval for High Risk                           │
 │  ☑ Send Email Notifications                                 │
 │  ☐ Block High Risk Entries                                  │
-│                                                              │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -653,9 +648,9 @@ This is a **Single DocType** - only one configuration record exists per site. Al
 
 **Enable AI Suggestions** (Checkbox)
 - **Purpose**: Makes "Get AI Suggestions" button available on validation results
-- **Requires**: OpenAI API key configured below
+- **Requires**: AI Provider API key configured below
 - **Cost**: ~$0.02 per high-risk entry analyzed
-- **When enabled**: Users can click button to get GPT-4 analysis
+- **When enabled**: Users can click button to get AI analysis
 - **When disabled**: AI suggestions not available (saves cost)
 - **Default**: Unchecked
 - **Recommendation**: Enable if budget allows; very valuable for high-risk entries
@@ -687,17 +682,17 @@ This is a **Single DocType** - only one configuration record exists per site. Al
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  RISK THRESHOLDS (Percentages)                               │
+│  RISK THRESHOLDS (Percentages)                              │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
+│                                                             │
 │  Low Risk Threshold:     30   %                             │
 │  High Risk Threshold:    60   %                             │
-│                                                              │
-│  Risk Levels:                                                │
-│  • 0-30%:   Low Risk (Green)    - No action required       │
-│  • 31-60%:  Medium Risk (Orange) - Optional review         │
-│  • 61-100%: High Risk (Red)      - Requires attention      │
-│                                                              │
+│                                                             │
+│  Risk Levels:                                               │
+│  • 0-30%:   Low Risk (Green)    - No action required        │
+│  • 31-60%:  Medium Risk (Orange) - Optional review          │
+│  • 61-100%: High Risk (Red)      - Requires attention       │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -740,17 +735,17 @@ This is a **Single DocType** - only one configuration record exists per site. Al
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  AI INTEGRATION (Optional)                                   │
+│  AI INTEGRATION (Optional)                                  │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  OpenAI API Key:  [sk-proj-xxxxx... (hidden)]              │
-│  Model:           [gpt-4                    ▼]             │
-│  Max Tokens:      [1000                      ]             │
-│  Temperature:     [0.1                       ]             │
-│                                                              │
-│  ☑ Enable Monthly Cost Limit                               │
-│  Monthly Cost Limit:  [$100.00]                            │
-│                                                              │
+│                                                             │
+│  OpenAI API Key:  [sk-proj-xxxxx... (hidden)]               │
+│  Model:           [gpt-4                    ▼]              │
+│  Max Tokens:      [1000                      ]              │ 
+│  Temperature:     [0.1                       ]              │
+│                                                             │
+│  ☑ Enable Monthly Cost Limit                                │
+│  Monthly Cost Limit:  [$100.00]                             │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -806,20 +801,20 @@ This is a **Single DocType** - only one configuration record exists per site. Al
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  EMAIL NOTIFICATIONS                                         │
+│  EMAIL NOTIFICATIONS                                        │
 ├─────────────────────────────────────────────────────────────┤
-│                                                              │
-│  Notification Email:  [controller@company.com              ] │
-│                       [cfo@company.com                     ] │
-│                       [audit@company.com                   ] │
-│                                                              │
-│  ☑ Send Real-Time Alerts (High Risk entries)               │
+│                                                             │
+│  Notification Email:  [controller@company.com]              │
+│                       [cfo@company.com]                     │
+│                       [audit@company.com]                   │
+│                                                             │
+│  ☑ Send Real-Time Alerts (High Risk entries)                │
 │  ☑ Send Daily Summary                                       │
 │  ☐ Send Weekly Summary                                      │
 │  ☐ Send Monthly Summary                                     │
-│                                                              │
+│                                                             │
 │  Daily Summary Time:  [08:00 AM]                            │
-│                                                              │
+│                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -887,16 +882,16 @@ This is where the magic happens - **configuring what to check and how much risk 
 │  VALIDATION RULES                                                            │
 ├──────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
-│  Rule Name              │ Weight │ Threshold │ Enabled │ Description        │
-│ ────────────────────────┼────────┼───────────┼─────────┼─────────────────── │
-│  UNBALANCED_ENTRY       │  50%   │ 0.01      │   ☑    │ Debit ≠ Credit    │
-│  AMOUNT_VERY_HIGH       │  20%   │ 500,000   │   ☑    │ Very large amount │
-│  AMOUNT_HIGH_RISK       │  10%   │ 100,000   │   ☑    │ High amount       │
-│  MISSING_DESCRIPTION    │   8%   │ N/A       │   ☑    │ No description    │
-│  WEEKEND_POSTING        │   7%   │ N/A       │   ☑    │ Sat/Sun posting   │
-│  UNUSUAL_ACCOUNTS       │   5%   │ N/A       │   ☑    │ Odd account combo │
-│ ────────────────────────┴────────┴───────────┴─────────┴─────────────────── │
-│  TOTAL WEIGHT:  100%                                                        │
+│  Rule Name              │ Weight │ Threshold │ Enabled │ Description         │
+│ ────────────────────────┼────────┼───────────┼─────────┼───────────────────  │
+│  UNBALANCED_ENTRY       │  50%   │ 0.01      │   ☑     │ Debit ≠ Credit      │
+│  AMOUNT_VERY_HIGH       │  20%   │ 500,000   │   ☑     │ Very large amount   │
+│  AMOUNT_HIGH_RISK       │  10%   │ 100,000   │   ☑     │ High amount         │
+│  MISSING_DESCRIPTION    │   8%   │ N/A       │   ☑     │ No description      │
+│  WEEKEND_POSTING        │   7%   │ N/A       │   ☑     │ Sat/Sun posting     │
+│  UNUSUAL_ACCOUNTS       │   5%   │ N/A       │   ☑     │ Odd account combo   │
+│ ────────────────────────┴────────┴───────────┴─────────┴───────────────────  │
+│  TOTAL WEIGHT:  100%                                                         │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -939,8 +934,6 @@ Each row in this table defines one validation rule. Let's examine each field:
   - "Debits must equal credits within tolerance"
   - "Journal entries over $500K require CFO approval"
 - **Recommendation**: Clear, non-technical language
-
-[continuing...]
 
 
 ---
@@ -1181,90 +1174,6 @@ Most implementations allow custom suspicious patterns via settings:
 
 ---
 
-## How Risk Scores Combine
-
-**Key Principle**: Risk scores are **additive** - each violated rule contributes its weight percentage.
-
-### Example 1: Low-Risk Entry
-**Scenario**: Small routine accrual on Thursday with description
-
-- Journal Entry: Debit Professional Fees $5,000 / Credit Accrued Expenses $5,000
-- Posting Date: Thursday, October 10, 2025
-- Description: "Accrue October consulting services per agreement dated 10/1/2025"
-
-**Rule Evaluation**:
-- ❌ UNBALANCED_ENTRY: No violation (debits = credits)
-- ❌ AMOUNT_VERY_HIGH: No violation ($10K total < $500K threshold)
-- ❌ AMOUNT_HIGH_RISK: No violation ($10K total < $100K threshold)
-- ❌ MISSING_DESCRIPTION: No violation (clear description provided)
-- ❌ WEEKEND_POSTING: No violation (Thursday = weekday)
-- ❌ UNUSUAL_ACCOUNTS: No violation (Professional Fees/Accrued Expenses is normal)
-
-**Final Risk Score**: 0% (Low Risk - Green)
-
----
-
-### Example 2: Medium-Risk Entry
-**Scenario**: Large entry with no description on weekday
-
-- Journal Entry: Debit Prepaid Insurance $120,000 / Credit Cash $120,000
-- Posting Date: Wednesday, October 15, 2025
-- Description: (empty)
-
-**Rule Evaluation**:
-- ❌ UNBALANCED_ENTRY: No violation (debits = credits)
-- ❌ AMOUNT_VERY_HIGH: No violation ($240K total < $500K threshold)
-- ✅ AMOUNT_HIGH_RISK: **VIOLATION** ($240K total > $100K threshold) → +10%
-- ✅ MISSING_DESCRIPTION: **VIOLATION** (no description provided) → +8%
-- ❌ WEEKEND_POSTING: No violation (Wednesday = weekday)
-- ❌ UNUSUAL_ACCOUNTS: No violation (Prepaid Insurance/Cash is normal)
-
-**Final Risk Score**: 10% + 8% = **18%** (Low Risk - Green, but flagged for review)
-
----
-
-### Example 3: High-Risk Entry
-**Scenario**: Very large cash-to-revenue entry on weekend with no description
-
-- Journal Entry: Debit Cash $600,000 / Credit Revenue $600,000
-- Posting Date: Saturday, October 12, 2025
-- Description: (empty)
-
-**Rule Evaluation**:
-- ❌ UNBALANCED_ENTRY: No violation (debits = credits)
-- ✅ AMOUNT_VERY_HIGH: **VIOLATION** ($1.2M total > $500K threshold) → +20%
-- ❌ AMOUNT_HIGH_RISK: No violation (AMOUNT_VERY_HIGH takes precedence)
-- ✅ MISSING_DESCRIPTION: **VIOLATION** (no description provided) → +8%
-- ✅ WEEKEND_POSTING: **VIOLATION** (Saturday = weekend) → +7%
-- ✅ UNUSUAL_ACCOUNTS: **VIOLATION** (Cash/Revenue direct recognition) → +5%
-
-**Final Risk Score**: 20% + 8% + 7% + 5% = **40%** (Medium Risk - Orange)
-
-**Why not High Risk?** Even with 4 violations, the score is 40% (below 61% threshold). This demonstrates the calibrated weighting system.
-
----
-
-### Example 4: Critical Entry
-**Scenario**: Unbalanced entry (most serious violation)
-
-- Journal Entry: Debit Cash $100,000 / Credit Revenue $99,500
-- Posting Date: Thursday, October 10, 2025
-- Description: "Revenue recognition Q4"
-
-**Rule Evaluation**:
-- ✅ UNBALANCED_ENTRY: **CRITICAL VIOLATION** (difference = $500 > tolerance) → +50%
-- ❌ AMOUNT_VERY_HIGH: No violation ($199.5K total < $500K threshold)
-- ✅ AMOUNT_HIGH_RISK: **VIOLATION** ($199.5K total > $100K threshold) → +10%
-- ❌ MISSING_DESCRIPTION: No violation (description provided)
-- ❌ WEEKEND_POSTING: No violation (Thursday = weekday)
-- ❌ UNUSUAL_ACCOUNTS: No violation (though Cash/Revenue is suspicious, it's not in pattern list for this example)
-
-**Final Risk Score**: 50% + 10% = **60%** (Medium Risk - Orange, approaching High)
-
-**Critical Note**: An unbalanced entry should typically be **blocked from submission** rather than just flagged. Most implementations prevent save/submit when UNBALANCED_ENTRY triggers.
-
----
-
 ## Dashboard & Analytics
 
 The Journal Validation Dashboard provides comprehensive visibility into risk across your entire organization. Here's what each KPI and visualization shows:
@@ -1438,7 +1347,7 @@ Jan: 10% avg → Feb: 12% avg → Mar: 25% avg (spike!)
 **Purpose**: Identify which subsidiaries/entities have control weaknesses
 
 **Columns**:
-1. **Company Name**: Legal entity (e.g., "Noreli North Inc.", "Noreli Europe GmbH")
+1. **Company Name**: Legal entity (e.g., "Noreli North Inc.", "Noreli Asia PTE")
 2. **Total Entries**: Count of journal entries for this company
 3. **Avg Risk Score**: Mean risk score for this company's entries
 4. **High Risk %**: Percentage of this company's entries that are high risk
@@ -1446,11 +1355,11 @@ Jan: 10% avg → Feb: 12% avg → Mar: 25% avg (spike!)
 
 **Example**:
 
-| Company | Entries | Avg Risk | High Risk % | Top Violation |
-|---------|---------|----------|-------------|---------------|
-| Noreli North Inc. | 847 | 9.2% | 8% | MISSING_DESCRIPTION |
-| Noreli Europe GmbH | 201 | 22.1% | 19% | AMOUNT_HIGH_RISK |
-| Noreli Asia PTE | 199 | 31.5% | 27% | WEEKEND_POSTING |
+| Company           | Entries | Avg Risk | High Risk % | Top Violation       |
+|-------------------|---------|----------|-------------|---------------------|
+| Noreli North Inc. | 847     | 9.2%     | 8%          | MISSING_DESCRIPTION |
+| Noreli North SE   | 201     | 22.1%    | 19%         | AMOUNT_HIGH_RISK    |
+| Noreli Asia PTE   | 199     | 31.5%    | 27%         | WEEKEND_POSTING     |
 
 **Business Insights**:
 
@@ -1458,7 +1367,7 @@ Jan: 10% avg → Feb: 12% avg → Mar: 25% avg (spike!)
    - **Status**: Excellent control environment
    - **Action**: Use as benchmark for other entities
 
-2. **Noreli Europe GmbH (22.1% avg, 19% high risk)**:
+2. **Noreli Europe SE (22.1% avg, 19% high risk)**:
    - **Problem**: Higher risk than parent company
    - **Investigation**: Are $100K thresholds appropriate for EUR currency?
    - **Action**: May need currency-adjusted thresholds or more training
@@ -1478,7 +1387,6 @@ Jan: 10% avg → Feb: 12% avg → Mar: 25% avg (spike!)
 
 **Use Cases**:
 - **Audit planning**: Focus on Noreli Asia PTE (highest risk)
-- **Resource allocation**: Send trainer to Noreli Asia office
 - **Benchmarking**: Hold up Noreli North as model for others
 
 ---
@@ -1560,7 +1468,7 @@ Batch processing allows you to validate historical journal entries that existed 
 #### Step 1: Access Batch Processing
 
 **Navigation**:
-1. Go to Desk → Intercompany workspace
+1. Go to Desk → Journal Validation workspace
 2. Click "Journal Validation Settings" (or search "Journal Validation")
 3. Scroll to "Batch Processing" section
 
@@ -1697,90 +1605,10 @@ Batch processing allows you to validate historical journal entries that existed 
 
 ---
 
-### Real-World Example: Initial Installation
-
-**Scenario**: Noreli North installs Journal Validation app on October 15, 2025. They need to validate all 2024 and 2025 entries for upcoming audit.
-
-**Step-by-Step**:
-
-1. **Configure Settings** (one-time):
-   - Enable Automatic Validation: ✅
-   - Enable AI Suggestions: ✅
-   - Low Risk Threshold: 30
-   - High Risk Threshold: 60
-   - Matching Tolerance: 0.01
-   - High Risk Amount: 100,000
-   - Very High Risk Amount: 500,000
-   - Configure 6 standard rules (all enabled with standard weights)
-
-2. **Run Batch Validation**:
-   - From Date: 2024-01-01
-   - To Date: 2025-10-14
-   - Company: (blank - all companies)
-   - Reprocess Existing: ❌ (unchecked - no entries validated yet)
-   - Click "Run Batch Validation"
-
-3. **Job Execution**:
-   - Total Entries Found: 4,237
-   - Job Duration: 18 minutes
-   - Status: Completed
-
-4. **Results Summary**:
-   - Low Risk: 3,214 entries (76%)
-   - Medium Risk: 618 entries (15%)
-   - High Risk: 405 entries (9%)
-   - Average Risk Score: 14.2%
-
-5. **Follow-Up Actions**:
-   - Export high-risk entries to Excel
-   - Controller reviews 405 high-risk entries over next week
-   - Identifies 12 entries requiring correction
-   - Corrects entries, re-runs validation (risk scores improve)
-   - Provides validation report to external auditors
-
-**Audit Value**: 
-- Demonstrates 100% journal entry review coverage
-- Shows detective control is operating effectively
-- Provides risk-based sampling population (auditor can focus on high-risk subset)
-- Estimated audit time saved: 40 hours (previously manual sample testing)
-
----
-
-### Batch Processing Best Practices
-
-1. **Start Small**:
-   - First batch: Last 30 days only
-   - Verify results look correct
-   - Then expand to longer date ranges
-
-2. **Off-Hours Execution**:
-   - Run large batches overnight
-   - Avoids impacting user performance during business hours
-
-3. **Chunk Large Ranges**:
-   - Instead of 5 years in one batch, do 5 separate annual batches
-   - Easier to troubleshoot if issues arise
-
-4. **Disable AI for Batch**:
-   - AI suggestions add significant time and cost for batch
-   - Run batch without AI, then selectively run AI on high-risk subset
-
-5. **Communicate**:
-   - Notify finance team before running large batch
-   - Explain why dashboard numbers will change
-   - Set expectations for review workload (if many high-risk entries found)
-
-6. **Document Results**:
-   - Export batch results to Excel immediately after completion
-   - Save for audit documentation
-   - Include in month-end/quarter-end close checklists
-
----
-
 
 ## AI Integration Deep Dive
 
-The AI integration in Journal Validation uses OpenAI's GPT-4 to provide natural language explanations and actionable corrections for high-risk journal entries.
+The AI integration in Journal Validation provide natural language explanations and actionable corrections for high-risk journal entries.
 
 ### How AI Suggestions Work
 
@@ -1897,7 +1725,7 @@ The AI integration in Journal Validation uses OpenAI's GPT-4 to provide natural 
   - WEEKEND_POSTING (+7%)
   - UNUSUAL_ACCOUNTS (+5%)
 
-**AI Suggestion (GPT-4 Response)**:
+**AI Suggestion**:
 
 ```
 RISK ANALYSIS: Journal Entry ACC-JV-2025-00157
@@ -2096,303 +1924,6 @@ Settings include optional limits:
 
 ---
 
-## Real-World Examples
-
-Let's examine 10 real journal entries from Noreli North's ERPNext system and how Journal Validation processed them.
-
-### Example 1: ACC-JV-2025-00154
-**Perfect Low-Risk Entry**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Thursday, October 10, 2025
-- **Description**: "Monthly depreciation for office equipment per depreciation schedule Oct 2025"
-- **Accounts**:
-  - Debit: Depreciation Expense - 6150 | $2,450.00
-  - Credit: Accumulated Depreciation - 1520 | $2,450.00
-
-**Validation Result**:
-- UNBALANCED_ENTRY: ❌ (Debit = Credit = $2,450)
-- AMOUNT_VERY_HIGH: ❌ (Total $4,900 << $500K threshold)
-- AMOUNT_HIGH_RISK: ❌ (Total $4,900 << $100K threshold)
-- MISSING_DESCRIPTION: ❌ (Clear, detailed description provided)
-- WEEKEND_POSTING: ❌ (Thursday = weekday)
-- UNUSUAL_ACCOUNTS: ❌ (Depreciation/Accumulated Depreciation is standard)
-
-**Risk Score**: 0% (Low Risk - Green)
-
-**Business Context**: Routine month-end accrual. This is exactly what low-risk entries look like - clear purpose, normal accounts, proper documentation, appropriate amount.
-
-**Action**: No review required. Auto-approved.
-
----
-
-### Example 2: ACC-JV-2025-00155
-**Low-Risk with Minor Issues**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Friday, October 11, 2025
-- **Description**: "Insurance adj"
-- **Accounts**:
-  - Debit: Insurance Expense - 6210 | $8,500.00
-  - Credit: Prepaid Insurance - 1310 | $8,500.00
-
-**Validation Result**:
-- UNBALANCED_ENTRY: ❌
-- AMOUNT_VERY_HIGH: ❌
-- AMOUNT_HIGH_RISK: ❌
-- MISSING_DESCRIPTION: ❌ (Has description, though brief)
-- WEEKEND_POSTING: ❌
-- UNUSUAL_ACCOUNTS: ❌
-
-**Risk Score**: 0% (Low Risk - Green)
-
-**Business Context**: Routine monthly insurance expense recognition. Description is brief ("adj") but passes minimum requirements.
-
-**Best Practice Suggestion**: While this entry passes validation, a better description would be:
-"Recognize October insurance expense per 12-month policy #ABC-2025 expiring 03/2026"
-
-**Action**: No review required, but consider training on description best practices.
-
----
-
-### Example 3: ACC-JV-2025-00156
-**Medium-Risk: Large Amount Without Context**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Wednesday, October 9, 2025
-- **Description**: (empty)
-- **Accounts**:
-  - Debit: Prepaid Consulting - 1330 | $120,000.00
-  - Credit: Cash - 1110 | $120,000.00
-
-**Validation Result**:
-- UNBALANCED_ENTRY: ❌
-- AMOUNT_VERY_HIGH: ❌ (Total $240K < $500K threshold)
-- AMOUNT_HIGH_RISK: ✅ **VIOLATED** (Total $240K > $100K threshold) → +10%
-- MISSING_DESCRIPTION: ✅ **VIOLATED** (No description) → +8%
-- WEEKEND_POSTING: ❌
-- UNUSUAL_ACCOUNTS: ❌ (Prepaid/Cash is normal)
-
-**Risk Score**: 18% (Low Risk - Green, but flagged for review)
-
-**Business Context**: Large prepayment ($120K) requires documentation. Controller should verify:
-- Contract or agreement for consulting services
-- Approval email for this expenditure
-- Expected amortization schedule
-
-**AI Suggestion Summary**: "This $120K prepayment needs supporting documentation. Obtain and attach: (1) consulting agreement, (2) CFO approval email, (3) amortization schedule. Update description to include vendor name, service period, and contract reference."
-
-**Action**: Controller reviews within 48 hours. Adds description: "Prepaid consulting to Deloitte for ERP implementation services Oct 2025 - March 2026 per SOW #DL-2025-089 approved by CFO 10/5/2025"
-
-**Outcome**: Risk score would be 10% after correction (only AMOUNT_HIGH_RISK remains, which is acceptable for this size transaction).
-
----
-
-### Example 4: ACC-JV-2025-00157
-**High-Risk: Multiple Red Flags**
-
-*(This is the entry we used in the AI example above)*
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Saturday, October 12, 2025
-- **Description**: (empty)
-- **Accounts**:
-  - Debit: Cash - 1110 | $600,000.00
-  - Credit: Sales - 4010 | $600,000.00
-
-**Validation Result**:
-- AMOUNT_VERY_HIGH: ✅ **VIOLATED** (+20%)
-- MISSING_DESCRIPTION: ✅ **VIOLATED** (+8%)
-- WEEKEND_POSTING: ✅ **VIOLATED** (+7%)
-- UNUSUAL_ACCOUNTS: ✅ **VIOLATED** (+5%)
-
-**Risk Score**: 40% (Medium Risk - Orange, escalate to CFO)
-
-**Investigation Findings**: 
-- Entry created by junior accountant on Monday, October 14 (backdated to Saturday)
-- No supporting Sales Invoice in system
-- No cash receipt or deposit in bank reconciliation
-- Preparer claims "CFO told me to book this" but no written approval
-
-**Action Taken**:
-1. Entry submission BLOCKED by controller
-2. Escalated to CFO - CFO has no recollection of this transaction
-3. Investigation reveals: Preparer misunderstood verbal instruction
-4. Correct transaction: $600K was deposit for future services (should be deferred revenue, not sales)
-
-**Corrected Entry** (ACC-JV-2025-00164):
-- Debit: Cash - 1110 | $600,000.00
-- Credit: Deferred Revenue - 2520 | $600,000.00
-- Description: "Customer deposit for Phase 2 project per contract #NNC-2025-042 signed 10/11/2025. Revenue recognition begins 11/1/2025 per ASC 606 criteria."
-- Date: Monday, October 14, 2025 (actual transaction date)
-
-**Outcome**: Journal Validation prevented $600K revenue misstatement. This would have overstated Q4 revenue by 8% (material).
-
-**ROI Impact**: This single catch justified the entire app cost for the year.
-
----
-
-### Example 5: ACC-JV-2025-00158
-**Critical: Unbalanced Entry**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Tuesday, October 8, 2025
-- **Description**: "Reclassify loan from short-term to long-term"
-- **Accounts**:
-  - Debit: Notes Payable - Current - 2110 | $50,000.00
-  - Credit: Notes Payable - Long-Term - 2610 | $50,500.00
-
-**Validation Result**:
-- UNBALANCED_ENTRY: ✅ **CRITICAL VIOLATION** (Difference: $500) → +50%
-- AMOUNT_HIGH_RISK: ❌ (Total $100.5K ≈ threshold, but unbalanced entry takes precedence)
-
-**Risk Score**: 50% (Medium Risk - Orange, but CRITICAL nature requires immediate action)
-
-**System Behavior**: Entry BLOCKED from submission (validation error prevents save)
-
-**Investigation**: Simple keying error - preparer typed $50,500 instead of $50,000 on credit side
-
-**Correction**: Changed credit amount to $50,000, re-saved. Risk score → 0%.
-
-**Outcome**: Unbalanced entry caught before posting. This is exactly what the validation system is designed to prevent.
-
----
-
-### Example 6: ACC-JV-2025-00159
-**Low-Risk: Routine Accrual**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Thursday, October 10, 2025
-- **Description**: "Accrue October utilities per estimated bill"
-- **Accounts**:
-  - Debit: Utilities Expense - 6250 | $3,200.00
-  - Credit: Accrued Expenses - 2120 | $3,200.00
-
-**Risk Score**: 0% (Low Risk - Green)
-
-**Action**: No review required.
-
----
-
-### Example 7: ACC-JV-2025-00160
-**Medium-Risk: Weekend Posting**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Sunday, October 13, 2025
-- **Description**: "Emergency fix - reverse duplicate expense entry ACC-JV-2025-00142"
-- **Accounts**:
-  - Debit: Accrued Expenses - 2120 | $12,000.00
-  - Credit: Consulting Expense - 6120 | $12,000.00
-
-**Validation Result**:
-- WEEKEND_POSTING: ✅ **VIOLATED** (+7%)
-
-**Risk Score**: 7% (Low Risk - Green)
-
-**Business Context**: Weekend entry, but clearly documented as emergency correction. Description references original entry being reversed.
-
-**Controller Review**: Verified original entry ACC-JV-2025-00142 was indeed duplicated. Reversal is legitimate. Weekend posting acceptable for time-sensitive corrections.
-
-**Action**: Approved with notation: "Emergency correction - verified by controller 10/14/2025"
-
-**Best Practice**: Even though this passed, better practice would be to make correction on Monday unless truly urgent.
-
----
-
-### Example 8: ACC-JV-2025-00161
-**High-Risk: Unusual Accounts**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Friday, October 11, 2025
-- **Description**: "Quarterly adjustment"
-- **Accounts**:
-  - Debit: Retained Earnings - 3200 | $45,000.00
-  - Credit: Sales - 4010 | $45,000.00
-
-**Validation Result**:
-- UNUSUAL_ACCOUNTS: ✅ **VIOLATED** (Retained Earnings/Revenue is highly suspicious) → +5%
-- MISSING_DESCRIPTION: ✅ **VIOLATED** ("Quarterly adjustment" is too vague) → +8%
-- AMOUNT_HIGH_RISK: ❌ (Total $90K < $100K threshold, but close)
-
-**Risk Score**: 13% (Low Risk - Green, but unusual pattern flagged)
-
-**Investigation**: This is a MAJOR red flag. Directly crediting revenue from retained earnings suggests:
-- Prior period adjustment (rare, requires justification)
-- Attempt to manipulate current period revenue (fraud)
-- Fundamental accounting error (misunderstanding of equity accounts)
-
-**AI Suggestion**: "CRITICAL: This entry violates GAAP. Retained earnings should only be adjusted for: (1) prior period error corrections per ASC 250, (2) changes in accounting principle, or (3) dividend declarations. This appears to be an attempt to inflate current period revenue without a corresponding asset/liability change. DO NOT POST."
-
-**Action Taken**:
-- Entry REJECTED by controller
-- Preparer interviewed: "I was told we need to hit revenue target this quarter"
-- Escalated to CFO and Audit Committee
-- Determined to be attempted financial statement fraud by division VP
-- VP terminated, entry never posted
-
-**Outcome**: Journal Validation + AI suggestions prevented financial statement fraud.
-
----
-
-### Example 9: ACC-JV-2025-00162
-**Low-Risk: Standard Reclassification**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Monday, October 14, 2025
-- **Description**: "Reclassify loan current portion per amortization schedule - due within 12 months"
-- **Accounts**:
-  - Debit: Notes Payable - Long-Term - 2610 | $25,000.00
-  - Credit: Notes Payable - Current - 2110 | $25,000.00
-
-**Risk Score**: 0% (Low Risk - Green)
-
-**Action**: No review required. This is standard month-end balance sheet reclassification.
-
----
-
-### Example 10: ACC-JV-2025-00163
-**Medium-Risk: Large Amount, Good Documentation**
-
-**Entry Details**:
-- **Company**: Noreli North Inc.
-- **Date**: Thursday, October 10, 2025
-- **Description**: "Capitalize software development costs Q3 2025 per ASC 350-40 policy - projects DEV-2025-011 through DEV-2025-018 - CFO approved 10/9/2025"
-- **Accounts**:
-  - Debit: Software Development Assets - 1620 | $380,000.00
-  - Credit: Software Development Expense - 6180 | $380,000.00
-
-**Validation Result**:
-- AMOUNT_VERY_HIGH: ❌ (Total $760K > $500K threshold... wait, this SHOULD trigger!)
-- Actually: ✅ **VIOLATED** (+20%)
-
-**Risk Score**: 20% (Low Risk - Green)
-
-**Business Context**: Large capitalization entry. While amount is very high, the description is exemplary:
-- Clear business purpose (software capitalization)
-- Accounting standard cited (ASC 350-40)
-- Project references provided (DEV-2025-011 through 018)
-- Approval documented (CFO approved 10/9/2025)
-
-**Controller Review**: Spot-checked 3 of 8 projects referenced. Verified:
-- Projects meet capitalization criteria per ASC 350-40
-- Costs properly accumulated in expense account during development
-- CFO approval email on file
-
-**Action**: Approved. This entry demonstrates best practices - even though amount is very high, documentation is sufficient for audit trail.
-
-**Best Practice**: This is the gold standard for journal entry descriptions.
-
----
-
 ## Future Roadmap
 
 ### Short-Term Enhancements (Next 3-6 Months)
@@ -2423,16 +1954,6 @@ Let's examine 10 real journal entries from Noreli North's ERPNext system and how
   - Email notifications with embedded entry details + AI summary
 - **Expected Impact**: Formalize review process, ensure timely resolution
 - **Status**: Development starting December 2025
-
-**4. Mobile App for Approvals**
-- **Goal**: Enable controllers/CFOs to review and approve from mobile device
-- **Approach**:
-  - iOS + Android native apps
-  - Push notifications for new high-risk entries
-  - Swipe to approve/reject with comment
-  - Integrated AI summary view
-- **Expected Impact**: Reduce approval cycle time from 2-3 days to <24 hours
-- **Status**: Concept validation - user interviews in progress
 
 ---
 
@@ -2576,7 +2097,7 @@ Journal Validation for ERPNext transforms manual journal entry review from a tim
 - ✅ Comprehensive test suite (12+ unit tests)
 
 **AI Innovation**:
-- ✅ GPT-4 powered insights and corrections
+- ✅ AI powered insights and corrections
 - ✅ Natural language explanations
 - ✅ Cost-effective (~$0.02 per high-risk entry)
 - ✅ Complete transparency (token usage, costs tracked)
@@ -2621,56 +2142,9 @@ A: Not yet. Planned for 2026. Current web UI is mobile-responsive for viewing, b
 
 ---
 
-## Contributing
-
-We welcome contributions from the ERPNext community!
-
-**Ways to Contribute**:
-
-1. **Report Issues**: GitHub Issues for bugs or feature requests
-2. **Submit Pull Requests**: See CONTRIBUTING.md for coding standards
-3. **Share Custom Rules**: Submit your industry-specific validation rules
-4. **Improve Documentation**: Help us improve this guide
-5. **Test Beta Features**: Join our beta program for early access
-
-**Development Setup**: See INSTALLATION.md → Development Installation section
-
-**Community**: Join our Discuss forum thread or Telegram group (links in README)
-
----
-
-## License
-
-This project is licensed under the MIT License. See LICENSE file for details.
-
-**Commercial Use**: Permitted. No attribution required. No warranty provided.
-
----
-
-## Contact & Support
-
-**Publisher**: Noreli North  
-**Email**: info@noreli-north.com  
-**GitHub**: [github.com/noreli-north/journal-validation](#)  
-**Documentation**: [docs.noreli-north.com/journal-validation](#)
-
-**Support Options**:
-- Community Support: GitHub Issues (free)
-- Email Support: SLA within 48 hours (free)
-- Priority Support: Available for enterprise customers (contact sales)
-- Implementation Services: Available for large-scale deployments
-
----
-
 **Thank you for using Journal Validation!**
 
 If this app saves you time, catches errors, or prevents fraud, please ⭐ star our GitHub repository and share with others in the ERPNext community.
 
 Together we're making ERPNext the most robust and intelligent ERP platform available.
-
----
-
-*Last Updated: October 17, 2025*  
-*Version: 2.0*  
-*Word Count: ~15,000*
 
