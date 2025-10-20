@@ -2077,8 +2077,6 @@ Journal Validation for ERPNext transforms manual journal entry review from a tim
 
 This app represents the future of financial controls: intelligent, automated, and proactive rather than reactive. By combining rule-based risk scoring with AI-powered analysis, Journal Validation provides both the efficiency of automation and the insight of human expertise.
 
-**Get Started Today**: [Installation Guide](#installation) | [GitHub Repository](#) | [Video Tutorial](#)
-
 ---
 
 ## FAQ
@@ -2089,7 +2087,7 @@ A: No. Validation adds <200ms per entry. Users won't notice any delay.
 **Q: What if we have custom account structures?**
 A: All validation rules are configurable. You can adjust account patterns, thresholds, and weights to match your chart of accounts.
 
-**Q: Do we need OpenAI API for basic functionality?**
+**Q: Do we need AI API for basic functionality?**
 A: No. Risk scoring works without AI. AI suggestions are optional (but highly valuable for high-risk entries).
 
 **Q: Can we customize the risk scoring weights?**
@@ -2110,14 +2108,11 @@ A: No. Permission system ensures only users with "Accounts Manager" role can ove
 **Q: How long does batch processing take for 10,000 entries?**
 A: Approximately 20-30 minutes depending on server performance and number of rules enabled.
 
-**Q: Is there a mobile app?**
-A: Not yet. Planned for 2026. Current web UI is mobile-responsive for viewing, but creation/approval best on desktop.
-
 ---
 
 **Thank you for using Journal Validation!**
 
-If this app saves you time, catches errors, or prevents fraud, please ⭐ star our GitHub repository and share with others in the ERPNext community.
+If this app saves you time, catches errors, or prevents fraud, please ⭐ star my GitHub repository and share with others in the ERPNext community.
 
 Together we're making ERPNext the most robust and intelligent ERP platform available.
 
