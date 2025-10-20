@@ -15,33 +15,7 @@ tags: [ERPNext, Journal Validation, Risk Scoring, AI-Powered Controls, GPT-4, SO
 - 🤖 AI-powered insights
 - 📊 Production-tested (audit trails, unit tests)
 
-[GitHub Repository](#) | [Video Tutorial](#) | [Installation Guide](#)
-
----
-
-## Table of Contents
-
-- [Overview](#overview)
-- [The Problem: Manual Journal Entry Risk](#the-problem-manual-journal-entry-risk)
-- [The Solution: Intelligent Risk Scoring](#the-solution-intelligent-risk-scoring)
-- [Architecture](#architecture)
-- [Risk Scoring Model (0-100%)](#risk-scoring-model-0-100)
-- [Key Features](#key-features)
-- [Installation](#installation)
-- [Configuration Deep Dive](#configuration-deep-dive)
-- [Validation Rules Explained](#validation-rules-explained)
-- [How Validation Works](#how-validation-works)
-- [Dashboard & KPIs](#dashboard--kpis)
-- [Batch Processing](#batch-processing)
-- [AI Integration](#ai-integration)
-- [Real-World Examples](#real-world-examples)
-- [Code Examples](#code-examples)
-- [Testing](#testing)
-- [Standards Compliance](#standards-compliance)
-- [ROI Analysis](#roi-analysis)
-- [Best Practices](#best-practices)
-- [Future Roadmap](#future-roadmap)
-- [FAQ](#faq)
+ [Video Tutorial](https://www.youtube.com/watch?v=GamcvBQGYGE&pp=ygUMbm9yZWxpIG5vcnRo) | [Blog](https://norelinorth.github.io)
 
 ---
 
