@@ -347,7 +347,7 @@ Focus on:
 - ✅ **80% of financial fraud** involves manual journal entries (ACFE 2024)
 - ✅ **Average fraud:** $1.6M, median detection: 18 months
 - ✅ **Manual review coverage:** Only 20-30% (resource constraints)
-- ✅ **Market gap:** Existing solutions expensive ($50K-200K/year: BlackLine, FloQast)
+- ✅ **Market gap:** Existing solutions expensive
 
 #### Prompt 2: User Personas
 
