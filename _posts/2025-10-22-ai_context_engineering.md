@@ -380,8 +380,8 @@ For each:
 
 ```
 Create detailed feature comparison table for competitors:
-- BlackLine (market leader)
-- FloQast (challenger)
+- Market leader
+- Challenger
 - Manual spreadsheet processes (baseline)
 
 Columns: Core Features, Pricing, Target Audience, User Reviews
@@ -392,7 +392,7 @@ Columns: Core Features, Pricing, Target Audience, User Reviews
 #### Prompt 4: USP Analysis
 
 ```
-What is the unique selling proposition (USP) of BlackLine?
+What is the unique selling proposition (USP) of the market leader?
 Based on their website and press releases, what is their strategic focus?
 ```
 
@@ -1529,21 +1529,21 @@ Track these to measure effectiveness:
 
 ### Download Links
 
-1. 📦 **Journal Validation App** (GitHub): [Repository URL]
+1. 📦 **Journal Validation App** (GitHub)
    - Complete source code (5,932 lines)
    - Installation guide (5 minutes)
    - MIT License
 
-2. 📄 **Full Methodology Document** (15,000 words): [Link]
+2. 📄 **Full Methodology Document** (15,000 words)
    - Complete process with 16 prompts
    - Real AI responses
    - Before/after comparisons
 
-3. 📋 **CLAUDE.md Template**: [Link]
+3. 📋 **CLAUDE.md Template**
    - ERPNext standards
    - Copy and adapt
 
-4. 📚 **Reference Patterns Library**: [Link]
+4. 📚 **Reference Patterns Library**
    - Extracted from ERPNext core
 
 ### Prompt Templates
@@ -1611,7 +1611,7 @@ Score: X/8. If <8, provide fixes.
 ### Tools
 
 **Recommended:**
-- **AI Assistants:** Cursor, Cline, GitHub Copilot
+- **AI Assistants:** Claude
 - **Standards Checking:** Ruff (Python linter), custom scripts
 - **Test Coverage:** Coverage.py, Frappe test runner
 
@@ -1620,7 +1620,6 @@ Score: X/8. If <8, provide fixes.
 **Get Help:**
 - 💬 ERPNext Forum: discuss.erpnext.com
 - 💬 Frappe Slack: frappe.io/slack
-- 💬 GitHub Issues: [Repository]
 
 **Contribute:**
 - ⭐ Star the repository
@@ -1680,12 +1679,4 @@ This methodology doesn't just make you code faster. It makes you code **better**
 
 That's not a trade-off. That's transformation.
 
-**Go build something amazing.**
-
----
-
-**Article Metadata:**
-- Word Count: ~9,800 words
-- Read Time: 40-45 minutes
-- Last Updated: 2025-10-21
-- Version: 2.0 (Results-first, no external attributions)
+**Now go build something amazing.**
