@@ -29,8 +29,8 @@
 **Key Features:**
 - Automated market data fetching (stock prices, bonds, etc.)
 - Manual data entry capability
-- AI-powered recommendations using ai_assistant app
-- Multi-standard support (HGB, IFRS, US-GAAP)
+- AI-powered recommendations using ai assistant app
+- Multi-standard support (Local GAAP, IFRS, US-GAAP)
 - Dashboard and reporting
 - Full audit trail
 
@@ -54,15 +54,14 @@ Standard Frappe submittable document for tracking securities.
 {
     # Identification
     "naming_series": "FA-.YYYY.-",
-    "asset_name": "Data",              # e.g., "Deutsche Bank AG Shares"
+    "asset_name": "Data",              # e.g., "Apple"
     "company": "Link: Company",        # Standard ERPNext field
     "status": "Select",                # Draft/Active/Sold/Impaired/Disposed
 
     # Security Identification
     "isin": "Data",                    # International Securities ID
-    "wkn": "Data",                     # German securities code
     "ticker": "Data",                  # Stock ticker symbol
-    "exchange": "Data",                # XETRA, NYSE, etc.
+    "exchange": "Data",                # NYSE, etc.
     "security_type": "Select",         # Stock/Bond/Fund/ETF/Other
     "issuer": "Data",                  # Issuing entity
 
@@ -83,7 +82,7 @@ Standard Frappe submittable document for tracking securities.
     "unrealized_gain_loss": "Currency",
 
     # Accounting Standard Configuration
-    "accounting_standard": "Select",   # HGB/IFRS/US-GAAP
+    "accounting_standard": "Select",   # Local GAAP/IFRS/US-GAAP
 
     # IFRS 9 Classification
     "ifrs9_classification": "Select",  # Amortized Cost/FVOCI/FVTPL
