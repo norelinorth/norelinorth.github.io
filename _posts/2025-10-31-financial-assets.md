@@ -29,7 +29,7 @@ tags: [AI Agents, LangGraph, IFRS 9, Financial Accounting, ERPNext, Frappe Frame
 - 🧪 **42 IFRS 9 tests + 15 LangGraph workflow tests** - Comprehensive AI agent testing
 - 📖 **Open source (MIT)** - Full LangGraph implementation, RAG setup, production-ready
 
-***
+---
 
 If you've worked in financial accounting, you know the quarter-end drill: spreadsheets everywhere, manual classification decisions that haunt you forever, and the constant fear that you've violated some obscure paragraph of IFRS 9.
 
@@ -90,7 +90,7 @@ CFOs hire MBAs to do strategic analysis. Instead, they spend 8 hours/month copyi
 
 **This is where AI agents change the game.**
 
-***
+---
 
 ## The AI-First Architecture: LangGraph + ERPNext
 
@@ -132,7 +132,7 @@ Financial Asset Revaluation Created
 
 This isn't a black box. It's explainable AI for regulated industries.
 
-***
+---
 
 ## Deep Dive: The AI Agent Workflow
 
@@ -366,7 +366,7 @@ After all nodes execute, the agent returns:
 
 This entire analysis happens in **~3 seconds**.
 
-***
+---
 
 ## The User Experience: AI-Augmented Workflow
 
@@ -443,7 +443,7 @@ if revaluation.is_impairment and asset.ifrs9_classification == "FVOCI":
 - Human decision documented
 - Zero manual journal entry work
 
-***
+---
 
 ## Real-World Impact: Case Study
 
@@ -501,7 +501,7 @@ if revaluation.is_impairment and asset.ifrs9_classification == "FVOCI":
 **But the real value?** The controller's quote:
 > "The AI catches things we would have missed. It's like having a Big 4 senior manager reviewing every transaction. When auditors see the documentation - standards citations, confidence scores, full reasoning - they love it. This is the future."
 
-***
+---
 
 ## Technical Implementation: For the Developers
 
@@ -729,7 +729,7 @@ bench --site [your-site] execute financial_asset_accounting.ai_agent.rag.build_s
 bench --site [your-site] run-tests --app financial_asset_accounting
 ```
 
-***
+---
 
 ## The Future: Where AI Accounting is Heading
 
@@ -794,7 +794,7 @@ Example:
 
 **Regulatory consideration**: Humans remain ultimately responsible, but AI handles execution
 
-***
+---
 
 ## Open Source & Community
 
@@ -832,7 +832,7 @@ We welcome contributions! Priority areas:
 - **Monthly Calls**: Demo new features, discuss use cases
 - **Blog**: Deep dives on LangGraph patterns, RAG optimization, etc.
 
-***
+---
 
 ## Conclusion: AI That Actually Understands
 
@@ -854,7 +854,7 @@ This project is our answer: **AI handles compliance execution. Humans handle jud
 
 Try it. Break it. Improve it. Let's build the future of financial automation together.
 
-***
+---
 
 ## Links & Resources
 
@@ -871,7 +871,7 @@ Try it. Break it. Improve it. Let's build the future of financial automation tog
 - Confidence Scoring Algorithm: `/docs/confidence-scoring.md`
 - Test Coverage Report: `/docs/test-coverage.html`
 
-***
+---
 
 **Author**: [Your Name]
 **Date**: January 30, 2025
@@ -884,4 +884,3 @@ Drop a comment or reach out. Let's push the boundaries of what AI can do in regu
 **The future of accounting isn't automation. It's augmentation.**
 
 And it's here today.
-
