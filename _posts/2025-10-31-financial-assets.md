@@ -2,7 +2,7 @@
 
 **App Name:** `financial_asset_automation`
 **Version:** 1.0.0
-**Purpose:** Automate financial asset accounting and finance processes while maintaining 100% HGB, IFRS, and US-GAAP compliance
+**Purpose:** Automate financial asset accounting and finance processes while maintaining 100% LOCAL GAAP, IFRS, and US-GAAP compliance
 
 ---
 
@@ -89,8 +89,8 @@ Standard Frappe submittable document for tracking securities.
     "business_model": "Small Text",
     "sppi_test_result": "Check",
 
-    # HGB Classification
-    "hgb_category": "Select",          # Current Asset/Fixed Asset
+    # LOCAL GAAP Classification
+    "Local GAAP_category": "Select",          # Current Asset/Fixed Asset
     "intended_holding": "Select",      # Short-term/Long-term
 
     # US-GAAP Classification (ASC 320)
@@ -195,8 +195,8 @@ Standard Frappe submittable document for tracking securities.
     "ai_model_override": "Data",
 
     # Impairment Settings
-    "hgb_permanent_decline_threshold": "Percent",
-    "hgb_permanent_decline_duration": "Int",
+    "Local GAAP_permanent_decline_threshold": "Percent",
+    "Local GAAP_permanent_decline_duration": "Int",
     "ifrs_ecl_enable": "Check",
 
     # Account Mappings
@@ -318,7 +318,7 @@ class ImpairmentAnalysisAgent(BaseFinancialAgent):
 
         Your role:
         1. Analyze financial assets for impairment indicators
-        2. Apply accounting standards (HGB, IFRS 9, US-GAAP) correctly
+        2. Apply accounting standards (LOCAL GAAP, IFRS 9, US-GAAP) correctly
         3. Provide clear reasoning for your conclusions
         4. Suggest appropriate accounting entries
 
@@ -417,7 +417,7 @@ class IFRS9ClassificationResult(BaseModel):
 
 class ClassificationAgent(BaseFinancialAgent):
     """
-    Intelligent agent for IFRS 9 / HGB / US-GAAP classification
+    Intelligent agent for IFRS 9 / LOCAL GAAP / US-GAAP classification
     Uses multi-step reasoning to determine correct classification
     """
 
@@ -485,7 +485,7 @@ class GLEntryResult(BaseModel):
 class GLGenerationAgent(BaseFinancialAgent):
     """
     Intelligent GL entry generation based on accounting standard
-    Ensures correct debits/credits per HGB/IFRS/US-GAAP
+    Ensures correct debits/credits per LOCAL GAAP/IFRS/US-GAAP
     """
 
     async def generate_gl_entries(
@@ -589,13 +589,13 @@ result = await agent.analyze_impairment(asset_doc)
 
 1. **Impairment Analysis** (Pydantic AI Agent)
    - Multi-step analysis with structured reasoning
-   - Standard-specific logic (HGB vs. IFRS vs. US-GAAP)
+   - Standard-specific logic (LOCAL GAAP vs. IFRS vs. US-GAAP)
    - Confidence scoring
    - Suggested journal entries
 
 2. **Classification Assistance** (Pydantic AI Agent)
    - IFRS 9: Business model + SPPI test
-   - HGB: Current vs. Fixed asset determination
+   - LOCAL GAAP: Current vs. Fixed asset determination
    - US-GAAP: Trading/AFS/HTM categorization
 
 3. **Price Validation** (Pydantic AI Agent)
@@ -609,7 +609,7 @@ result = await agent.analyze_impairment(asset_doc)
    - Narration generation
 
 5. **Simple Q&A** (ai_assistant direct calls)
-   - "What's the carrying amount under HGB?"
+   - "What's the carrying amount under LOCAL GAAP?"
    - "Is this asset impaired?"
    - User queries via chatbot
 
@@ -658,7 +658,7 @@ scheduler_events = {
 
 ## 5. ACCOUNTING STANDARDS IMPLEMENTATION
 
-### 5.1 HGB (German Commercial Code)
+### 5.1 LOCAL GAAP (German Commercial Code)
 
 **Principles:**
 - Historical cost principle
@@ -668,7 +668,7 @@ scheduler_events = {
 
 **Implementation:**
 ```python
-def get_carrying_amount_hgb(asset_doc):
+def get_carrying_amount_Local GAAP(asset_doc):
     cost = flt(asset_doc.total_cost_basis)
     market = flt(asset_doc.market_value)
     cumulative_impairment = flt(asset_doc.cumulative_impairment)
@@ -808,11 +808,11 @@ def get_carrying_amount_hgb(asset_doc):
 ---
 
 ### Phase 4: Accounting Standards (Weeks 7-9)
-**Goal:** HGB, IFRS, US-GAAP compliance
+**Goal:** LOCAL GAAP, IFRS, US-GAAP compliance
 
 **Tasks:**
 1. Create accounting_standards module structure
-2. Implement HGB logic (lower of cost or market)
+2. Implement LOCAL GAAP logic (lower of cost or market)
 3. Implement IFRS 9 logic (3 classifications)
 4. Implement US-GAAP logic (ASC 320)
 5. Add carrying amount calculation
@@ -910,7 +910,7 @@ Before each phase completion, verify:
 Test each function in isolation:
 ```python
 # Example: Test carrying amount calculation
-def test_get_carrying_amount_hgb():
+def test_get_carrying_amount_Local GAAP():
     asset = frappe.get_doc({
         "doctype": "Financial Asset",
         "total_cost_basis": 10000,
@@ -918,7 +918,7 @@ def test_get_carrying_amount_hgb():
         "cumulative_impairment": 0
     })
 
-    result = get_carrying_amount_hgb(asset)
+    result = get_carrying_amount_Local GAAP(asset)
     assert result == 8000  # Lower of cost or market
 ```
 
@@ -966,7 +966,7 @@ git diff apps/erpnext/
 
 1. ✅ **Marketplace-ready** - Could be submitted without modifications
 2. ✅ **Standards-compliant** - 100% Frappe/ERPNext patterns
-3. ✅ **Accounting-compliant** - HGB, IFRS, US-GAAP correct
+3. ✅ **Accounting-compliant** - LOCAL GAAP, IFRS, US-GAAP correct
 4. ✅ **AI-enhanced** - Meaningful recommendations
 5. ✅ **User-friendly** - Accountants can use without technical knowledge
 6. ✅ **Production-tested** - Works with real portfolios (100+ assets)
