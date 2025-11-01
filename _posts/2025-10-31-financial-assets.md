@@ -90,7 +90,7 @@ Standard Frappe submittable document for tracking securities.
     "sppi_test_result": "Check",
 
     # LOCAL GAAP Classification
-    "Local GAAP_category": "Select",          # Current Asset/Fixed Asset
+    "Local GAAP_category": "Select",   # Current Asset/Fixed Asset
     "intended_holding": "Select",      # Short-term/Long-term
 
     # US-GAAP Classification (ASC 320)
@@ -635,7 +635,6 @@ class MarketDataProvider(ABC):
 **Providers:**
 1. **Yahoo Finance** (free, no API key)
 2. **Alpha Vantage** (free tier: 500 calls/day)
-3. **ECB** (European Central Bank - official EU data)
 
 ### 4.2 Scheduled Price Updates
 
@@ -658,7 +657,7 @@ scheduler_events = {
 
 ## 5. ACCOUNTING STANDARDS IMPLEMENTATION
 
-### 5.1 LOCAL GAAP (German Commercial Code)
+### 5.1 LOCAL GAAP
 
 **Principles:**
 - Historical cost principle
@@ -730,160 +729,7 @@ def get_carrying_amount_Local GAAP(asset_doc):
 
 ---
 
-## 7. IMPLEMENTATION ROADMAP
-
-### Phase 1: Foundation (Weeks 1-2)
-**Goal:** Basic app structure with core DocTypes
-
-**Tasks:**
-1. Create app skeleton using bench
-2. Create Financial Asset Settings (Single)
-3. Create Financial Asset (main DocType)
-4. Create child tables (Price History, Transaction)
-5. Implement basic validation
-6. Test CRUD operations
-
-**Deliverables:**
-- ✅ App installed and functional
-- ✅ Can create and view Financial Assets
-- ✅ Basic calculations working (market value, unrealized G/L)
-- ✅ No custom fields on core ERPNext DocTypes
-
-**Testing:**
-- Create 5 test assets manually
-- Verify all calculations
-- Test permissions
-- End-to-end: Create → Save → Submit workflow
-
----
-
-### Phase 2: Market Data Integration (Weeks 3-4)
-**Goal:** Automated price fetching
-
-**Tasks:**
-1. Create base provider class
-2. Implement Yahoo Finance integration
-3. Implement Alpha Vantage integration (optional)
-4. Create scheduled task for daily updates
-5. Add price validation logic
-6. Implement manual override
-
-**Deliverables:**
-- ✅ Automated price updates working
-- ✅ Price history logged with audit trail
-- ✅ Alerts for unusual movements
-- ✅ Manual override functional
-
-**Testing:**
-- Fetch prices for 10 test assets
-- Verify scheduler runs correctly
-- Test manual price entry
-- End-to-end: Create asset → Auto-fetch → Review history
-
----
-
-### Phase 3: AI Integration (Weeks 5-6)
-**Goal:** AI-powered recommendations
-
-**Tasks:**
-1. Create AI helper module
-2. Implement impairment analysis function
-3. Implement classification suggestion
-4. Add FA AI Recommendation child table
-5. Create review workflow
-6. Add automated triggers
-
-**Deliverables:**
-- ✅ AI analysis functional
-- ✅ Recommendations logged and reviewable
-- ✅ Integration with ai_assistant app verified
-- ✅ Approve/reject workflow working
-
-**Testing:**
-- Trigger AI analysis for 5 assets
-- Review recommendations
-- Test approval workflow
-- End-to-end: Price drop → AI analysis → Review → Approve/Reject
-
----
-
-### Phase 4: Accounting Standards (Weeks 7-9)
-**Goal:** LOCAL GAAP, IFRS, US-GAAP compliance
-
-**Tasks:**
-1. Create accounting_standards module structure
-2. Implement LOCAL GAAP logic (lower of cost or market)
-3. Implement IFRS 9 logic (3 classifications)
-4. Implement US-GAAP logic (ASC 320)
-5. Add carrying amount calculation
-6. Implement impairment logic per standard
-7. Create GL integration (Journal Entries)
-
-**Deliverables:**
-- ✅ All three standards implemented
-- ✅ Correct carrying amounts calculated
-- ✅ GL integration working
-- ✅ Impairment processing functional per standard
-
-**Testing:**
-- Test same asset under all 3 standards
-- Verify carrying amounts differ correctly
-- Test impairment workflows
-- End-to-end: Create asset → Calculate carrying amount → Post GL entries
-
----
-
-### Phase 5: Reporting & Dashboard (Weeks 10-11)
-**Goal:** User-friendly visualization
-
-**Tasks:**
-1. Create Financial Assets workspace
-2. Add dashboard charts
-3. Create Financial Asset Portfolio report
-4. Create Impairment Analysis report
-5. Create Price Movement Alert report
-6. Add custom dashboards
-
-**Deliverables:**
-- ✅ Workspace functional with charts
-- ✅ All reports working
-- ✅ Dashboards displaying real-time data
-
-**Testing:**
-- Generate all reports with test data
-- Verify chart calculations
-- User acceptance testing
-- End-to-end: Create assets → View dashboard → Generate reports
-
----
-
-### Phase 6: Polish & Documentation (Week 12)
-**Goal:** Production-ready
-
-**Tasks:**
-1. Code review for standards compliance
-2. Write README.md
-3. Write INSTALLATION.md
-4. Write user guide
-5. Create sample data fixtures
-6. End-to-end testing
-7. Performance testing
-
-**Deliverables:**
-- ✅ App ready for deployment
-- ✅ Documentation complete
-- ✅ All tests passing
-- ✅ Standards compliance verified
-
-**Testing:**
-- Full end-to-end testing
-- Multi-company testing
-- Multi-standard testing
-- Performance testing (100+ assets)
-
----
-
-## 8. STANDARDS COMPLIANCE CHECKLIST
+## 7. STANDARDS COMPLIANCE CHECKLIST
 
 Before each phase completion, verify:
 
@@ -903,87 +749,6 @@ Before each phase completion, verify:
 - [ ] **GL entries** - Standard ERPNext pattern
 
 ---
-
-## 9. TESTING STRATEGY
-
-### Individual Function Testing
-Test each function in isolation:
-```python
-# Example: Test carrying amount calculation
-def test_get_carrying_amount_Local GAAP():
-    asset = frappe.get_doc({
-        "doctype": "Financial Asset",
-        "total_cost_basis": 10000,
-        "market_value": 8000,
-        "cumulative_impairment": 0
-    })
-
-    result = get_carrying_amount_Local GAAP(asset)
-    assert result == 8000  # Lower of cost or market
-```
-
-### End-to-End Testing
-Test complete workflows:
-```python
-# Example: Full asset lifecycle
-def test_asset_lifecycle_e2e():
-    # 1. Create asset
-    asset = create_test_asset()
-
-    # 2. Fetch price
-    fetch_market_price(asset)
-
-    # 3. Calculate carrying amount
-    carrying = asset.get_carrying_amount()
-
-    # 4. Check impairment
-    if asset.requires_impairment():
-        create_impairment_entry(asset)
-
-    # 5. Verify GL entries
-    gl_entries = get_gl_entries_for_asset(asset)
-    assert len(gl_entries) > 0
-```
-
-### Standards Verification
-Run compliance checks after each change:
-```bash
-# Check for hardcoded values
-grep -r "0\.01\|fallback" apps/financial_asset_automation/
-
-# Check for custom fields
-frappe.get_meta("Sales Invoice").get_custom_fields()
-
-# Check for core modifications
-git diff apps/erpnext/
-```
-
----
-
-## 10. SUCCESS CRITERIA
-
-**App is successful if:**
-
-1. ✅ **Marketplace-ready** - Could be submitted without modifications
-2. ✅ **Standards-compliant** - 100% Frappe/ERPNext patterns
-3. ✅ **Accounting-compliant** - LOCAL GAAP, IFRS, US-GAAP correct
-4. ✅ **AI-enhanced** - Meaningful recommendations
-5. ✅ **User-friendly** - Accountants can use without technical knowledge
-6. ✅ **Production-tested** - Works with real portfolios (100+ assets)
-7. ✅ **Well-documented** - Clear guides
-
----
-
-## 11. NEXT STEPS
-
-**Start Phase 1:**
-1. Create app skeleton
-2. Install on erpnext.local
-3. Create first DocType (Financial Asset Settings)
-4. Test basic functionality
-
----
-
 ## Appendix A: Standard Frappe Patterns Reference
 
 ### 1. DocType Validation
@@ -1028,9 +793,3 @@ assets = frappe.get_all(
     fields=["name", "asset_name", "market_value"]
 )
 ```
-
----
-
-**Document Version:** 1.0
-**Last Updated:** 2025-10-17
-**Status:** Ready for Phase 1 Implementation
