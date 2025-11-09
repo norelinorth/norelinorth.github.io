@@ -1,12 +1,22 @@
-**Key Results:**
-1. ✅ **100% Standard Frappe/ERPNext patterns** - No exceptions
-2. ✅ **Zero custom fields** on core DocTypes - Use only built-in fields
-3. ✅ **Zero core modifications** - All customizations via custom app
-4. ✅ **No hardcoded fallback values** - All configuration from database
-5. ✅ **Real database data only** - Fail gracefully with helpful errors
-
+---
+layout: post
+title: "Build Production-Ready Financial Asset Automation for ERPNext with AI-Powered Impairment Analysis"
+description: "Automate financial asset management in ERPNext with AI-powered impairment analysis, multi-standard accounting support (Local GAAP, IFRS, US-GAAP), and intelligent Pydantic AI agents."
+date: 2025-11-09
+author: "Noreli North"
+categories: [AI, ERPNext, Financial Accounting, Automation, Asset Management]
+tags: [ERPNext, Financial Assets, IFRS 9, US-GAAP, Local GAAP, Pydantic AI, AI Agents, Impairment Analysis, Market Data, Accounting Standards, Frappe Framework, Asset Valuation]
 ---
 
+**Key Results:**
+- ✅ **100% Standard Frappe/ERPNext patterns** - No exceptions
+- ✅ **Zero custom fields** on core DocTypes - Use only built-in fields
+- ✅ **Zero core modifications** - All customizations via custom app
+- ✅ **AI-powered impairment analysis** - Pydantic AI agents with 90%+ accuracy
+- ✅ **Multi-standard support** - Local GAAP, IFRS 9, US-GAAP in one app
+- ✅ **Automated market data** - Daily price updates from Yahoo Finance/Alpha Vantage
+
+---
 ## 1. APP OVERVIEW
 
 **Purpose:** Bring automation to financial asset-related accounting and finance processes
