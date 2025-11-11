@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Stop Manual Data Entry Forever: AI-Powered Master Data Enrichment for ERPNext"
+title: "ERPNext + Crawl4AI - Automate Enriching Master Data from ANY Website in SECONDS"
 description: "Build production-ready ERPNext master data enrichment with AI. Automatically extract company information from websites and populate Customer/Supplier records in 14 seconds with zero custom fields."
 date: 2025-11-09
 author: "Noreli North"
