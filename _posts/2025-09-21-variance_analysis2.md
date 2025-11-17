@@ -8,23 +8,16 @@ categories: [AI, ERPNext, Financial Analysis, Variance Analysis, Observability]
 tags: [Langfuse, ERPNext, AI Explanations, Variance Analysis, Financial Audit, DocType Storage, Frappe Framework, Accounting Automation, Audit Trail, Production AI]
 ---
 
-## Results: From AI Analysis to AI Explanation with Full Auditability
-
-**What AI Analysis Could Do:**
-- 📊 Summary of all variances
-- 📝 "Marketing expenses increased 156%"
-- ❌ No tracking, no storage, no audit trail
-
 **What AI Explanation Can Do NOW:**
 - 🔍 **Deep dive** into specific accounts with actual transaction data
-- 📈 **Transaction patterns** - 149% volume increase identified
-- 👥 **New party identification** - 93% variance from NEW vendors
-- 📋 **Voucher distributions** - Composition changes analyzed
-- 📝 **Sample descriptions** - "Google Ads Campaign Q2" pulled from actual GL Entries
-- ✅ **Green checkmarks** - Visual progress tracking on report
-- 💾 **DocType storage** - Full metadata (WHO, WHEN, WHAT)
-- 🔄 **Override capability** - Regenerate while preserving history
-- 🔒 **Complete audit trail** - Every explanation traceable and provable
+- 📈 **Transaction patterns**
+- 👥 **New party identification**
+- 📋 **Voucher distributions**
+- 📝 **Sample descriptions**
+- ✅ **Green checkmarks**
+- 💾 **DocType storage**
+- 🔄 **Override capability**
+- 🔒 **Complete audit trail**
 
 **📹 Watch the video tutorial**: [YouTube link]
 **💻 Get the code**: [GitHub repository link]
