@@ -242,7 +242,7 @@ The AI synthesizes ALL this data:
   │     WHO requested │ WHEN generated │ WHAT data examined     │
   │          WHAT concluded │ WHETHER updated │ FULL HISTORY    │
   └─────────────────────────────────────────────────────────────┘
-
+```
 ---
 
 <a name="green-checkmark"></a>
