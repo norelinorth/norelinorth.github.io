@@ -551,34 +551,3 @@ A: Yes! Override capability lets you regenerate while preserving the modificatio
 
 **Q: Are the checkmarks automatic?**
 A: Yes. When you save an explanation, the checkmark appears automatically on your report.
-
----
-
-## Contributing
-
-Areas for improvement:
-- [ ] Additional data sources for AI (budget comparisons, forecasts)
-- [ ] Multi-currency variance explanations
-- [ ] Automated scheduling of variance analysis
-- [ ] Integration with other financial modules
-- [ ] Chain of Thought reasoning implementation
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
-
----
-
-## License
-
-MIT License - see [LICENSE](./LICENSE) for details.
-
----
-
-**Built with ❤️ for accountants who need AI they can TRUST**
-
-AI Analysis was good.
-AI Explanation is EVERYTHING.
-
----
-
-_Last updated: 2025-11-16_
-
