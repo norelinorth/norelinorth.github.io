@@ -174,54 +174,73 @@ The AI synthesizes ALL this data:
 **AI Analysis couldn't do this. AI Explanation uses YOUR data to tell YOUR story.**
 
 ### AI VARIANCE EXPLANATION WORKFLOW 
-```html
-  <table>
-    <tr>
-      <th>Step</th>
-      <th>Action</th>
-      <th>What Happens</th>
-    </tr>
-    <tr>
-      <td><strong>1</strong></td>
-      <td>Report Generation</td>
-      <td>Pull variances from GL Entries</td>
-    </tr>
-    <tr>
-      <td><strong>2</strong></td>
-      <td>AI Analysis</td>
-      <td>Get overview of all significant variances</td>
-    </tr>
-    <tr>
-      <td><strong>3</strong></td>
-      <td>Deep Dive Selection</td>
-      <td>Pick specific account to explain</td>
-    </tr>
-    <tr>
-      <td><strong>4</strong></td>
-      <td>Data Query</td>
-      <td>System pulls patterns, parties, vouchers, descriptions</td>
-    </tr>
-    <tr>
-      <td><strong>5</strong></td>
-      <td>AI Reasoning</td>
-      <td>AI constructs explanation from actual data</td>
-    </tr>
-    <tr>
-      <td><strong>6</strong></td>
-      <td>DocType Storage</td>
-      <td>Explanation saved with full metadata (WHO, WHEN, WHAT)</td>
-    </tr>
-    <tr>
-      <td><strong>7</strong></td>
-      <td>Visual Indicator</td>
-      <td>Green checkmark ✅ shows completion</td>
-    </tr>
-    <tr>
-      <td><strong>8</strong></td>
-      <td>Override Capability</td>
-      <td>Regenerate anytime with history preserved</td>
-    </tr>
-  </table>
+  ┌─────────────────────────────────────────────────────────────┐
+  │              AI VARIANCE EXPLANATION WORKFLOW               │
+  ├─────────────────────────────────────────────────────────────┤
+  │                                                             │
+  │  ┌────────────────────────────────────────────────────────┐ │
+  │  │  1. REPORT GENERATION                                  │ │
+  │  │     • Pull variances from GL Entries                   │ │
+  │  │     • Calculate YoY changes                            │ │
+  │  │     • Display significant variances                    │ │
+  │  └────────────────────────────────────────────────────────┘ │
+  │                            ▼                                │
+  │  ┌────────────────────────────────────────────────────────┐ │
+  │  │  2. AI ANALYSIS (Overview)                             │ │
+  │  │     • Analyze ALL significant variances at once        │ │
+  │  │     • Generate executive summary                       │ │
+  │  │     • "Revenue up 23%, Expenses up 15%..."             │ │
+  │  └────────────────────────────────────────────────────────┘ │
+  │                            ▼                                │
+  │  ┌────────────────────────────────────────────────────────┐ │
+  │  │  3. DEEP DIVE SELECTION                                │ │
+  │  │     • User selects specific account                    │ │
+  │  │     • Click "Explain Variance"                         │ │
+  │  │     • Target: Marketing Expenses (+156%)               │ │
+  │  └────────────────────────────────────────────────────────┘ │
+  │                            ▼                                │
+  │  ┌────────────────────────────────────────────────────────┐ │
+  │  │  4. DATA QUERY (The Magic)                             │ │
+  │  │     • Transaction patterns: 45 → 112 txns (+149%)      │ │
+  │  │     • New parties: $65K from new vendors (93%)         │ │
+  │  │     • Voucher distribution: More Journal Entries       │ │
+  │  │     • Sample descriptions: "Google Ads Q2..."          │ │
+  │  └────────────────────────────────────────────────────────┘ │
+  │                            ▼                                │
+  │  ┌────────────────────────────────────────────────────────┐ │
+  │  │  5. AI REASONING                                       │ │
+  │  │     • Synthesize all queried data                      │ │
+  │  │     • Identify root cause patterns                     │ │
+  │  │     • Generate: "Digital marketing expansion in Q2"    │ │
+  │  └────────────────────────────────────────────────────────┘ │
+  │                            ▼                                │
+  │  ┌────────────────────────────────────────────────────────┐ │
+  │  │  6. DOCTYPE STORAGE (Audit Trail)                      │ │
+  │  │     • Save to Variance Explanation DocType             │ │
+  │  │     • WHO: finance.manager@company.com                 │ │
+  │  │     • WHEN: 2025-11-15 14:32:00                        │ │
+  │  │     • WHAT: Full explanation + metadata                │ │
+  │  └────────────────────────────────────────────────────────┘ │
+  │                            ▼                                │
+  │  ┌────────────────────────────────────────────────────────┐ │
+  │  │  7. VISUAL INDICATOR                                   │ │
+  │  │     • Green checkmark ✅ appears on report             │ │
+  │  │     • Shows "8 of 12 variances explained"              │ │
+  │  │     • At-a-glance progress tracking                    │ │
+  │  └────────────────────────────────────────────────────────┘ │
+  │                            ▼                                │
+  │  ┌────────────────────────────────────────────────────────┐ │
+  │  │  8. OVERRIDE CAPABILITY                                │ │
+  │  │     • Regenerate explanation anytime                   │ │
+  │  │     • History preserved in modification log            │ │
+  │  │     • Audit trail remains intact                       │ │
+  │  └────────────────────────────────────────────────────────┘ │
+  │                                                             │
+  ├─────────────────────────────────────────────────────────────┤
+  │                    COMPLETE AUDIT TRAIL                     │
+  │     WHO requested │ WHEN generated │ WHAT data examined     │
+  │          WHAT concluded │ WHETHER updated │ FULL HISTORY    │
+  └─────────────────────────────────────────────────────────────┘
 
 ---
 
