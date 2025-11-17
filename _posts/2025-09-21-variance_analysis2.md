@@ -449,13 +449,6 @@ def save_variance_explanation(account, base_fy, comparison_fy, reason, explanati
         frappe.throw(_("Error saving explanation: {0}").format(str(e)))
 ```
 
-### Cost Monitoring
-
-- Average cost: $0.01-$0.02 per explanation
-- 100 explanations/month = ~$2/month
-- Monitor via Langfuse dashboard
-- Set alerts for cost spikes
-
 ---
 
 <a name="next-steps"></a>
