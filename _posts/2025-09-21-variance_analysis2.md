@@ -512,5 +512,3 @@ Step 4: Therefore, my explanation is...
 **NEW ANSWER:** "Here's the data pipeline showing transaction patterns (149% volume increase), new party identification (93% from new vendors), voucher distributions, and sample descriptions. Here's the explanation saved to DocType with full metadata. Here's the Langfuse trace showing every AI call. Here's the modification history."
 
 **That's AUDITABLE AI.**
-
----
