@@ -173,7 +173,7 @@ The AI synthesizes ALL this data:
 
 **AI Analysis couldn't do this. AI Explanation uses YOUR data to tell YOUR story.**
 
-### AI VARIANCE EXPLANATION WORKFLOW 
+### AI VARIANCE EXPLANATION WORKFLOWa
   ┌─────────────────────────────────────────────────────────────┐
   │              AI VARIANCE EXPLANATION WORKFLOW               │
   ├─────────────────────────────────────────────────────────────┤
