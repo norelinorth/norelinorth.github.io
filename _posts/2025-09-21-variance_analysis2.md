@@ -19,9 +19,7 @@ tags: [Langfuse, ERPNext, AI Explanations, Variance Analysis, Financial Audit, D
 - 🔄 **Override capability**
 - 🔒 **Complete audit trail**
 
-**📹 Watch the video tutorial**: [YouTube link]
-**💻 Get the code**: [GitHub repository link]
-**🎯 Try it yourself**: [Setup guide link]
+**📹 Watch the video tutorial**: [[YouTube link](https://youtu.be/s4A0InJphRM)]
 
 ---
 
