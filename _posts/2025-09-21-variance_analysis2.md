@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "AI Variance Explanations for ERPNext: From Black Box to Auditable Intelligence"
+title: "This AI Turns Variance Analysis Into ACTIONABLE Insights (Not Just Numbers)"
 description: "Build production-ready AI variance explanations that go beyond analysis. Deep dive into specific accounts with actual transaction data, track progress with green checkmarks, save everything to DocType with full audit trail, and override explanations while preserving history."
 date: 2025-11-17
 author: "Noreli North"
