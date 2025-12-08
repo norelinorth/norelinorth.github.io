@@ -1,0 +1,8 @@
+title: Noreli North
+description: Learn, build and deploy AI agents (general + finance)
+theme: minima
+show_excerpts: true
+header_pages:
+  - index.md
+  - about.md
+
