@@ -6,10 +6,8 @@ categories: [erpnext, ai, mcp, task-management]
 tags: [claude, erpnext, mcp, frappe, kanban, ai-coding, developer-tools]
 author: Noreli North
 description: "Connect Claude AI to ERPNext's Kanban board via MCP. Watch your AI create projects, update task status, and log affected files - all automatically while it codes."
-image: /assets/images/mcp-task-management.png
+image: /assets/ai_coding.png
 ---
-
-# AI That Tracks Its Own Work: MCP Task Management for ERPNext
 
 **Key Results**:
 - ⚡ **Real-time task tracking** (AI updates its own Kanban board)
@@ -19,6 +17,7 @@ image: /assets/images/mcp-task-management.png
 - 🚀 **10-minute setup** (production-ready immediately)
 
 ---
+
 ![alt text](/assets/ai_coding.png)
 
 ## The Problem: AI Without Accountability
