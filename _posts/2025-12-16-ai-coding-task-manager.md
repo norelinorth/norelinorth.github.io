@@ -16,6 +16,9 @@ image: /assets/ai_coding.png
 - 📊 **Professional audit trail** (full history in ERPNext)
 - 🚀 **10-minute setup** (production-ready immediately)
 
+
+[Video Demo](https://youtu.be/pucBlPziCHI) | [Documentation](https://norelinorth.github.io)
+
 ---
 
 ![alt text](/assets/ai_coding.png)
