@@ -9,8 +9,6 @@ description: "A comprehensive technical guide to the MCP Server for ERPNext - fr
 image: /assets/images/AI Coding Team.png
 ---
 
-# Building the Complete AI Integration Layer for ERPNext: MCP Server Deep Dive
-
 **Key Results:**
 - ⚡ **15+ AI-accessible tools** (query, analyze, track, search)
 - 🛡️ **Enterprise security** (API keys, rate limiting, IP filtering, audit logs)
