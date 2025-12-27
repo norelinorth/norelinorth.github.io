@@ -17,7 +17,7 @@ image: /assets/images/AI Coding Team.png
 - 🤖 **AI task management** (Kanban boards, Gantt charts, execution tracking)
 - 📊 **Production-tested** (complete audit trails, comprehensive test coverage)
 
-[Video Demo]() | [Documentation](https://norelinorth.github.io)
+[Video Demo](https://youtu.be/ukc2vzdJFEw) | [Documentation](https://norelinorth.github.io)
 
 ---
 ![alt text](/assets/AI Coding Team.png)
