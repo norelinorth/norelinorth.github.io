@@ -17,7 +17,7 @@ image: /assets/Compliance_AI_Agent.png
 - ✅ **100% Frappe/ERPNext Standards** - Zero core modifications
 - 🏆 **213 Tests Passing** - Production-ready, marketplace-quality
 
-[Video Demo](#) | [Documentation](https://norelinorth.github.io)
+[Video Demo](https://youtu.be/CYACOm1TgJI) | [Documentation](https://norelinorth.github.io)
 
 ---
 ![alt text](/assets/Compliance_AI_Agent.png)
